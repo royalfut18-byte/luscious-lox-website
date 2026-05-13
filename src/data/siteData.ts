@@ -10,11 +10,11 @@ export const siteConfig = {
   instagramUrl: 'https://www.instagram.com/lusciousloxau/',
   instagramFollowers: '17K',
   instagramPosts: 578,
-  // REPLACE: Add your Google Maps embed URL here
-  googleMapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.5!2d151.155!3d-33.883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDUzJzAwLjAiUyAxNTHCsDA5JzE4LjAiRQ!5e0!3m2!1sen!2sau!4v1',
   // REPLACE: Add your booking link here (e.g., Fresha, Square, etc.)
-  bookingUrl: '#contact',
+  bookingUrl: '#booking',
   directionsUrl: 'https://www.google.com/maps/dir//419+Parramatta+Rd+Leichhardt+NSW+2040',
+  // REPLACE: Add your Google Maps embed URL here
+  googleMapsEmbed: '',
   hours: [
     { day: 'Monday', hours: 'Closed' },
     { day: 'Tuesday', hours: 'Closed' },
@@ -27,155 +27,121 @@ export const siteConfig = {
 };
 
 export const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Extensions', href: '#extensions' },
   { label: 'Services', href: '#services' },
-  { label: 'Results', href: '#results' },
-  { label: 'Why Us', href: '#why-us' },
+  { label: 'Extensions', href: '#extensions' },
+  { label: 'Gallery', href: '#gallery' },
   { label: 'Reviews', href: '#reviews' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'FAQ', href: '#faq' },
+  { label: 'Contact', href: '#booking' },
 ];
 
-export const serviceCategories = [
-  {
-    title: 'Extensions',
-    services: [
-      'Nano Hair Extensions',
-      'Tape Hair Extensions',
-      'Remy Hair Extensions',
-      'Hair Extension Consultations',
-    ],
-  },
-  {
-    title: 'Colour',
-    services: [
-      'Balayage',
-      'Hair Colouring',
-      'Hair Highlighting',
-      'Ombre Hair Colour',
-    ],
-  },
-  {
-    title: 'Styling',
-    services: [
-      'Blowdry',
-      'Curly Hair Styling',
-      'Hairstyling',
-      "Children's Cuts",
-    ],
-  },
-  {
-    title: 'Treatments',
-    services: [
-      'Keratin Treatments',
-      'Hair Straightening',
-      'Shampoo & Conditioning',
-      'Hair Regrowth',
-    ],
-  },
+export const services = [
+  { title: 'Hair Extensions', desc: 'Premium nano, tape & Remy extensions for seamless length and volume.', category: 'extensions' },
+  { title: 'Tape Extensions', desc: 'Lightweight, flat-lay tape wefts for natural movement and comfort.', category: 'extensions' },
+  { title: 'Balayage', desc: 'Hand-painted sun-kissed colour with soft, natural grow-out.', category: 'colour' },
+  { title: 'Hair Colouring', desc: 'Full colour, root touch-ups and creative colour transformations.', category: 'colour' },
+  { title: 'Keratin Treatments', desc: 'Smoothing treatments for frizz-free, shiny, manageable hair.', category: 'treatments' },
+  { title: 'Styling & Blowdry', desc: 'Professional blowdry, curly styling, and occasion hair.', category: 'styling' },
 ];
 
 export const extensionBenefits = [
   {
-    title: 'Seamless Blend',
-    description: 'Colour-matched and applied to sit flush against your natural hair for an undetectable finish.',
+    title: 'Undetectable Blend',
+    description: 'Precision colour-matched to sit flush against your natural hair. Nobody will know.',
   },
   {
-    title: 'Premium Human Hair',
-    description: 'Only the finest quality Remy human hair, sourced ethically for natural movement and longevity.',
+    title: 'Premium Remy Hair',
+    description: 'Ethically sourced European and Remy human hair for natural movement and shine.',
   },
   {
-    title: 'Reusable Extensions',
-    description: 'Invest once and enjoy multiple applications — our extensions are designed for reuse with proper care.',
+    title: 'Reusable & Long-Lasting',
+    description: 'Designed for multiple applications with proper care — invest once, wear for months.',
   },
   {
-    title: 'Instant Volume & Length',
-    description: 'Transform your look in a single appointment with full, flowing hair that moves naturally.',
+    title: 'Instant Transformation',
+    description: 'Full length and volume in one appointment. Walk out with your dream hair.',
   },
   {
-    title: 'Consultation-Led Matching',
-    description: 'Every client receives a personalised consultation to find the ideal colour, method and length.',
+    title: 'Personalised Consultation',
+    description: 'Every client receives a one-on-one colour and method consultation before we begin.',
   },
   {
-    title: 'Professionally Applied',
-    description: 'Expert application techniques designed to maintain the health and integrity of your natural hair.',
+    title: 'Damage-Free Methods',
+    description: 'Nano and tape techniques designed to protect the integrity of your natural hair.',
   },
 ];
 
-// REPLACE: Add real image URLs here
+// REPLACE: Add real image URLs to the `src` field
 export const galleryImages = [
-  { id: 1, label: 'Length', placeholder: 'Extensions — Length Transformation' },
-  { id: 2, label: 'Volume', placeholder: 'Extensions — Volume Enhancement' },
-  { id: 3, label: 'Colour Blend', placeholder: 'Balayage — Seamless Colour Blend' },
-  { id: 4, label: 'Seamless Finish', placeholder: 'Nano Extensions — Seamless Finish' },
-  { id: 5, label: 'Length', placeholder: 'Tape Extensions — Natural Length' },
-  { id: 6, label: 'Volume', placeholder: 'Full Volume — Before & After' },
+  { id: 1, label: 'Length', src: '', alt: 'Hair extensions length transformation' },
+  { id: 2, label: 'Volume', src: '', alt: 'Volume enhancement with extensions' },
+  { id: 3, label: 'Balayage', src: '', alt: 'Seamless balayage colour blend' },
+  { id: 4, label: 'Nano Blend', src: '', alt: 'Nano extensions undetectable finish' },
+  { id: 5, label: 'Tape-In', src: '', alt: 'Tape-in extensions natural look' },
+  { id: 6, label: 'Colour', src: '', alt: 'Hair colour transformation' },
 ];
 
-export const processSteps = [
-  {
-    step: 1,
-    title: 'Consultation',
-    description: 'We discuss your hair goals, lifestyle and preferences to recommend the ideal solution.',
-  },
-  {
-    step: 2,
-    title: 'Colour & Method Matching',
-    description: 'Expert colour analysis and extension method selection tailored to your hair type.',
-  },
-  {
-    step: 3,
-    title: 'Application & Transformation',
-    description: 'Precision application by our specialist to create a flawless, natural result.',
-  },
-  {
-    step: 4,
-    title: 'Aftercare Guidance',
-    description: 'Personalised aftercare advice to maintain your extensions and keep your hair healthy.',
-  },
-];
-
-// Client feedback placeholders — REPLACE with real Google review text when available
+// REPLACE: Insert real Google review text when available
 export const reviews = [
   {
     id: 1,
-    text: 'Beautiful service, professional advice and amazing results. The extensions look completely natural.',
+    text: 'Absolutely beautiful work. The extensions look completely natural — I get compliments everywhere I go. Best in Sydney.',
+    name: 'Verified Client',
     rating: 5,
   },
   {
     id: 2,
-    text: 'The finish was seamless and natural. I finally have the volume I have always wanted.',
+    text: 'The colour match was perfect and the blend is truly undetectable. I finally have the volume and length I have always dreamed of.',
+    name: 'Verified Client',
     rating: 5,
   },
   {
     id: 3,
-    text: 'A premium experience from consultation to styling. Worth every minute.',
+    text: 'A premium experience from start to finish. The consultation was thorough and the result exceeded all my expectations.',
+    name: 'Verified Client',
     rating: 5,
   },
   {
     id: 4,
-    text: 'Incredible attention to detail. The colour match was perfect and the blend is undetectable.',
+    text: 'Professional, talented, and genuinely caring. The salon feels luxurious and the results speak for themselves.',
+    name: 'Verified Client',
     rating: 5,
   },
 ];
 
-// REPLACE: Add real Instagram post image URLs here
-export const instagramPosts = [
-  { id: 1, placeholder: 'Instagram Post 1' },
-  { id: 2, placeholder: 'Instagram Post 2' },
-  { id: 3, placeholder: 'Instagram Post 3' },
-  { id: 4, placeholder: 'Instagram Post 4' },
-  { id: 5, placeholder: 'Instagram Post 5' },
-  { id: 6, placeholder: 'Instagram Post 6' },
+export const faqs = [
+  {
+    q: 'How long do hair extensions last?',
+    a: 'With proper care and maintenance appointments, our premium extensions typically last 3–6 months per application. The hair itself can be reused for up to 12 months.',
+  },
+  {
+    q: 'Will extensions damage my natural hair?',
+    a: 'Our nano and tape methods are specifically designed to minimise stress on your natural hair. When applied and maintained professionally, they should not cause damage.',
+  },
+  {
+    q: 'How do I know which extension method is right for me?',
+    a: 'During your consultation, we assess your hair type, density, lifestyle and goals to recommend the ideal method — whether that\'s nano tip, tape-in, or another approach.',
+  },
+  {
+    q: 'Do you colour match extensions?',
+    a: 'Absolutely. We custom colour-match every set of extensions to your natural hair or desired colour for a seamless, undetectable blend.',
+  },
+  {
+    q: 'How long does a full extension appointment take?',
+    a: 'A full head of extensions typically takes 2–4 hours depending on the method and volume required. We never rush — precision is everything.',
+  },
+  {
+    q: 'Do I need a consultation first?',
+    a: 'Yes, we require an initial consultation before all extension services. This allows us to discuss your goals, assess your hair, and plan the perfect approach.',
+  },
 ];
 
-export const whyUsPoints = [
-  'Celebrity hairdresser expertise',
-  'Specialist in undetectable hair extensions',
-  'Premium Remy human hair quality',
-  '5-star reviewed salon',
-  'Convenient Leichhardt location',
-  'Personal consultation process',
-  'Professional colour matching',
-  'High-end transformation experience',
+// REPLACE: Add real Instagram image URLs
+export const instagramPosts = [
+  { id: 1, src: '', alt: 'Instagram post 1' },
+  { id: 2, src: '', alt: 'Instagram post 2' },
+  { id: 3, src: '', alt: 'Instagram post 3' },
+  { id: 4, src: '', alt: 'Instagram post 4' },
+  { id: 5, src: '', alt: 'Instagram post 5' },
+  { id: 6, src: '', alt: 'Instagram post 6' },
 ];

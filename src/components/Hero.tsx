@@ -1,163 +1,118 @@
 import { motion } from 'framer-motion';
-import { Star, Instagram, ArrowDown, Sparkles } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import { siteConfig } from '../data/siteData';
-
-const reveal = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, delay: 0.15 + i * 0.12, ease: [0.2, 0.8, 0.2, 1] },
-  }),
-};
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden">
-      {/* Background layers */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[70%] h-full bg-gradient-to-l from-champagne/25 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-muted-gold/[0.04] rounded-full blur-[100px] -translate-x-1/3 translate-y-1/4" />
-        <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-rose-tint/50 rounded-full blur-[80px]" />
+    <section id="home" className="relative min-h-[100dvh] flex items-center overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-cream via-ivory to-soft-blush" />
+        <div className="absolute top-0 right-0 w-[60%] h-full bg-gradient-to-l from-champagne/20 to-transparent" />
+        <div className="absolute bottom-0 left-[10%] w-[500px] h-[500px] rounded-full bg-muted-gold/[0.03] blur-[120px]" />
       </div>
 
-      <div className="relative max-w-[1400px] mx-auto w-full px-6 sm:px-10 pt-28 sm:pt-32 pb-16">
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center">
-          {/* Left — Copy */}
-          <motion.div initial="hidden" animate="visible" className="order-2 lg:order-1 space-y-8">
-            {/* Eyebrow */}
-            <motion.div variants={reveal} custom={0} className="flex items-center gap-3">
-              <div className="w-8 h-[1px] bg-muted-gold" />
-              <span className="label-sm">Celebrity Extension Specialists</span>
+      <div className="relative w-full max-w-[1360px] mx-auto px-6 sm:px-10 pt-32 sm:pt-36 pb-20 sm:pb-24">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-16 lg:gap-10 items-center">
+          {/* Left copy */}
+          <div className="order-2 lg:order-1">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-3 mb-7"
+            >
+              <div className="w-8 h-[1.5px] bg-muted-gold" />
+              <span className="label-sm">Leichhardt, Sydney</span>
             </motion.div>
 
-            {/* Headline */}
-            <motion.h1 variants={reveal} custom={1} className="font-heading text-display font-light text-espresso leading-none">
-              <span className="italic">Undetectable</span>
-              <br />
-              <span className="not-italic">Luxury Hair</span>
-              <br />
-              <span className="not-italic text-muted-gold">Extensions</span>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="font-heading text-display text-espresso"
+            >
+              <span className="italic block">Luxury Hair</span>
+              <span className="block mt-1">Extensions</span>
             </motion.h1>
 
-            {/* Subheadline */}
-            <motion.p variants={reveal} custom={2} className="section-intro">
-              Celebrity hair extension specialists creating seamless length, volume and colour transformations with premium Remy human hair — in Leichhardt, Sydney.
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-7 text-[17px] sm:text-[19px] text-warm-gray/80 font-body font-light leading-[1.75] max-w-[480px]"
+            >
+              Celebrity extension specialists creating seamless, undetectable transformations with premium Remy human hair.
             </motion.p>
 
-            {/* Trust row */}
-            <motion.div variants={reveal} custom={3} className="flex flex-wrap items-center gap-6 pt-2">
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={13} className="text-muted-gold fill-muted-gold" />
-                  ))}
-                </div>
-                <span className="text-[13px] text-warm-gray font-body">{siteConfig.googleRating} on Google</span>
-              </div>
-              <div className="w-[1px] h-4 bg-espresso/10 hidden sm:block" />
-              <div className="flex items-center gap-2">
-                <Instagram size={14} className="text-muted-gold" />
-                <span className="text-[13px] text-warm-gray font-body">{siteConfig.instagramFollowers} followers</span>
-              </div>
-            </motion.div>
-
-            {/* CTAs */}
-            <motion.div variants={reveal} custom={4} className="flex flex-wrap gap-4 pt-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-10 flex flex-wrap gap-4"
+            >
               <a href={siteConfig.bookingUrl} className="btn-primary">
-                Book a Consultation
+                Book Consultation
+                <ArrowRight size={14} strokeWidth={2.5} />
               </a>
-              <a href={siteConfig.phoneHref} className="btn-secondary">
-                Call {siteConfig.phone}
+              <a href="#services" className="btn-secondary">
+                <Play size={13} strokeWidth={2.5} />
+                View Services
               </a>
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* Right — Visual composition */}
+          {/* Right visual */}
           <motion.div
             className="order-1 lg:order-2 relative"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.0, delay: 0.4 }}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.0, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="relative max-w-[480px] mx-auto lg:max-w-none">
-              {/* Main image card */}
-              <motion.div
-                className="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-gradient-to-br from-champagne/70 via-warm-beige/40 to-rose-tint/60 border border-muted-gold/10 shadow-luxury-lg"
-                initial={{ y: 20, scale: 0.97 }}
-                animate={{ y: 0, scale: 1 }}
-                transition={{ duration: 0.9, delay: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-              >
-                {/* REPLACE: Add hero image here as <img src="..." className="w-full h-full object-cover" /> */}
+            <div className="relative max-w-[440px] mx-auto lg:max-w-none">
+              {/* Main image */}
+              <div className="relative aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-luxury border border-champagne/30">
+                <div className="absolute inset-0 bg-gradient-to-br from-champagne/60 via-warm-beige/40 to-soft-blush/50" />
+                {/* REPLACE: Add hero image — <img src="YOUR_IMAGE_URL" className="absolute inset-0 w-full h-full object-cover" alt="Luscious Lox salon" /> */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center px-8">
-                    <div className="w-16 h-16 rounded-full bg-muted-gold/10 flex items-center justify-center mx-auto mb-4">
-                      <Sparkles size={24} className="text-muted-gold/40" />
-                    </div>
-                    <p className="text-espresso/20 font-heading text-lg italic">Hero Image</p>
-                    <p className="text-espresso/15 text-xs font-body mt-1">Replace with salon photo</p>
+                  <div className="text-center opacity-30">
+                    <p className="font-heading text-xl italic text-espresso/40">Salon Image</p>
+                    <p className="text-xs font-body text-espresso/30 mt-1">Replace placeholder</p>
                   </div>
                 </div>
-                {/* Soft overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-espresso/5 via-transparent to-champagne/10" />
-              </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-espresso/8 via-transparent to-transparent" />
+              </div>
 
-              {/* Floating card — rating */}
+              {/* Floating badge — bottom left */}
               <motion.div
-                className="absolute -bottom-4 -left-4 sm:-bottom-3 sm:-left-6 bg-white rounded-2xl px-5 py-4 shadow-luxury-lg border border-champagne/30"
-                initial={{ opacity: 0, y: 20, x: -10 }}
-                animate={{ opacity: 1, y: 0, x: 0 }}
-                transition={{ duration: 0.7, delay: 1.0, ease: 'easeOut' }}
+                className="absolute -bottom-5 -left-3 sm:-bottom-4 sm:-left-5 bg-white rounded-2xl px-5 py-4 shadow-elevated border border-champagne/25"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.0, duration: 0.6, ease: 'easeOut' }}
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex -space-x-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={11} className="text-muted-gold fill-muted-gold" />
-                    ))}
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-muted-gold/20 to-champagne/40 flex items-center justify-center">
+                    <span className="text-muted-gold font-heading text-lg italic">5.0</span>
                   </div>
                   <div>
-                    <p className="text-[12px] font-body font-semibold text-espresso">5.0 Rating</p>
-                    <p className="text-[10px] font-body text-warm-gray">Google Reviews</p>
+                    <p className="text-[12px] font-body font-bold text-espresso">Google Rated</p>
+                    <p className="text-[10px] font-body text-warm-gray/60">★★★★★</p>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Floating card — specialist badge */}
+              {/* Floating badge — top right */}
               <motion.div
-                className="absolute -top-3 -right-3 sm:top-6 sm:-right-4 bg-white rounded-2xl px-5 py-4 shadow-luxury-lg border border-champagne/30"
-                initial={{ opacity: 0, y: -10, x: 10 }}
-                animate={{ opacity: 1, y: 0, x: 0 }}
-                transition={{ duration: 0.7, delay: 1.2, ease: 'easeOut' }}
+                className="absolute -top-3 -right-2 sm:top-5 sm:-right-5 bg-espresso text-cream rounded-2xl px-5 py-3.5 shadow-elevated"
+                initial={{ opacity: 0, y: -12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2, duration: 0.6, ease: 'easeOut' }}
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-muted-gold/20 to-champagne/50 flex items-center justify-center">
-                    <Sparkles size={15} className="text-muted-gold" />
-                  </div>
-                  <div>
-                    <p className="text-[12px] font-body font-semibold text-espresso">Nano Extensions</p>
-                    <p className="text-[10px] font-body text-warm-gray">Undetectable finish</p>
-                  </div>
-                </div>
+                <p className="text-[11px] font-body font-bold tracking-[0.15em] uppercase">Nano Specialists</p>
               </motion.div>
             </div>
           </motion.div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.0 }}
-        >
-          <span className="text-[10px] font-body tracking-[0.2em] uppercase text-warm-gray/40">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <ArrowDown size={14} className="text-warm-gray/30" />
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );

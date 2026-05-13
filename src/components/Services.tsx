@@ -1,66 +1,61 @@
 import { motion } from 'framer-motion';
-import { Sparkles, Palette, Wind, Scissors } from 'lucide-react';
-import { serviceCategories } from '../data/siteData';
-
-const icons = [Sparkles, Palette, Wind, Scissors];
-const accents = ['from-muted-gold/15 to-champagne/30', 'from-rose-tint to-champagne/20', 'from-champagne/40 to-warm-beige/20', 'from-ivory to-champagne/30'];
+import { ArrowUpRight } from 'lucide-react';
+import { services, siteConfig } from '../data/siteData';
 
 export default function Services() {
   return (
     <section id="services" className="section-gap section-padding">
-      <div className="max-w-[1400px] mx-auto">
-        {/* Section header */}
+      <div className="max-w-[1360px] mx-auto">
+        {/* Header */}
         <motion.div
-          className="text-center max-w-2xl mx-auto mb-20 sm:mb-24"
+          className="max-w-2xl mb-16 sm:mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="label-sm mb-5 block">What We Offer</span>
-          <h2 className="font-heading text-hero font-light text-espresso">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-8 h-[1.5px] bg-muted-gold" />
+            <span className="label-sm">What We Offer</span>
+          </div>
+          <h2 className="font-heading text-section text-espresso">
             Our <span className="italic">Services</span>
           </h2>
-          <p className="mt-6 section-intro mx-auto">
-            From premium hair extensions to expert colouring and styling — every service is delivered with precision and luxury.
+          <p className="mt-5 section-desc">
+            From premium hair extensions to expert colouring and keratin treatments — every service is delivered with precision and luxury care.
           </p>
         </motion.div>
 
-        {/* Service cards — magazine grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-          {serviceCategories.map((category, idx) => {
-            const Icon = icons[idx];
-            return (
-              <motion.div
-                key={category.title}
-                className="group relative bg-white rounded-[1.75rem] p-8 sm:p-9 border border-champagne/30 shadow-card hover:shadow-card-hover transition-all duration-500 hover:-translate-y-2"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.2, 0.8, 0.2, 1] }}
-              >
-                {/* Accent gradient background */}
-                <div className={`absolute top-0 left-0 right-0 h-32 rounded-t-[1.75rem] bg-gradient-to-b ${accents[idx]} opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
+        {/* Service grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {services.map((service, idx) => (
+            <motion.a
+              key={service.title}
+              href={siteConfig.bookingUrl}
+              className="group card-premium p-7 sm:p-8 flex flex-col justify-between min-h-[200px] relative overflow-hidden"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, delay: idx * 0.07, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {/* Hover gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-muted-gold/0 to-champagne/0 group-hover:from-muted-gold/[0.03] group-hover:to-champagne/10 transition-all duration-700 rounded-[1.5rem]" />
 
-                <div className="relative">
-                  <div className="w-14 h-14 rounded-2xl bg-white border border-champagne/40 shadow-luxury flex items-center justify-center mb-7 group-hover:shadow-card transition-shadow duration-500">
-                    <Icon size={22} className="text-muted-gold" />
+              <div className="relative">
+                <div className="flex items-start justify-between mb-4">
+                  <h3 className="font-heading text-[1.4rem] sm:text-[1.55rem] text-espresso italic leading-tight">{service.title}</h3>
+                  <div className="w-8 h-8 rounded-full border border-espresso/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:border-muted-gold/30">
+                    <ArrowUpRight size={14} className="text-muted-gold" />
                   </div>
-
-                  <h3 className="font-heading text-2xl sm:text-[1.7rem] text-espresso mb-5 italic">{category.title}</h3>
-
-                  <ul className="space-y-3">
-                    {category.services.map((service) => (
-                      <li key={service} className="flex items-center gap-3 text-[13.5px] text-warm-gray font-body">
-                        <div className="w-1 h-1 rounded-full bg-muted-gold/60 flex-shrink-0" />
-                        {service}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              </motion.div>
-            );
-          })}
+                <p className="text-[13.5px] text-warm-gray/70 font-body leading-relaxed">{service.desc}</p>
+              </div>
+
+              <div className="relative mt-5 pt-4 border-t border-champagne/30">
+                <span className="text-[10px] font-body font-bold tracking-[0.2em] uppercase text-muted-gold/60">{service.category}</span>
+              </div>
+            </motion.a>
+          ))}
         </div>
       </div>
     </section>

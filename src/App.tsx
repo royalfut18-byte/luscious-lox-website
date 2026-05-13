@@ -2,41 +2,36 @@ import { useState } from 'react';
 import IntroReveal from './components/IntroReveal';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import SignatureExtensions from './components/SignatureExtensions';
+import TrustStrip from './components/TrustStrip';
 import Services from './components/Services';
+import SignatureExtensions from './components/SignatureExtensions';
 import ResultsGallery from './components/ResultsGallery';
-import WhyUs from './components/WhyUs';
-import Process from './components/Process';
 import Reviews from './components/Reviews';
-import InstagramPreview from './components/InstagramPreview';
-import BookingCTA from './components/BookingCTA';
-import Contact from './components/Contact';
+import FAQ from './components/FAQ';
+import BookingForm from './components/BookingForm';
 import Footer from './components/Footer';
 
 function App() {
-  const [siteReady, setSiteReady] = useState(false);
+  const [ready, setReady] = useState(false);
 
   return (
     <>
-      <IntroReveal onComplete={() => setSiteReady(true)} />
-
+      <IntroReveal onComplete={() => setReady(true)} />
       <div
-        className={`transition-opacity duration-700 ease-out ${
-          siteReady ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        className={`transition-all duration-1000 ease-out ${
+          ready ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
       >
         <Navbar />
         <main>
           <Hero />
-          <SignatureExtensions />
+          <TrustStrip />
           <Services />
+          <SignatureExtensions />
           <ResultsGallery />
-          <WhyUs />
-          <Process />
           <Reviews />
-          <InstagramPreview />
-          <BookingCTA />
-          <Contact />
+          <FAQ />
+          <BookingForm />
         </main>
         <Footer />
       </div>
