@@ -6,119 +6,130 @@ interface IntroRevealProps {
 }
 
 export default function IntroReveal({ onComplete }: IntroRevealProps) {
-  const [visible, setVisible] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
-
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [removed, setRemoved] = useState(false);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
-      setVisible(false);
+      setRemoved(true);
       onComplete();
       return;
     }
 
-    // Start fade out after intro plays
-    const fadeTimer = setTimeout(() => {
-      setFadeOut(true);
-    }, 2100);
+    const t1 = setTimeout(() => setFadeOut(true), 2200);
+    const t2 = setTimeout(() => { setRemoved(true); onComplete(); }, 2900);
 
-    // Fully remove and reveal site
-    const removeTimer = setTimeout(() => {
-      setVisible(false);
-      onComplete();
-    }, 2700);
-
-    return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(removeTimer);
-    };
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const skip = () => {
-    setFadeOut(true);
-    setTimeout(() => {
-      setVisible(false);
-      onComplete();
-    }, 400);
-  };
-
-  if (!visible) return null;
+  if (removed) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#FDFBF7] transition-opacity duration-[600ms] ease-out ${
-        fadeOut ? 'opacity-0' : 'opacity-100'
-      }`}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 99999,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#1C1210',
+        opacity: fadeOut ? 0 : 1,
+        transition: 'opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
+      }}
     >
       {/* Skip */}
       <button
-        onClick={skip}
-        className="absolute top-7 right-7 sm:top-9 sm:right-10 text-[#1C1210]/20 hover:text-[#1C1210]/50 text-[10px] font-sans font-bold tracking-[0.3em] uppercase transition-colors z-10"
+        onClick={() => { setFadeOut(true); setTimeout(() => { setRemoved(true); onComplete(); }, 400); }}
+        style={{
+          position: 'absolute',
+          top: '2rem',
+          right: '2rem',
+          color: 'rgba(253, 251, 247, 0.3)',
+          fontSize: '10px',
+          fontFamily: 'Manrope, sans-serif',
+          fontWeight: 700,
+          letterSpacing: '0.3em',
+          textTransform: 'uppercase',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          zIndex: 10,
+        }}
       >
         Skip
       </button>
 
-      {/* Background glow */}
+      {/* Background golden glow */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] sm:w-[700px] sm:h-[700px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(176, 141, 87, 0.07) 0%, transparent 65%)' }}
-        initial={{ scale: 0.4, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 2.0, ease: 'easeOut' }}
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: '600px',
+          height: '600px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(176, 141, 87, 0.1) 0%, transparent 60%)',
+          transform: 'translate(-50%, -50%)',
+        }}
+        initial={{ scale: 0.3, opacity: 0 }}
+        animate={{ scale: 1.2, opacity: 1 }}
+        transition={{ duration: 2.5, ease: 'easeOut' }}
       />
 
       {/* Hair strand lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(11)].map((_, i) => (
+      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+        {[...Array(9)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute"
             style={{
+              position: 'absolute',
               width: '1px',
-              height: `${90 + i * 15}px`,
-              left: `${12 + i * 7}%`,
-              top: '22%',
-              background: `linear-gradient(180deg, transparent, rgba(176, 141, 87, ${0.12 + i * 0.02}), rgba(176, 141, 87, ${0.04}), transparent)`,
+              height: `${80 + i * 18}px`,
+              left: `${18 + i * 7.5}%`,
+              top: '20%',
+              background: `linear-gradient(180deg, transparent, rgba(196, 162, 101, ${0.2 + i * 0.03}), transparent)`,
               transformOrigin: 'top center',
             }}
-            initial={{ scaleY: 0, opacity: 0, rotate: -15 + i * 3 }}
+            initial={{ scaleY: 0, opacity: 0, rotate: -12 + i * 3 }}
             animate={{
-              scaleY: [0, 1.1, 0.6],
-              opacity: [0, 0.7, 0.15],
-              rotate: [-15 + i * 3, -8 + i * 2],
-              y: [0, 40],
+              scaleY: [0, 1.2, 0.5],
+              opacity: [0, 0.8, 0.2],
+              rotate: [-12 + i * 3, -6 + i * 2],
+              y: [0, 50],
             }}
-            transition={{
-              duration: 2.2,
-              delay: 0.1 + i * 0.05,
-              ease: [0.25, 0.8, 0.25, 1],
-            }}
+            transition={{ duration: 2.2, delay: 0.2 + i * 0.06, ease: [0.25, 0.8, 0.25, 1] }}
           />
         ))}
       </div>
 
       {/* Center content */}
-      <div className="relative flex flex-col items-center px-6">
-        {/* Top ornament */}
+      <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.5rem' }}>
+        {/* Top line */}
         <motion.div
-          className="h-[1.5px] rounded-full mb-10"
-          style={{ background: 'rgba(176, 141, 87, 0.35)' }}
+          style={{ height: '1.5px', background: 'rgba(196, 162, 101, 0.4)', marginBottom: '2.5rem', borderRadius: '1px' }}
           initial={{ width: 0 }}
-          animate={{ width: 48 }}
-          transition={{ duration: 0.7, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
+          animate={{ width: 45 }}
+          transition={{ duration: 0.6, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
         />
 
-        {/* Logo text — clip reveal */}
-        <div className="overflow-hidden">
+        {/* Text clip reveal */}
+        <div style={{ overflow: 'hidden' }}>
           <motion.h1
-            className="text-[3.2rem] sm:text-[4.5rem] md:text-[6rem] font-light italic leading-[0.9] text-[#1C1210]"
-            style={{ fontFamily: '"Playfair Display", Georgia, serif', letterSpacing: '-0.03em' }}
+            style={{
+              fontFamily: '"Playfair Display", Georgia, serif',
+              fontSize: 'clamp(3rem, 10vw, 6rem)',
+              fontWeight: 300,
+              fontStyle: 'italic',
+              color: '#FDFBF7',
+              lineHeight: 0.95,
+              letterSpacing: '-0.03em',
+              margin: 0,
+            }}
             initial={{ y: '120%' }}
             animate={{ y: '0%' }}
-            transition={{ duration: 1.1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             Luscious Lox
           </motion.h1>
@@ -126,39 +137,40 @@ export default function IntroReveal({ onComplete }: IntroRevealProps) {
 
         {/* Gold shimmer sweep */}
         <motion.div
-          className="absolute top-1/2 left-[-10%] right-[-10%] h-[80%] -translate-y-1/2 pointer-events-none"
           style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(196, 162, 101, 0.12) 40%, rgba(196, 162, 101, 0.3) 50%, rgba(196, 162, 101, 0.12) 60%, transparent 100%)',
+            position: 'absolute',
+            top: '30%',
+            left: '-15%',
+            right: '-15%',
+            height: '60%',
+            background: 'linear-gradient(90deg, transparent 0%, rgba(196, 162, 101, 0.08) 35%, rgba(196, 162, 101, 0.25) 50%, rgba(196, 162, 101, 0.08) 65%, transparent 100%)',
+            pointerEvents: 'none',
           }}
           initial={{ x: '-100%' }}
           animate={{ x: '100%' }}
-          transition={{ duration: 1.3, delay: 1.2, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 1.4, delay: 1.2, ease: [0.4, 0, 0.2, 1] }}
         />
 
         {/* Subtitle */}
         <motion.div
-          className="flex items-center gap-4 mt-6"
+          style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '1.5rem' }}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.85 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
         >
-          <div className="w-5 h-[1px] bg-[#B08D57]/35" />
-          <span
-            className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#5C4F44]/45"
-            style={{ fontFamily: 'Manrope, system-ui, sans-serif' }}
-          >
+          <div style={{ width: '18px', height: '1px', background: 'rgba(196, 162, 101, 0.4)' }} />
+          <span style={{ fontSize: '10px', fontFamily: 'Manrope, sans-serif', fontWeight: 700, letterSpacing: '0.4em', textTransform: 'uppercase', color: 'rgba(253, 251, 247, 0.35)' }}>
             Hair · Leichhardt · Sydney
           </span>
-          <div className="w-5 h-[1px] bg-[#B08D57]/35" />
+          <div style={{ width: '18px', height: '1px', background: 'rgba(196, 162, 101, 0.4)' }} />
         </motion.div>
 
-        {/* Bottom ornament */}
+        {/* Bottom line */}
         <motion.div
-          className="mt-10 h-[1px] rounded-full"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(176, 141, 87, 0.3), transparent)' }}
+          style={{ marginTop: '2.5rem', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(196, 162, 101, 0.3), transparent)', borderRadius: '1px' }}
           initial={{ width: 0, opacity: 0 }}
-          animate={{ width: 90, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.3, ease: 'easeOut' }}
+          animate={{ width: 80, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 1.3, ease: 'easeOut' }}
         />
       </div>
     </div>
