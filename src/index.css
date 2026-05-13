@@ -45,7 +45,7 @@
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2.5 px-10 py-[18px] text-cream/90 font-body font-semibold text-[12px] tracking-[0.18em] uppercase rounded-full border-[1.5px] border-cream/15 transition-all duration-500 hover:bg-cream/8 hover:border-cream/40 hover:scale-[1.03] active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-2.5 px-10 py-[18px] text-cream/90 font-body font-semibold text-[12px] tracking-[0.18em] uppercase rounded-full border-[1.5px] border-cream/15 transition-all duration-500 hover:bg-cream/10 hover:border-cream/40 hover:scale-[1.03] active:scale-[0.97];
   }
 
   .section-padding {

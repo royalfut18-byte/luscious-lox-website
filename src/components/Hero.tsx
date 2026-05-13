@@ -1,114 +1,129 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Star } from 'lucide-react';
 import { siteConfig } from '../data/siteData';
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-[100dvh] flex items-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-cream via-ivory to-soft-blush" />
-        <div className="absolute top-0 right-0 w-[60%] h-full bg-gradient-to-l from-champagne/20 to-transparent" />
-        <div className="absolute bottom-0 left-[10%] w-[500px] h-[500px] rounded-full bg-muted-gold/[0.03] blur-[120px]" />
-      </div>
+    <section id="home" className="relative min-h-[100dvh] flex items-center overflow-hidden bg-[#FDFBF7]">
+      {/* Large background shape */}
+      <div className="absolute top-0 right-0 w-[55%] h-full bg-[#F4EDE6] rounded-bl-[80px] sm:rounded-bl-[120px] hidden lg:block" />
+      <div className="absolute bottom-0 left-[5%] w-[400px] h-[400px] rounded-full bg-[#B08D57]/[0.04] blur-[100px]" />
 
-      <div className="relative w-full max-w-[1360px] mx-auto px-6 sm:px-10 pt-32 sm:pt-36 pb-20 sm:pb-24">
-        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-16 lg:gap-10 items-center">
-          {/* Left copy */}
-          <div className="order-2 lg:order-1">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+      <div className="relative w-full max-w-[1360px] mx-auto px-6 sm:px-10 pt-32 sm:pt-40 pb-20 sm:pb-28">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+          {/* Left — Copy */}
+          <div className="order-2 lg:order-1 max-w-[560px]">
+            <motion.p
+              className="text-[11px] font-bold tracking-[0.35em] uppercase text-[#B08D57] mb-6"
+              style={{ fontFamily: 'Manrope, sans-serif' }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-3 mb-7"
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <div className="w-8 h-[1.5px] bg-muted-gold" />
-              <span className="label-sm">Leichhardt, Sydney</span>
-            </motion.div>
+              Celebrity Extension Specialists · Sydney
+            </motion.p>
 
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              className="text-[clamp(2.8rem,7.5vw,5.5rem)] leading-[0.95] tracking-[-0.035em] text-[#1C1210]"
+              style={{ fontFamily: '"Playfair Display", serif', fontWeight: 300 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="font-heading text-display text-espresso"
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="italic block">Luxury Hair</span>
-              <span className="block mt-1">Extensions</span>
+              <em className="not-italic">Your Dream Hair,</em><br />
+              <em>Perfected.</em>
             </motion.h1>
 
             <motion.p
+              className="mt-7 text-[16px] sm:text-[18px] text-[#5C4F44]/75 leading-[1.8] max-w-[440px]"
+              style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 300 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-7 text-[17px] sm:text-[19px] text-warm-gray/80 font-body font-light leading-[1.75] max-w-[480px]"
+              transition={{ duration: 0.7, delay: 0.35 }}
             >
-              Celebrity extension specialists creating seamless, undetectable transformations with premium Remy human hair.
+              Premium nano & tape hair extensions, balayage, and colour — expertly crafted for a seamless, undetectable finish at our Leichhardt salon.
             </motion.p>
 
+            {/* Rating */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-6 flex items-center gap-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={14} className="text-[#B08D57] fill-[#B08D57]" />
+                ))}
+              </div>
+              <span className="text-[13px] text-[#5C4F44]/60 ml-1" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                {siteConfig.googleRating} rated · {siteConfig.instagramFollowers} followers
+              </span>
+            </motion.div>
+
+            {/* CTAs */}
+            <motion.div
               className="mt-10 flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.55 }}
             >
               <a href={siteConfig.bookingUrl} className="btn-primary">
                 Book Consultation
                 <ArrowRight size={14} strokeWidth={2.5} />
               </a>
               <a href="#services" className="btn-secondary">
-                <Play size={13} strokeWidth={2.5} />
                 View Services
               </a>
             </motion.div>
           </div>
 
-          {/* Right visual */}
+          {/* Right — Image composition */}
           <motion.div
             className="order-1 lg:order-2 relative"
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="relative max-w-[440px] mx-auto lg:max-w-none">
+            <div className="relative max-w-[460px] mx-auto lg:max-w-none lg:ml-auto">
               {/* Main image */}
-              <div className="relative aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-luxury border border-champagne/30">
-                <div className="absolute inset-0 bg-gradient-to-br from-champagne/60 via-warm-beige/40 to-soft-blush/50" />
-                {/* REPLACE: Add hero image — <img src="YOUR_IMAGE_URL" className="absolute inset-0 w-full h-full object-cover" alt="Luscious Lox salon" /> */}
+              <div className="relative aspect-[3/4] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-[0_30px_80px_rgba(28,18,16,0.08)] border border-[#EDE1CF]/50">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#EDE1CF]/80 via-[#E8D9C5]/50 to-[#F6EDE8]/60" />
+                {/* REPLACE: <img src="YOUR_HERO_IMAGE" className="absolute inset-0 w-full h-full object-cover" alt="Hair transformation" /> */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center opacity-30">
-                    <p className="font-heading text-xl italic text-espresso/40">Salon Image</p>
-                    <p className="text-xs font-body text-espresso/30 mt-1">Replace placeholder</p>
-                  </div>
+                  <p className="text-[#1C1210]/15 text-sm" style={{ fontFamily: 'Manrope, sans-serif' }}>Hero Image Placeholder</p>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-espresso/8 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1210]/5 to-transparent" />
               </div>
 
-              {/* Floating badge — bottom left */}
+              {/* Floating: 5-star badge */}
               <motion.div
-                className="absolute -bottom-5 -left-3 sm:-bottom-4 sm:-left-5 bg-white rounded-2xl px-5 py-4 shadow-elevated border border-champagne/25"
-                initial={{ opacity: 0, y: 16 }}
+                className="absolute -bottom-5 -left-4 sm:-left-6 bg-white rounded-2xl px-5 py-4 shadow-[0_12px_40px_rgba(176,141,87,0.12)] border border-[#EDE1CF]/40"
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.0, duration: 0.6, ease: 'easeOut' }}
+                transition={{ delay: 1.1, duration: 0.6 }}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-muted-gold/20 to-champagne/40 flex items-center justify-center">
-                    <span className="text-muted-gold font-heading text-lg italic">5.0</span>
+                  <div className="w-10 h-10 rounded-xl bg-[#B08D57]/10 flex items-center justify-center">
+                    <span className="text-[#B08D57] font-bold text-sm" style={{ fontFamily: '"Playfair Display", serif' }}>5.0</span>
                   </div>
                   <div>
-                    <p className="text-[12px] font-body font-bold text-espresso">Google Rated</p>
-                    <p className="text-[10px] font-body text-warm-gray/60">★★★★★</p>
+                    <p className="text-[12px] font-bold text-[#1C1210]" style={{ fontFamily: 'Manrope, sans-serif' }}>Google Reviews</p>
+                    <div className="flex gap-0.5 mt-0.5">
+                      {[...Array(5)].map((_, i) => <Star key={i} size={9} className="text-[#B08D57] fill-[#B08D57]" />)}
+                    </div>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Floating badge — top right */}
+              {/* Floating: Nano badge */}
               <motion.div
-                className="absolute -top-3 -right-2 sm:top-5 sm:-right-5 bg-espresso text-cream rounded-2xl px-5 py-3.5 shadow-elevated"
-                initial={{ opacity: 0, y: -12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2, duration: 0.6, ease: 'easeOut' }}
+                className="absolute -top-3 -right-3 sm:top-6 sm:-right-5 bg-[#1C1210] text-[#FDFBF7] rounded-full px-5 py-3 shadow-[0_8px_30px_rgba(28,18,16,0.2)]"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.3, duration: 0.5 }}
               >
-                <p className="text-[11px] font-body font-bold tracking-[0.15em] uppercase">Nano Specialists</p>
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase" style={{ fontFamily: 'Manrope, sans-serif' }}>Nano Specialists</span>
               </motion.div>
             </div>
           </motion.div>
