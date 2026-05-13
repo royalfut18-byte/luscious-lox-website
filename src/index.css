@@ -12,66 +12,82 @@
   body {
     @apply bg-cream text-espresso font-body;
     font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    overflow-x: hidden;
   }
 
   ::selection {
-    @apply bg-muted-gold/15 text-espresso;
+    background: rgba(176, 141, 87, 0.15);
+    color: #1C1210;
   }
 
-  h1, h2, h3, h4 {
-    text-wrap: balance;
-  }
+  h1, h2, h3, h4 { text-wrap: balance; }
 }
 
 @layer components {
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2.5 px-10 py-[18px] bg-espresso text-cream font-body font-semibold text-[12px] tracking-[0.18em] uppercase rounded-full transition-all duration-500 hover:shadow-luxury hover:scale-[1.03] active:scale-[0.97] overflow-hidden;
+    @apply relative inline-flex items-center justify-center gap-3 px-10 py-[18px] bg-espresso text-cream font-body font-bold text-[11px] tracking-[0.2em] uppercase rounded-full overflow-hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
-  .btn-primary::before {
-    content: '';
-    @apply absolute inset-0 bg-gradient-to-r from-muted-gold/0 via-muted-gold/10 to-muted-gold/0 opacity-0 transition-opacity duration-500;
+  .btn-primary:hover {
+    @apply shadow-luxury scale-[1.04];
   }
-  .btn-primary:hover::before {
-    @apply opacity-100;
-  }
+  .btn-primary:active { @apply scale-[0.97]; }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2.5 px-10 py-[18px] border-[1.5px] border-espresso/15 text-espresso font-body font-semibold text-[12px] tracking-[0.18em] uppercase rounded-full transition-all duration-500 hover:bg-espresso hover:text-cream hover:border-espresso hover:shadow-elevated hover:scale-[1.03] active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-3 px-10 py-[18px] border-[1.5px] border-espresso/15 text-espresso font-body font-bold text-[11px] tracking-[0.2em] uppercase rounded-full;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  .btn-secondary:hover {
+    @apply bg-espresso text-cream border-espresso shadow-elevated scale-[1.04];
+  }
+  .btn-secondary:active { @apply scale-[0.97]; }
 
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2.5 px-10 py-[18px] bg-gold-gradient text-white font-body font-semibold text-[12px] tracking-[0.18em] uppercase rounded-full transition-all duration-500 hover:shadow-luxury hover:scale-[1.03] active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-3 px-10 py-[18px] text-white font-body font-bold text-[11px] tracking-[0.2em] uppercase rounded-full;
+    background: linear-gradient(135deg, #C4A265, #B08D57, #8E7142);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  .btn-gold:hover { @apply shadow-luxury scale-[1.04]; }
+  .btn-gold:active { @apply scale-[0.97]; }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2.5 px-10 py-[18px] text-cream/90 font-body font-semibold text-[12px] tracking-[0.18em] uppercase rounded-full border-[1.5px] border-cream/15 transition-all duration-500 hover:bg-cream/10 hover:border-cream/40 hover:scale-[1.03] active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-3 px-10 py-[18px] text-cream/80 font-body font-bold text-[11px] tracking-[0.2em] uppercase rounded-full border-[1.5px] border-cream/15;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  .btn-ghost:hover { @apply bg-cream/10 border-cream/40 scale-[1.04]; }
 
   .section-padding {
     @apply px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32;
   }
 
-  .section-gap {
-    @apply py-26 sm:py-32 md:py-38;
-  }
-
   .glass-nav {
-    @apply bg-cream/75 backdrop-blur-2xl border-b border-champagne/25;
+    @apply bg-cream/70 backdrop-blur-2xl border-b border-champagne/20;
+    box-shadow: 0 1px 20px rgba(176, 141, 87, 0.04);
   }
 
   .label-sm {
-    @apply text-[11px] font-body font-bold tracking-[0.3em] uppercase text-muted-gold;
+    @apply text-[10px] font-body font-bold tracking-[0.35em] uppercase text-muted-gold;
+  }
+
+  .section-gap {
+    @apply py-28 sm:py-36;
   }
 
   .section-desc {
-    @apply text-[17px] sm:text-lg text-warm-gray/80 font-body font-light leading-[1.8] max-w-xl;
+    @apply text-[15px] text-warm-gray/65 font-body font-light leading-[1.9] max-w-lg;
   }
 
   .card-premium {
-    @apply bg-white rounded-[1.5rem] border border-champagne/40 shadow-card transition-all duration-500;
+    @apply bg-white rounded-[1.5rem] border border-champagne/25 shadow-card;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .card-premium:hover {
-    @apply shadow-card-hover -translate-y-1;
+    @apply shadow-card-hover border-champagne/40;
   }
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #FDFBF7; }
+::-webkit-scrollbar-thumb { background: #EDE1CF; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #B08D57; }

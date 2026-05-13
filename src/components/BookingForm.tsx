@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, CheckCircle, Phone, MapPin } from 'lucide-react';
+import { Send, CheckCircle, Phone, MapPin, Clock } from 'lucide-react';
 import { siteConfig } from '../data/siteData';
 
 export default function BookingForm() {
@@ -9,48 +9,53 @@ export default function BookingForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Connect to Supabase or form backend (Formspree, Netlify Forms, etc.)
     setSent(true);
   };
 
-  const inputCls = "w-full px-5 py-4 rounded-xl border border-champagne/50 bg-ivory/40 font-body text-[14px] text-espresso placeholder:text-warm-gray/35 focus:outline-none focus:border-muted-gold/40 focus:ring-2 focus:ring-muted-gold/8 focus:bg-white transition-all duration-300";
+  const inputCls = "w-full px-5 py-4 rounded-xl border border-champagne/40 bg-ivory/30 font-body text-[14px] text-espresso placeholder:text-warm-gray/35 focus:outline-none focus:border-muted-gold/50 focus:ring-2 focus:ring-muted-gold/[0.06] focus:bg-white transition-all duration-300";
 
   return (
-    <section id="booking" className="section-gap section-padding relative overflow-hidden">
+    <section id="booking" className="py-28 sm:py-36 section-padding relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-cream via-ivory to-cream" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-champagne/10 rounded-full blur-[120px]" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-champagne/[0.08] rounded-full blur-[150px]" />
+      <div className="absolute bottom-[20%] right-0 w-[400px] h-[400px] bg-soft-blush/30 rounded-full blur-[100px]" />
 
       <div className="relative max-w-[1200px] mx-auto">
         {/* Header */}
         <motion.div
-          className="text-center max-w-xl mx-auto mb-14 sm:mb-16"
+          className="text-center max-w-xl mx-auto mb-14 sm:mb-18"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="label-sm mb-5 block">Book Now</span>
-          <h2 className="font-heading text-section text-espresso">
-            Ready for Your <span className="italic">Dream Hair?</span>
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="w-10 h-[1.5px] bg-muted-gold" />
+            <span className="label-sm">Book Now</span>
+            <div className="w-10 h-[1.5px] bg-muted-gold" />
+          </div>
+          <h2 className="font-heading text-[clamp(2.2rem,5vw,4rem)] font-light leading-[1.05] tracking-[-0.03em] text-espresso">
+            Ready for Your <em>Dream Hair?</em>
           </h2>
-          <p className="mt-5 section-desc mx-auto">
+          <p className="mt-5 text-[15px] text-warm-gray/60 font-body font-light leading-[1.8] max-w-lg mx-auto">
             Book a consultation and let us design the perfect extension, colour or styling solution for you.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-14">
-          {/* Left info */}
+          {/* Left info cards */}
           <motion.div
-            className="space-y-5"
-            initial={{ opacity: 0, x: -16 }}
+            className="space-y-4"
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="card-premium p-6 flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-champagne/40 border border-champagne/40 flex items-center justify-center">
-                <Phone size={17} className="text-muted-gold" />
+            {/* Phone card */}
+            <div className="bg-white rounded-[1.25rem] border border-champagne/25 shadow-card p-6 flex items-center gap-4 hover:shadow-card-hover hover:border-champagne/40 transition-all duration-500">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-champagne/50 to-muted-gold/10 border border-champagne/40 flex items-center justify-center">
+                <Phone size={18} className="text-muted-gold" />
               </div>
               <div>
                 <p className="text-[13px] font-body font-bold text-espresso">Call Us</p>
@@ -58,9 +63,10 @@ export default function BookingForm() {
               </div>
             </div>
 
-            <div className="card-premium p-6 flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-champagne/40 border border-champagne/40 flex items-center justify-center">
-                <MapPin size={17} className="text-muted-gold" />
+            {/* Location card */}
+            <div className="bg-white rounded-[1.25rem] border border-champagne/25 shadow-card p-6 flex items-center gap-4 hover:shadow-card-hover hover:border-champagne/40 transition-all duration-500">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-champagne/50 to-muted-gold/10 border border-champagne/40 flex items-center justify-center">
+                <MapPin size={18} className="text-muted-gold" />
               </div>
               <div>
                 <p className="text-[13px] font-body font-bold text-espresso">Visit Us</p>
@@ -68,21 +74,26 @@ export default function BookingForm() {
               </div>
             </div>
 
-            {/* Hours */}
-            <div className="card-premium p-6">
-              <p className="text-[12px] font-body font-bold tracking-[0.15em] uppercase text-espresso/60 mb-4">Opening Hours</p>
-              <div className="space-y-2">
+            {/* Hours card */}
+            <div className="bg-white rounded-[1.25rem] border border-champagne/25 shadow-card p-6 hover:shadow-card-hover hover:border-champagne/40 transition-all duration-500">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-champagne/50 to-muted-gold/10 border border-champagne/40 flex items-center justify-center">
+                  <Clock size={16} className="text-muted-gold" />
+                </div>
+                <p className="text-[12px] font-body font-bold tracking-[0.15em] uppercase text-espresso/70">Hours</p>
+              </div>
+              <div className="space-y-2.5 pl-[52px]">
                 {siteConfig.hours.map((h) => (
                   <div key={h.day} className="flex justify-between text-[13px] font-body">
                     <span className="text-espresso/70 font-medium">{h.day}</span>
-                    <span className={h.hours === 'Closed' ? 'text-warm-gray/30' : 'text-warm-gray/70'}>{h.hours}</span>
+                    <span className={h.hours === 'Closed' ? 'text-warm-gray/25' : 'text-warm-gray/70'}>{h.hours}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Map placeholder — REPLACE: Add Google Maps iframe */}
-            <div className="card-premium h-[160px] flex items-center justify-center overflow-hidden">
+            {/* Map */}
+            <div className="bg-white rounded-[1.25rem] border border-champagne/25 shadow-card h-[160px] flex items-center justify-center overflow-hidden">
               {siteConfig.googleMapsEmbed ? (
                 <iframe
                   src={siteConfig.googleMapsEmbed}
@@ -92,7 +103,7 @@ export default function BookingForm() {
                 />
               ) : (
                 <div className="text-center text-warm-gray/25">
-                  <MapPin size={20} className="mx-auto mb-1" />
+                  <MapPin size={20} className="mx-auto mb-1.5" />
                   <p className="text-[11px] font-body">Google Maps</p>
                 </div>
               )}
@@ -101,23 +112,33 @@ export default function BookingForm() {
 
           {/* Right form */}
           <motion.div
-            initial={{ opacity: 0, x: 16 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
             {sent ? (
-              <div className="card-premium p-12 text-center h-full flex flex-col items-center justify-center min-h-[450px]">
-                <div className="w-16 h-16 rounded-full bg-muted-gold/10 flex items-center justify-center mb-6">
-                  <CheckCircle size={28} className="text-muted-gold" />
-                </div>
-                <h3 className="font-heading text-[1.6rem] text-espresso mb-3">Enquiry Sent</h3>
-                <p className="text-[14px] text-warm-gray/70 font-body max-w-sm">
+              <motion.div
+                className="bg-white rounded-[2rem] border border-champagne/25 shadow-card p-12 text-center h-full flex flex-col items-center justify-center min-h-[450px]"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <motion.div
+                  className="w-20 h-20 rounded-full bg-gradient-to-br from-muted-gold/15 to-champagne/40 flex items-center justify-center mb-7 border border-champagne/30"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+                >
+                  <CheckCircle size={32} className="text-muted-gold" />
+                </motion.div>
+                <h3 className="font-heading text-[1.8rem] text-espresso mb-3 italic">Enquiry Sent</h3>
+                <p className="text-[14px] text-warm-gray/70 font-body max-w-sm leading-relaxed">
                   Thank you! We'll be in touch shortly to confirm your consultation.
                 </p>
-              </div>
+              </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="card-premium p-8 sm:p-10 space-y-5">
+              <form onSubmit={handleSubmit} className="bg-white rounded-[2rem] border border-champagne/25 shadow-card p-8 sm:p-10 space-y-5">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div>
                     <label htmlFor="bk-name" className="block text-[10px] font-body font-bold tracking-[0.2em] uppercase text-warm-gray/50 mb-2.5">Name *</label>
@@ -160,7 +181,7 @@ export default function BookingForm() {
                   <textarea id="bk-msg" rows={4} value={form.message} onChange={e => setForm({...form, message: e.target.value})} className={`${inputCls} resize-none`} placeholder="Tell us about your hair goals..." />
                 </div>
 
-                <button type="submit" className="btn-primary w-full mt-2">
+                <button type="submit" className="btn-primary w-full mt-3">
                   <Send size={14} />
                   Send Enquiry
                 </button>
