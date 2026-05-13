@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import IntroReveal from './components/IntroReveal';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -13,34 +13,21 @@ import BookingForm from './components/BookingForm';
 import Footer from './components/Footer';
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
   const [siteVisible, setSiteVisible] = useState(false);
 
-  const handleIntroComplete = useCallback(() => {
-    setShowIntro(false);
-    // Small delay before revealing site so the intro fully fades
-    setTimeout(() => setSiteVisible(true), 100);
-  }, []);
-
-  // Absolute safety net — if intro fails catastrophically, show site after 5s
+  // Safety: always show site after 5s no matter what
   useEffect(() => {
-    const t = setTimeout(() => {
-      setShowIntro(false);
-      setSiteVisible(true);
-    }, 5000);
+    const t = setTimeout(() => setSiteVisible(true), 5000);
     return () => clearTimeout(t);
   }, []);
 
   return (
     <>
-      {showIntro && <IntroReveal onComplete={handleIntroComplete} />}
+      {/* Intro is always rendered — it fades itself out and becomes pointer-events:none */}
+      <IntroReveal onComplete={() => setSiteVisible(true)} />
 
-      <div
-        style={{
-          opacity: siteVisible ? 1 : 0,
-          transition: 'opacity 0.6s ease',
-        }}
-      >
+      {/* Site content — starts invisible, fades in when intro completes */}
+      <div style={{ opacity: siteVisible ? 1 : 0, transition: 'opacity 0.7s ease' }}>
         <Navbar />
         <main>
           <Hero />
