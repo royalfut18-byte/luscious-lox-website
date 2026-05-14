@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Star, ArrowDown } from 'lucide-react';
 import { useRef } from 'react';
-import { siteConfig } from '../data/siteData';
+import { siteConfig, heroImage } from '../data/siteData';
 
 export default function Hero() {
   const ref = useRef(null);
@@ -112,11 +112,7 @@ export default function Hero() {
             >
               {/* Image mask */}
               <div className="relative aspect-[3/4] rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-[0_40px_100px_rgba(28,18,16,0.1)] border border-champagne/20">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#EDE1CF] via-[#E8D9C5] to-[#F3ECE4]" />
-                {/* REPLACE: <img src="YOUR_HERO_IMAGE" className="absolute inset-0 w-full h-full object-cover" /> */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                  <p className="font-heading text-lg italic text-espresso/40">Hero Image</p>
-                </div>
+                <img src={heroImage} alt="Luscious Lox hero — premium hair extensions" className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-espresso/[0.06] via-transparent to-transparent" />
               </div>
 

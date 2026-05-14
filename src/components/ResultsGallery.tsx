@@ -65,15 +65,9 @@ export default function ResultsGallery() {
                 transition={{ duration: 0.7, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ scale: 1.02 }}
               >
-                {/* Image or gradient placeholder */}
-                <div className="absolute inset-0 bg-gradient-to-br from-champagne/60 via-warm-beige/30 to-soft-blush/40">
-                  {img.src ? (
-                    <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center opacity-20">
-                      <span className="text-[11px] font-body text-espresso/40 text-center px-4">{img.alt}</span>
-                    </div>
-                  )}
+                {/* Image */}
+                <div className="absolute inset-0">
+                  <img src={img.src} alt={img.alt} className="w-full h-full object-cover rounded-3xl transition-transform duration-700 group-hover:scale-110" loading="lazy" />
                 </div>
 
                 {/* Scroll reveal mask */}

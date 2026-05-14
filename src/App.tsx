@@ -10,6 +10,7 @@ import Reviews from './components/Reviews';
 import CTABand from './components/CTABand';
 import FAQ from './components/FAQ';
 import BookingForm from './components/BookingForm';
+import InstagramPreview from './components/InstagramPreview';
 import Footer from './components/Footer';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <ResultsGallery />
           <CTABand />
           <Reviews />
+          <InstagramPreview />
           <FAQ />
           <BookingForm />
         </main>

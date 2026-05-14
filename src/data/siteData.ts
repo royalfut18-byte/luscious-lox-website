@@ -71,14 +71,15 @@ export const extensionBenefits = [
   },
 ];
 
-// REPLACE: Add real image URLs to the `src` field
+export const heroImage = '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_32%20PM%20%281%29.png';
+
 export const galleryImages = [
-  { id: 1, label: 'Length', src: '', alt: 'Hair extensions length transformation' },
-  { id: 2, label: 'Volume', src: '', alt: 'Volume enhancement with extensions' },
-  { id: 3, label: 'Balayage', src: '', alt: 'Seamless balayage colour blend' },
-  { id: 4, label: 'Nano Blend', src: '', alt: 'Nano extensions undetectable finish' },
-  { id: 5, label: 'Tape-In', src: '', alt: 'Tape-in extensions natural look' },
-  { id: 6, label: 'Colour', src: '', alt: 'Hair colour transformation' },
+  { id: 1, label: 'Length', src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_33%20PM%20%282%29.png', alt: 'Hair extensions length transformation' },
+  { id: 2, label: 'Volume', src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_33%20PM%20%283%29.png', alt: 'Volume enhancement with extensions' },
+  { id: 3, label: 'Balayage', src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_34%20PM%20%284%29.png', alt: 'Seamless balayage colour blend' },
+  { id: 4, label: 'Nano Blend', src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_34%20PM%20%285%29.png', alt: 'Nano extensions undetectable finish' },
+  { id: 5, label: 'Tape-In', src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_34%20PM%20%286%29.png', alt: 'Tape-in extensions natural look' },
+  { id: 6, label: 'Colour', src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_35%20PM%20%287%29.png', alt: 'Hair colour transformation' },
 ];
 
 // REPLACE: Insert real Google review text when available
@@ -136,12 +137,11 @@ export const faqs = [
   },
 ];
 
-// REPLACE: Add real Instagram image URLs
 export const instagramPosts = [
-  { id: 1, src: '', alt: 'Instagram post 1' },
-  { id: 2, src: '', alt: 'Instagram post 2' },
-  { id: 3, src: '', alt: 'Instagram post 3' },
-  { id: 4, src: '', alt: 'Instagram post 4' },
-  { id: 5, src: '', alt: 'Instagram post 5' },
-  { id: 6, src: '', alt: 'Instagram post 6' },
+  { id: 1, src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_32%20PM%20%281%29.png', alt: 'Luscious Lox Instagram post 1' },
+  { id: 2, src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_33%20PM%20%282%29.png', alt: 'Luscious Lox Instagram post 2' },
+  { id: 3, src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_33%20PM%20%283%29.png', alt: 'Luscious Lox Instagram post 3' },
+  { id: 4, src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_34%20PM%20%284%29.png', alt: 'Luscious Lox Instagram post 4' },
+  { id: 5, src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_34%20PM%20%285%29.png', alt: 'Luscious Lox Instagram post 5' },
+  { id: 6, src: '/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_34%20PM%20%286%29.png', alt: 'Luscious Lox Instagram post 6' },
 ];
