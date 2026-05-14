@@ -1,4 +1,3 @@
-import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const SYSTEM_PROMPT = `You are the Luscious Lox AI assistant — a friendly, knowledgeable virtual concierge for Luscious Lox HAIR, a premium hair extension salon in Leichhardt, Sydney.
@@ -119,20 +118,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  const region = process.env.AWS_REGION || 'us-east-1';
-  const modelId = process.env.BEDROCK_MODEL_ID || 'global.anthropic.claude-opus-4-6-v1';
+  const bearerToken = process.env.AWS_BEARER_TOKEN_BEDROCK;
+  const region = process.env.AWS_REGION || 'ap-southeast-2';
+  const modelId = process.env.BEDROCK_MODEL_ID || 'au.anthropic.claude-opus-4-6-v1';
 
-  if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
-    return res.status(500).json({ error: 'Server configuration error.' });
+  if (!bearerToken) {
+    console.error('Missing AWS_BEARER_TOKEN_BEDROCK environment variable');
+    return res.status(500).json({ error: 'Server configuration error: Bedrock API key not configured.' });
   }
 
-  const client = new BedrockRuntimeClient({
-    region,
-    credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    },
-  });
+  const endpoint = `https://bedrock-runtime.${region}.amazonaws.com/model/${encodeURIComponent(modelId)}/invoke`;
 
   const body = JSON.stringify({
     anthropic_version: 'bedrock-2023-05-31',
@@ -145,30 +140,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   });
 
   try {
-    const command = new InvokeModelCommand({
-      modelId,
-      contentType: 'application/json',
-      accept: 'application/json',
-      body: new TextEncoder().encode(body),
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${bearerToken}`,
+      },
+      body,
     });
 
-    const response = await client.send(command);
-    const responseBody = JSON.parse(new TextDecoder().decode(response.body));
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Bedrock API error (${response.status}):`, errorText);
 
+      if (response.status === 401 || response.status === 403) {
+        return res.status(500).json({ error: 'Server configuration error: invalid or expired API key.' });
+      }
+
+      if (response.status === 429) {
+        return res.status(503).json({ error: 'Our assistant is temporarily busy. Please try again in a moment.' });
+      }
+
+      if (response.status === 503 || response.status === 504) {
+        return res.status(503).json({ error: 'Our assistant is temporarily busy. Please try again in a moment.' });
+      }
+
+      return res.status(500).json({ error: 'Something went wrong. Please try again or call us at 0418 865 734.' });
+    }
+
+    const responseBody = await response.json();
     const assistantMessage = responseBody.content?.[0]?.text || 'I apologise, I was unable to process that. Please try again or call us at 0418 865 734.';
 
     return res.status(200).json({ message: assistantMessage });
   } catch (error: unknown) {
     const errMsg = error instanceof Error ? error.message : 'Unknown error';
     console.error('Bedrock API error:', errMsg);
-
-    if (errMsg.includes('AccessDeniedException') || errMsg.includes('UnrecognizedClientException')) {
-      return res.status(500).json({ error: 'Server configuration error.' });
-    }
-
-    if (errMsg.includes('ModelNotReadyException') || errMsg.includes('ModelTimeoutException')) {
-      return res.status(503).json({ error: 'Our assistant is temporarily busy. Please try again in a moment.' });
-    }
 
     return res.status(500).json({ error: 'Something went wrong. Please try again or call us at 0418 865 734.' });
   }
