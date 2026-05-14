@@ -12,6 +12,7 @@ import FAQ from './components/FAQ';
 import BookingForm from './components/BookingForm';
 import InstagramPreview from './components/InstagramPreview';
 import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
 
 function App() {
   const [siteVisible, setSiteVisible] = useState(false);
@@ -43,6 +44,7 @@ function App() {
           <BookingForm />
         </main>
         <Footer />
+        <Chatbot />
       </div>
     </>
   );
