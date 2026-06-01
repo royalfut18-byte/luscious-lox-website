@@ -3,7 +3,7 @@ export const siteConfig = {
   fullName: 'Luscious Lox HAIR Leichhardt',
   phone: '0418 865 734',
   phoneHref: 'tel:+61418865734',
-  address: '419 Parramatta Rd, Leichhardt NSW 2040',
+  address: '156 Wycombe Rd, Neutral Bay NSW 2089',
   googleRating: 5.0,
   googleReviews: 7,
   instagram: '@lusciousloxau',
@@ -12,7 +12,7 @@ export const siteConfig = {
   instagramPosts: 578,
   // REPLACE: Add your booking link here (e.g., Fresha, Square, etc.)
   bookingUrl: '#booking',
-  directionsUrl: 'https://www.google.com/maps/dir//419+Parramatta+Rd+Leichhardt+NSW+2040',
+  directionsUrl: 'https://www.google.com/maps/dir//156+Wycombe+Rd+Neutral+Bay+NSW+2089',
   // REPLACE: Add your Google Maps embed URL here
   googleMapsEmbed: '',
   hours: [
