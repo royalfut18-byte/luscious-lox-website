@@ -4,7 +4,7 @@ import { Star, MapPin, Award, Gem } from 'lucide-react';
 const items = [
   { icon: Star, text: '5.0 Google Rating' },
   { icon: Award, text: 'Extension Specialists' },
-  { icon: MapPin, text: 'Leichhardt, Sydney' },
+  { icon: MapPin, text: 'Neutral Bay, Sydney' },
   { icon: Gem, text: 'Premium Remy Hair' },
 ];
 

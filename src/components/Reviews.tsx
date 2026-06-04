@@ -38,7 +38,7 @@ export default function Reviews() {
                 <Star key={i} size={14} className="text-muted-gold fill-muted-gold" />
               ))}
             </div>
-            <span className="text-[13px] text-warm-gray/60 font-body">{siteConfig.googleRating} on Google · {siteConfig.googleReviews} reviews</span>
+            <span className="text-[13px] text-warm-gray/60 font-body">{siteConfig.googleRating} on Google &middot; {siteConfig.googleReviews} reviews</span>
           </div>
         </motion.div>
 
@@ -50,7 +50,7 @@ export default function Reviews() {
           <Quote size={80} className="text-champagne/30 rotate-12" />
         </motion.div>
 
-        {/* Testimonial cards — staggered 2-col with offset */}
+        {/* Testimonial cards - staggered 2-col with offset */}
         <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
           {reviews.map((review, idx) => (
             <motion.div
@@ -86,7 +86,7 @@ export default function Reviews() {
                 {/* Author */}
                 <div className="mt-8 pt-6 border-t border-champagne/25 flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-champagne/60 to-muted-gold/20 flex items-center justify-center border border-champagne/40">
-                    <span className="text-[11px] font-body font-bold text-muted-gold">✓</span>
+                    <span className="text-[11px] font-body font-bold text-muted-gold">&check;</span>
                   </div>
                   <div>
                     <span className="text-[12px] font-body font-bold tracking-[0.1em] uppercase text-espresso/60">{review.name}</span>

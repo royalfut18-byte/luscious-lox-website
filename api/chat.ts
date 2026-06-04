@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 // ---------------------------------------------------------------------------
-// Local intent matching — handles common salon questions without calling Bedrock
+// Local intent matching - handles common salon questions without calling Bedrock
 // ---------------------------------------------------------------------------
 
 interface IntentMatch {
@@ -14,14 +14,14 @@ const LOCAL_INTENTS: IntentMatch[] = [
     patterns: [
       /\b(book|appoint|consult|reserv|schedule)\b/i,
     ],
-    response: "Of course — we'd love to help you book. Please call Luscious Lox on 0418 865 734, or use the booking form on this page with your name, phone, preferred date and hair goals. The team will confirm your appointment.",
+    response: "Of course - we'd love to help you book. Please call Luscious Lox on 0418 865 734, or use the booking form on this page with your name, phone, preferred date and hair goals. The team will confirm your appointment.",
   },
   {
     patterns: [
       /\b(hour|open|close|when are you|trading|availab)\b/i,
       /\b(what days|what time)\b/i,
     ],
-    response: "We're open Thursday and Friday 9:00 AM – 6:00 PM, and Saturday 9:00 AM – 5:00 PM. We're closed Sunday through Wednesday. Give us a call on 0418 865 734 to book your visit!",
+    response: "We're open Thursday and Friday 9:00 AM - 6:00 PM, and Saturday 9:00 AM - 5:00 PM. We're closed Sunday through Wednesday. Give us a call on 0418 865 734 to book your visit!",
   },
   {
     patterns: [
@@ -78,10 +78,10 @@ function matchLocalIntent(userMessage: string): string | null {
 // System prompt for Bedrock (complex questions only)
 // ---------------------------------------------------------------------------
 
-const SYSTEM_PROMPT = `You are the Luscious Lox AI assistant — a friendly, knowledgeable virtual concierge for Luscious Lox HAIR, a premium hair extension salon in Neutral Bay, Sydney.
+const SYSTEM_PROMPT = `You are the Luscious Lox AI assistant - a friendly, knowledgeable virtual concierge for Luscious Lox HAIR, a premium hair extension salon in Neutral Bay, Sydney.
 
 SALON INFORMATION:
-- Name: Luscious Lox HAIR Leichhardt
+- Name: Luscious Lox HAIR Neutral Bay
 - Address: 156 Wycombe Rd, Neutral Bay NSW 2089
 - Phone: 0418 865 734
 - Instagram: @lusciousloxau (17K followers)
@@ -96,7 +96,7 @@ SALON INFORMATION:
   Sunday: Closed
 
 SERVICES:
-- Nano tip extensions (our signature — undetectable, damage-free)
+- Nano tip extensions (our signature - undetectable, damage-free)
 - Tape-in extensions (lightweight, flat-lay wefts)
 - Premium Remy human hair extensions
 - Balayage (hand-painted sun-kissed colour)
@@ -122,14 +122,14 @@ BOOKING:
 PRICING:
 - Pricing is determined during consultation
 - Depends on: method chosen, hair length desired, colour matching complexity, and amount of hair needed
-- Never quote specific prices — always direct to consultation
+- Never quote specific prices - always direct to consultation
 
 RULES:
 - Only answer questions about Luscious Lox salon, hair extensions, and related hair services
 - Never make medical guarantees or fake promises about results
 - Never guarantee specific timelines for hair growth or damage repair
 - Keep responses short (2-4 sentences max), friendly, premium, and salon-like
-- Use a warm, professional tone — like a knowledgeable receptionist
+- Use a warm, professional tone - like a knowledgeable receptionist
 - For bookings, always direct to calling 0418 865 734 or the website contact form
 - For pricing, explain it depends on consultation and individual factors
 - If asked about something unrelated to the salon or hair, politely redirect
@@ -337,7 +337,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: 'Server configuration error: invalid or expired API key.', debugId: result.debugId });
     }
 
-    // Retryable errors exhausted — return helpful fallback
+    // Retryable errors exhausted - return helpful fallback
     return res.status(200).json({ message: FALLBACK_MESSAGE, debugId: result.debugId });
   } catch (error: unknown) {
     const errMsg = error instanceof Error ? error.message : 'Unknown error';

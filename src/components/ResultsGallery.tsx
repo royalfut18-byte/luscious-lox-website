@@ -16,7 +16,7 @@ export default function ResultsGallery() {
       <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-muted-gold/[0.03] rounded-full blur-[120px]" />
 
       <div className="relative max-w-[1400px] mx-auto">
-        {/* Header — editorial style with parallax */}
+        {/* Header - editorial style with parallax */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16 sm:mb-20">
           <motion.div
             className="max-w-xl"
@@ -34,7 +34,7 @@ export default function ResultsGallery() {
               Real <em>Transformations</em>
             </h2>
             <p className="mt-6 text-[15px] text-warm-gray/65 font-body font-light leading-[1.9] max-w-lg">
-              Every result tells a story. Premium extensions, expert colour, and meticulous technique — see the difference for yourself.
+              Every result tells a story. Premium extensions, expert colour, and meticulous technique - see the difference for yourself.
             </p>
           </motion.div>
           <motion.a

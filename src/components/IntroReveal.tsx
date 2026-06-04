@@ -145,7 +145,7 @@ export default function IntroReveal({ onComplete }: Props) {
         >
           <div style={{ width: 16, height: 1, background: 'rgba(196,162,101,0.35)' }} />
           <span style={{ fontSize: 10, fontFamily: 'Manrope,sans-serif', fontWeight: 700, letterSpacing: '0.4em', textTransform: 'uppercase' as const, color: 'rgba(253,251,247,0.3)' }}>
-            Hair · Leichhardt · Sydney
+            Hair | Neutral Bay | Sydney
           </span>
           <div style={{ width: 16, height: 1, background: 'rgba(196,162,101,0.35)' }} />
         </motion.div>

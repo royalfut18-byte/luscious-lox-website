@@ -34,7 +34,7 @@ export default function Hero() {
               <span className="label-sm">Celebrity Hair Extension Specialists</span>
             </motion.div>
 
-            {/* Headline — staggered word reveal */}
+            {/* Headline - staggered word reveal */}
             <div className="overflow-hidden mb-3">
               <motion.div
                 initial={{ y: '100%' }}
@@ -65,7 +65,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.7 }}
             >
-              Premium nano & tape extensions, balayage, and colour — expertly crafted for a seamless, undetectable finish at our Leichhardt salon.
+              Premium nano & tape extensions, balayage, and colour - expertly crafted for a seamless, undetectable finish at our Neutral Bay salon.
             </motion.p>
 
             {/* Social proof */}
@@ -82,7 +82,7 @@ export default function Hero() {
               <div className="w-[1px] h-4 bg-espresso/10" />
               <span className="text-[12px] font-body font-medium text-espresso/40">{siteConfig.instagramFollowers} followers</span>
               <div className="w-[1px] h-4 bg-espresso/10 hidden sm:block" />
-              <span className="text-[12px] font-body font-medium text-espresso/40 hidden sm:block">Leichhardt</span>
+              <span className="text-[12px] font-body font-medium text-espresso/40 hidden sm:block">Neutral Bay</span>
             </motion.div>
 
             {/* CTAs */}
@@ -99,7 +99,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right — Image */}
+          {/* Right - Image */}
           <motion.div
             className="order-1 lg:order-2 relative"
             style={{ y: imageY }}
@@ -112,7 +112,7 @@ export default function Hero() {
             >
               {/* Image mask */}
               <div className="relative aspect-[3/4] rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-[0_40px_100px_rgba(28,18,16,0.1)] border border-champagne/20">
-                <img src={heroImage} alt="Luscious Lox hero — premium hair extensions" className="absolute inset-0 w-full h-full object-cover" />
+                <img src={heroImage} alt="Luscious Lox hero - premium hair extensions" className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-espresso/[0.06] via-transparent to-transparent" />
               </div>
 

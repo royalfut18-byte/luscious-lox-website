@@ -25,10 +25,10 @@ function App() {
 
   return (
     <>
-      {/* Intro is always rendered — it fades itself out and becomes pointer-events:none */}
+      {/* Intro is always rendered - it fades itself out and becomes pointer-events:none */}
       <IntroReveal onComplete={() => setSiteVisible(true)} />
 
-      {/* Site content — starts invisible, fades in when intro completes */}
+      {/* Site content - starts invisible, fades in when intro completes */}
       <div style={{ opacity: siteVisible ? 1 : 0, transition: 'opacity 0.7s ease' }}>
         <Navbar />
         <main>

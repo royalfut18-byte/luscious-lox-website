@@ -49,7 +49,7 @@ export default function Footer() {
           >
             <h4 className="font-heading text-[1.8rem] text-cream font-light italic mb-4">Luscious Lox</h4>
             <p className="text-[13px] text-cream/30 font-body leading-relaxed max-w-xs">
-              Celebrity hair extension specialists creating seamless, luxury transformations in Leichhardt, Sydney.
+              Celebrity hair extension specialists creating seamless, luxury transformations in Neutral Bay, Sydney.
             </p>
             <a
               href={siteConfig.instagramUrl}
@@ -125,7 +125,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-cream/[0.05] py-7 px-6 sm:px-10">
         <div className="max-w-[1400px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[11px] text-cream/15 font-body">© {year} {siteConfig.fullName}. All rights reserved.</p>
+          <p className="text-[11px] text-cream/15 font-body">&copy; {year} {siteConfig.fullName}. All rights reserved.</p>
           <p className="text-[11px] text-cream/15 font-body">{siteConfig.address}</p>
         </div>
       </div>

@@ -29,7 +29,7 @@ export default function Services() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7, delay: 0.15 }}
           >
-            From premium extensions to expert colour — every service is delivered with precision, care, and a luxury salon experience.
+            From premium extensions to expert colour - every service is delivered with precision, care, and a luxury salon experience.
           </motion.p>
         </div>
 
