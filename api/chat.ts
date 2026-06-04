@@ -21,7 +21,7 @@ const LOCAL_INTENTS: IntentMatch[] = [
       /\b(hour|open|close|when are you|trading|availab)\b/i,
       /\b(what days|what time)\b/i,
     ],
-    response: "We're open Thursday and Friday 9:00 AM - 6:00 PM, and Saturday 9:00 AM - 5:00 PM. We're closed Sunday through Wednesday. Give us a call on 0418 865 734 to book your visit!",
+    response: "We're open Monday, Tuesday, Wednesday and Friday from 10:00 AM - 6:00 PM, Thursday from 10:00 AM - 7:00 PM, and Saturday from 9:00 AM - 4:00 PM. We're closed on Sunday. Give us a call on 0418 865 734 to book your visit!",
   },
   {
     patterns: [
@@ -52,7 +52,7 @@ const LOCAL_INTENTS: IntentMatch[] = [
     patterns: [
       /\b(instagram|insta|ig|social)\b/i,
     ],
-    response: "Follow us on Instagram @lusciousloxau for our latest transformations, behind-the-scenes content, and extension inspo! We have over 17K followers and love sharing our work.",
+    response: "Follow us on Instagram @lusciousloxhairboutique for our latest transformations, behind-the-scenes content, and extension inspo! We have over 17K followers and love sharing our work.",
   },
   {
     patterns: [
@@ -84,15 +84,15 @@ SALON INFORMATION:
 - Name: Luscious Lox HAIR Neutral Bay
 - Address: 156 Wycombe Rd, Neutral Bay NSW 2089
 - Phone: 0418 865 734
-- Instagram: @lusciousloxau (17K followers)
+- Instagram: @lusciousloxhairboutique (17K followers)
 - Google Rating: 5.0 from 7 reviews
 - Hours:
-  Monday: Closed
-  Tuesday: Closed
-  Wednesday: Closed
-  Thursday: 9:00 AM - 6:00 PM
-  Friday: 9:00 AM - 6:00 PM
-  Saturday: 9:00 AM - 5:00 PM
+  Monday: 10:00 AM - 6:00 PM
+  Tuesday: 10:00 AM - 6:00 PM
+  Wednesday: 10:00 AM - 6:00 PM
+  Thursday: 10:00 AM - 7:00 PM
+  Friday: 10:00 AM - 6:00 PM
+  Saturday: 9:00 AM - 4:00 PM
   Sunday: Closed
 
 SERVICES:
