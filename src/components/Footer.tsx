@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Instagram, Phone, MapPin, ArrowUpRight, ArrowRight } from 'lucide-react';
+import { Instagram, Phone, MapPin, Mail, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { siteConfig } from '../data/siteData';
 
 export default function Footer() {
@@ -98,6 +98,14 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Phone size={13} className="text-[#B08D57]/40 flex-shrink-0" />
                 <a href={siteConfig.phoneHref} className="hover:text-cream transition-colors duration-300">{siteConfig.phone}</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone size={13} className="text-[#B08D57]/40 flex-shrink-0" />
+                <a href={siteConfig.landlineHref} className="hover:text-cream transition-colors duration-300">{siteConfig.landline}</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail size={13} className="text-[#B08D57]/40 flex-shrink-0" />
+                <a href={siteConfig.emailHref} className="hover:text-cream transition-colors duration-300">{siteConfig.email}</a>
               </li>
             </ul>
           </motion.div>

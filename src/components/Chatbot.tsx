@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Phone, MapPin, Clock, Scissors, CalendarCheck } from 'lucide-react';
+import { siteConfig } from '../data/siteData';
 
 interface Message {
   id: string;
@@ -15,7 +16,7 @@ const QUICK_BUTTONS: Array<{ label: string; icon: typeof MessageCircle; message?
   { label: 'Hair extensions', icon: Scissors, message: 'Tell me about your hair extension services' },
   { label: 'Opening hours', icon: Clock, message: 'What are your opening hours?' },
   { label: 'Location', icon: MapPin, message: 'Where is your salon located?' },
-  { label: 'Call salon', icon: Phone, href: 'tel:+61418865734' },
+  { label: 'Call salon', icon: Phone, href: siteConfig.phoneHref },
 ];
 
 export default function Chatbot() {
@@ -244,7 +245,7 @@ export default function Chatbot() {
                 </button>
               </div>
               <p className="text-center text-[9px] text-warm-gray/40 font-body mt-2">
-                AI assistant - for detailed enquiries call 0418 865 734
+                AI assistant - for detailed enquiries call {siteConfig.phone} or {siteConfig.landline}
               </p>
             </form>
           </motion.div>

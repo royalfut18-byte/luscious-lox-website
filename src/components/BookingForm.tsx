@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { AlertCircle, CheckCircle, Clock, MapPin, Phone, Send } from 'lucide-react';
+import { AlertCircle, CheckCircle, Clock, Mail, MapPin, Phone, Send } from 'lucide-react';
 import { siteConfig } from '../data/siteData';
 
 type InquiryForm = {
@@ -146,14 +146,33 @@ export default function BookingForm() {
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
+            <div className="bg-white rounded-[1.25rem] border border-champagne/25 shadow-card p-6 hover:shadow-card-hover hover:border-champagne/40 transition-all duration-500">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-champagne/50 to-muted-gold/10 border border-champagne/40 flex items-center justify-center">
+                  <Phone size={18} className="text-muted-gold" />
+                </div>
+                <div>
+                  <p className="text-[13px] font-body font-bold text-espresso">Call Us</p>
+                  <div className="mt-1 space-y-1">
+                    <a href={siteConfig.phoneHref} className="block text-[13px] font-body text-warm-gray/70 hover:text-muted-gold transition-colors">
+                      {siteConfig.phone}
+                    </a>
+                    <a href={siteConfig.landlineHref} className="block text-[13px] font-body text-warm-gray/70 hover:text-muted-gold transition-colors">
+                      {siteConfig.landline}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="bg-white rounded-[1.25rem] border border-champagne/25 shadow-card p-6 flex items-center gap-4 hover:shadow-card-hover hover:border-champagne/40 transition-all duration-500">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-champagne/50 to-muted-gold/10 border border-champagne/40 flex items-center justify-center">
-                <Phone size={18} className="text-muted-gold" />
+                <Mail size={18} className="text-muted-gold" />
               </div>
               <div>
-                <p className="text-[13px] font-body font-bold text-espresso">Call Us</p>
-                <a href={siteConfig.phoneHref} className="text-[13px] font-body text-warm-gray/70 hover:text-muted-gold transition-colors">
-                  {siteConfig.phone}
+                <p className="text-[13px] font-body font-bold text-espresso">Email Us</p>
+                <a href={siteConfig.emailHref} className="text-[13px] font-body text-warm-gray/70 hover:text-muted-gold transition-colors">
+                  {siteConfig.email}
                 </a>
               </div>
             </div>

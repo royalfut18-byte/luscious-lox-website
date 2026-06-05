@@ -88,6 +88,10 @@ export default function CTABand() {
               <Phone size={13} />
               {siteConfig.phone}
             </a>
+            <a href={siteConfig.landlineHref} className="btn-ghost">
+              <Phone size={13} />
+              {siteConfig.landline}
+            </a>
           </motion.div>
         </motion.div>
       </div>

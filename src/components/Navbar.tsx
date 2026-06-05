@@ -40,9 +40,15 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-5">
-          <a href={siteConfig.phoneHref} className="text-[12px] font-body font-medium text-espresso/35 hover:text-espresso transition-colors duration-300">
-            {siteConfig.phone}
-          </a>
+          <div className="flex items-center gap-3 text-[12px] font-body font-medium text-espresso/35">
+            <a href={siteConfig.phoneHref} className="hover:text-espresso transition-colors duration-300">
+              {siteConfig.phone}
+            </a>
+            <span>/</span>
+            <a href={siteConfig.landlineHref} className="hover:text-espresso transition-colors duration-300">
+              {siteConfig.landline}
+            </a>
+          </div>
           <a href={siteConfig.bookingUrl} className="btn-primary !py-3 !px-7 !text-[10px]">
             Book Now <ArrowRight size={12} />
           </a>
@@ -84,6 +90,7 @@ export default function Navbar() {
               <div className="mt-6 pt-5 border-t border-champagne/25 space-y-3">
                 <a href={siteConfig.bookingUrl} className="btn-primary w-full justify-center">Book Consultation</a>
                 <a href={siteConfig.phoneHref} className="btn-secondary w-full justify-center"><Phone size={13} /> {siteConfig.phone}</a>
+                <a href={siteConfig.landlineHref} className="btn-secondary w-full justify-center"><Phone size={13} /> {siteConfig.landline}</a>
               </div>
             </div>
           </motion.div>
