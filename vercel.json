@@ -2,6 +2,7 @@
   "framework": "vite",
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/chat" },
-    { "source": "/api/inquiry", "destination": "/api/inquiry" }
+    { "source": "/api/inquiry", "destination": "/api/inquiry" },
+    { "source": "/(.*)", "destination": "/" }
   ]
 }

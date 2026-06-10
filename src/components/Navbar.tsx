@@ -3,9 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, ArrowRight } from 'lucide-react';
 import { siteConfig, navLinks } from '../data/siteData';
 
-export default function Navbar() {
+type NavbarProps = {
+  isHome?: boolean;
+};
+
+export default function Navbar({ isHome = false }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const brandHref = isHome ? '#home' : '/';
+  const bookingHref = isHome ? siteConfig.bookingUrl : '/#booking';
+  const resolveHref = (href: string) => (isHome ? href : `/${href}`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -20,7 +27,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-6 sm:px-10 flex items-center justify-between">
-        <a href="#home" className="group">
+        <a href={brandHref} className="group">
           <span className="font-heading text-[1.4rem] sm:text-[1.65rem] text-espresso italic font-light tracking-tight group-hover:text-muted-gold transition-colors duration-500">
             Luscious Lox
           </span>
@@ -30,7 +37,7 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={resolveHref(link.href)}
               className="relative text-[11.5px] font-body font-semibold tracking-[0.05em] text-espresso/50 hover:text-espresso transition-colors duration-400 group"
             >
               {link.label}
@@ -49,7 +56,7 @@ export default function Navbar() {
               {siteConfig.landline}
             </a>
           </div>
-          <a href={siteConfig.bookingUrl} className="btn-primary !py-3 !px-7 !text-[10px]">
+          <a href={bookingHref} className="btn-primary !py-3 !px-7 !text-[10px]">
             Book Now <ArrowRight size={12} />
           </a>
         </div>
@@ -77,7 +84,7 @@ export default function Navbar() {
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
-                  href={link.href}
+                  href={resolveHref(link.href)}
                   onClick={() => setOpen(false)}
                   className="block py-3 font-heading text-[1.35rem] font-light italic text-espresso/50 hover:text-espresso transition-colors"
                   initial={{ opacity: 0, x: -8 }}
@@ -88,7 +95,7 @@ export default function Navbar() {
                 </motion.a>
               ))}
               <div className="mt-6 pt-5 border-t border-champagne/25 space-y-3">
-                <a href={siteConfig.bookingUrl} className="btn-primary w-full justify-center">Book Consultation</a>
+                <a href={bookingHref} className="btn-primary w-full justify-center">Book Consultation</a>
                 <a href={siteConfig.phoneHref} className="btn-secondary w-full justify-center"><Phone size={13} /> {siteConfig.phone}</a>
                 <a href={siteConfig.landlineHref} className="btn-secondary w-full justify-center"><Phone size={13} /> {siteConfig.landline}</a>
               </div>

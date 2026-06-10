@@ -2,8 +2,14 @@ import { motion } from 'framer-motion';
 import { Instagram, Phone, MapPin, Mail, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { siteConfig } from '../data/siteData';
 
-export default function Footer() {
+type FooterProps = {
+  isHome?: boolean;
+};
+
+export default function Footer({ isHome = false }: FooterProps) {
   const year = new Date().getFullYear();
+  const bookingHref = isHome ? siteConfig.bookingUrl : '/#booking';
+  const resolveHref = (href: string) => (isHome ? href : `/${href}`);
 
   return (
     <footer className="relative bg-[#1C1210] text-cream/70 overflow-hidden">
@@ -30,7 +36,7 @@ export default function Footer() {
               </h3>
               <p className="text-[13px] text-cream/30 font-body mt-2">Book a consultation with Luscious Lox today.</p>
             </div>
-            <a href={siteConfig.bookingUrl} className="btn-gold flex-shrink-0">
+            <a href={bookingHref} className="btn-gold flex-shrink-0">
               Book Now <ArrowRight size={13} strokeWidth={2.5} />
             </a>
           </motion.div>
@@ -74,11 +80,11 @@ export default function Footer() {
           >
             <p className="text-[10px] font-body font-bold tracking-[0.25em] uppercase text-cream/20 mb-6">Services</p>
             <ul className="space-y-3.5 text-[13px] font-body text-cream/40">
-              <li><a href="#extensions" className="hover:text-cream hover:pl-1 transition-all duration-300">Nano Extensions</a></li>
-              <li><a href="#extensions" className="hover:text-cream hover:pl-1 transition-all duration-300">Tape Extensions</a></li>
-              <li><a href="#services" className="hover:text-cream hover:pl-1 transition-all duration-300">Balayage & Colour</a></li>
-              <li><a href="#services" className="hover:text-cream hover:pl-1 transition-all duration-300">Keratin Treatments</a></li>
-              <li><a href="#services" className="hover:text-cream hover:pl-1 transition-all duration-300">Styling & Blowdry</a></li>
+              <li><a href={resolveHref('#extensions')} className="hover:text-cream hover:pl-1 transition-all duration-300">Nano Extensions</a></li>
+              <li><a href={resolveHref('#extensions')} className="hover:text-cream hover:pl-1 transition-all duration-300">Tape Extensions</a></li>
+              <li><a href={resolveHref('#services')} className="hover:text-cream hover:pl-1 transition-all duration-300">Balayage & Colour</a></li>
+              <li><a href={resolveHref('#services')} className="hover:text-cream hover:pl-1 transition-all duration-300">Keratin Treatments</a></li>
+              <li><a href={resolveHref('#services')} className="hover:text-cream hover:pl-1 transition-all duration-300">Styling & Blowdry</a></li>
             </ul>
           </motion.div>
 

@@ -34,26 +34,16 @@ export default function Hero() {
               <span className="label-sm">Celebrity Hair Extension Specialists</span>
             </motion.div>
 
-            {/* Headline - staggered word reveal */}
+            {/* Headline */}
             <div className="overflow-hidden mb-3">
               <motion.div
                 initial={{ y: '100%' }}
                 animate={{ y: 0 }}
                 transition={{ duration: 1.0, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
-                <h1 className="font-heading text-[clamp(3rem,8vw,6.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-espresso">
-                  Your Dream
-                </h1>
-              </motion.div>
-            </div>
-            <div className="overflow-hidden mb-2">
-              <motion.div
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1.0, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <h1 className="font-heading text-[clamp(3rem,8vw,6.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-espresso italic">
-                  Hair, Perfected.
+                <h1 className="font-heading text-[clamp(3rem,8vw,6.2rem)] font-light leading-[0.92] tracking-[-0.04em] text-espresso">
+                  Hair Extensions &
+                  <span className="block italic">Hair Salon Neutral Bay</span>
                 </h1>
               </motion.div>
             </div>
@@ -65,7 +55,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.7 }}
             >
-              Premium nano & tape extensions, balayage, and colour - expertly crafted for a seamless, undetectable finish at our Neutral Bay salon.
+              Luscious Lox is a luxury hair salon in Neutral Bay, Sydney, specialising in nano extensions, tape extensions, balayage, colour, keratin treatments and styling.
             </motion.p>
 
             {/* Social proof */}
