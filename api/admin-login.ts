@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { clearAdminSession, setAdminSession, verifyAdminCredentials } from './_lib/admin';
+import { clearAdminSession, setAdminSession, verifyAdminCredentials } from './_lib/admin.js';
 
 function getString(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';

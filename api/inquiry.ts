@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { normalizeEnvValue } from './_lib/admin';
+import { normalizeEnvValue } from './_lib/admin.js';
 
 type InquiryPayload = {
   name?: unknown;

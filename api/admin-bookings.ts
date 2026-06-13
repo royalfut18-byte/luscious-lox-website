@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { buildSupabaseHeaders, getSupabaseConfig, requireAdmin } from './_lib/admin';
+import { buildSupabaseHeaders, getSupabaseConfig, requireAdmin } from './_lib/admin.js';
 
 const allowedStatuses = new Set(['new', 'contacted', 'scheduled', 'completed', 'archived']);
 
