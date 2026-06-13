@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import AdminPortal from './components/AdminPortal';
 import HomePage from './components/HomePage';
 import LandingPage from './components/LandingPage';
 import SeoHead from './components/SeoHead';
@@ -17,6 +18,20 @@ function App() {
     window.addEventListener('popstate', handleNavigation);
     return () => window.removeEventListener('popstate', handleNavigation);
   }, []);
+
+  if (pathname.startsWith('/admin')) {
+    return (
+      <>
+        <SeoHead
+          title="Luscious Lox Admin"
+          description="Private Luscious Lox bookings dashboard."
+          canonical={`${siteUrl}/admin`}
+          robots="noindex,nofollow"
+        />
+        <AdminPortal />
+      </>
+    );
+  }
 
   const page = seoPages[pathname];
   const seo = page

@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { normalizeEnvValue } from './_lib/admin';
 
 type InquiryPayload = {
   name?: unknown;
@@ -114,10 +115,11 @@ async function storeInquiry(record: {
   service: string;
   message: string;
 }) {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = normalizeEnvValue(process.env.SUPABASE_URL);
+  const serviceRoleKey = normalizeEnvValue(process.env.SUPABASE_SERVICE_ROLE_KEY);
 
   if (!supabaseUrl || !serviceRoleKey) {
+    console.error('Inquiry storage is not configured: missing or blank Supabase environment variables');
     return { ok: false as const, status: 503, error: 'Inquiry storage is not configured.' };
   }
 

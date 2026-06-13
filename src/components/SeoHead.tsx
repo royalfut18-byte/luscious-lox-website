@@ -5,6 +5,7 @@ type SeoHeadProps = {
   description: string;
   canonical: string;
   schema?: Record<string, unknown>;
+  robots?: string;
 };
 
 const upsertMeta = (selector: string, attributes: Record<string, string>) => {
@@ -32,12 +33,12 @@ const upsertLink = (selector: string, rel: string, href: string) => {
   element.setAttribute('href', href);
 };
 
-export default function SeoHead({ title, description, canonical, schema }: SeoHeadProps) {
+export default function SeoHead({ title, description, canonical, schema, robots = 'index,follow' }: SeoHeadProps) {
   useEffect(() => {
     document.title = title;
 
     upsertMeta('meta[name="description"]', { name: 'description', content: description });
-    upsertMeta('meta[name="robots"]', { name: 'robots', content: 'index,follow' });
+    upsertMeta('meta[name="robots"]', { name: 'robots', content: robots });
     upsertMeta('meta[property="og:title"]', { property: 'og:title', content: title });
     upsertMeta('meta[property="og:description"]', { property: 'og:description', content: description });
     upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
@@ -47,16 +48,22 @@ export default function SeoHead({ title, description, canonical, schema }: SeoHe
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description });
     upsertLink('link[rel="canonical"]', 'canonical', canonical);
 
-    let schemaElement = document.head.querySelector<HTMLScriptElement>('script[data-schema="hair-salon"]');
-    if (!schemaElement) {
-      schemaElement = document.createElement('script');
-      schemaElement.type = 'application/ld+json';
-      schemaElement.dataset.schema = 'hair-salon';
-      document.head.appendChild(schemaElement);
+    const schemaElement = document.head.querySelector<HTMLScriptElement>('script[data-schema="hair-salon"]');
+
+    if (!schema) {
+      schemaElement?.remove();
+      return;
     }
 
-    schemaElement.textContent = JSON.stringify(schema ?? {});
-  }, [canonical, description, schema, title]);
+    const nextSchemaElement = schemaElement ?? document.createElement('script');
+    nextSchemaElement.type = 'application/ld+json';
+    nextSchemaElement.dataset.schema = 'hair-salon';
+    nextSchemaElement.textContent = JSON.stringify(schema);
+
+    if (!schemaElement) {
+      document.head.appendChild(nextSchemaElement);
+    }
+  }, [canonical, description, robots, schema, title]);
 
   return null;
 }
