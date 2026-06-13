@@ -94,6 +94,21 @@ function statusClasses(status: string) {
   }
 }
 
+function getStatusGuidance(status: string) {
+  switch (status) {
+    case 'completed':
+      return 'Treatment delivered. Archive when follow-up is done.';
+    case 'scheduled':
+      return 'Appointment is locked in. Keep notes ready for the visit.';
+    case 'contacted':
+      return 'Awaiting reply or final confirmation from the client.';
+    case 'archived':
+      return 'Closed out. Keep for history and reporting.';
+    default:
+      return 'Fresh lead. Best action is to call or email while intent is high.';
+  }
+}
+
 export default function AdminPortal() {
   const [sessionReady, setSessionReady] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
@@ -253,10 +268,12 @@ export default function AdminPortal() {
   const newBookings = bookings.filter((booking) => booking.status === 'new').length;
   const activeBookings = bookings.filter((booking) => booking.status === 'new' || booking.status === 'contacted' || booking.status === 'scheduled').length;
   const completedBookings = bookings.filter((booking) => booking.status === 'completed').length;
+  const archivedBookings = bookings.filter((booking) => booking.status === 'archived').length;
   const scheduledDates = bookings.filter((booking) => {
     const { preferredDate } = parseBookingMessage(booking.message);
     return preferredDate.length > 0;
   }).length;
+  const completionRate = totalBookings ? Math.round((completedBookings / totalBookings) * 100) : 0;
 
   let topService = 'No bookings yet';
   const serviceCounts: Record<string, number> = {};
@@ -268,6 +285,13 @@ export default function AdminPortal() {
       topService = service;
     }
   });
+  const topServiceCount = topService === 'No bookings yet' ? 0 : (serviceCounts[topService] ?? 0);
+  const mostRecentBooking = bookings[0] ?? null;
+  const selectedPosition = selectedBooking ? filteredBookings.findIndex((booking) => booking.id === selectedBooking.id) + 1 : 0;
+  const statusBreakdown = statusOptions.map((status) => ({
+    status,
+    count: bookings.filter((booking) => booking.status === status).length,
+  }));
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -386,9 +410,12 @@ export default function AdminPortal() {
 
   if (!sessionReady) {
     return (
-      <div className="min-h-screen bg-[#120C0A] text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="mx-auto h-12 w-12 rounded-full border border-white/10 border-t-[#D7B57A] animate-spin" />
+      <div className="min-h-screen bg-[#120C0A] text-white flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(215,181,122,0.18),transparent_24%),linear-gradient(180deg,#120C0A_0%,#1A110E_48%,#120C0A_100%)]" />
+        <div className="relative text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#D7B57A]/20 bg-white/[0.05]">
+            <div className="h-10 w-10 rounded-full border border-white/10 border-t-[#D7B57A] animate-spin" />
+          </div>
           <p className="mt-5 text-sm uppercase tracking-[0.3em] text-white/50">Loading Admin</p>
         </div>
       </div>
@@ -397,111 +424,146 @@ export default function AdminPortal() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-[#120C0A] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(215,181,122,0.18),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(244,208,153,0.12),transparent_28%),linear-gradient(180deg,#120C0A_0%,#1E1411_45%,#120C0A_100%)]" />
-        <div className="relative min-h-screen grid lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="px-8 py-12 sm:px-12 lg:px-16 flex flex-col justify-between">
-            <a href="/" className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors">
+      <div className="min-h-screen overflow-hidden bg-[#120C0A] text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(215,181,122,0.22),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(255,255,255,0.06),transparent_18%),linear-gradient(180deg,#120C0A_0%,#1E1411_45%,#120C0A_100%)]" />
+        <div className="relative mx-auto flex min-h-screen w-full max-w-[1500px] flex-col px-6 py-6 sm:px-10 lg:px-12">
+          <div className="flex items-center justify-between">
+            <a href="/" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white/55 transition hover:bg-white/[0.08] hover:text-white">
               <ArrowLeft size={16} />
               Back to website
             </a>
+            <div className="hidden rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-white/35 sm:block">
+              Private salon access
+            </div>
+          </div>
 
+          <div className="mt-8 grid flex-1 gap-8 xl:grid-cols-[1.15fr_0.85fr]">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="max-w-2xl"
+              className="rounded-[2.2rem] border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.26)] backdrop-blur-xl sm:p-9 lg:p-12"
             >
-              <div className="inline-flex items-center gap-3 rounded-full border border-[#D7B57A]/20 bg-white/5 px-5 py-2 text-[11px] uppercase tracking-[0.35em] text-[#E9C88F]">
+              <div className="inline-flex items-center gap-3 rounded-full border border-[#D7B57A]/20 bg-[#D7B57A]/10 px-5 py-2 text-[11px] uppercase tracking-[0.35em] text-[#E9C88F]">
                 <ShieldCheck size={14} />
                 Admin Suite
               </div>
-              <h1 className="mt-8 font-heading text-[clamp(3.2rem,6vw,5.6rem)] leading-[0.92] tracking-[-0.05em] text-white">
-                Booking control, tailored for <em className="text-[#E9C88F] not-italic">Luscious Lox</em>.
+              <h1 className="mt-8 max-w-3xl font-heading text-[clamp(3rem,6vw,5.9rem)] leading-[0.9] tracking-[-0.055em] text-white">
+                A calmer, sharper way to manage every <em className="not-italic text-[#E9C88F]">booking conversation</em>.
               </h1>
-              <p className="mt-6 max-w-xl text-[16px] leading-[1.9] text-white/60">
-                Review fresh enquiries, track appointment demand, and manage the salon pipeline from one polished control room.
+              <p className="mt-6 max-w-2xl text-[16px] leading-[1.95] text-white/62">
+                Built for the salon floor, not a spreadsheet. Review fresh enquiries, see who needs a response next, and move each client from interest to confirmed appointment with less friction.
               </p>
 
-              <div className="mt-12 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.05] p-5 backdrop-blur">
+              <div className="mt-10 grid gap-4 md:grid-cols-3">
+                <div className="rounded-[1.7rem] border border-white/10 bg-black/20 p-5">
                   <Sparkles className="text-[#E9C88F]" size={18} />
-                  <p className="mt-4 text-xs uppercase tracking-[0.24em] text-white/35">Lead Triage</p>
-                  <p className="mt-2 text-sm leading-6 text-white/70">See new bookings first and act on them without leaving the panel.</p>
+                  <p className="mt-5 text-[11px] uppercase tracking-[0.24em] text-white/35">Lead triage</p>
+                  <p className="mt-2 text-sm leading-6 text-white/72">Put new bookings at the front of the queue so the team can respond quickly while intent is high.</p>
                 </div>
-                <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.05] p-5 backdrop-blur">
+                <div className="rounded-[1.7rem] border border-white/10 bg-black/20 p-5">
                   <CalendarDays className="text-[#E9C88F]" size={18} />
-                  <p className="mt-4 text-xs uppercase tracking-[0.24em] text-white/35">Booking View</p>
-                  <p className="mt-2 text-sm leading-6 text-white/70">Scan preferred dates, services, contact details, and inquiry notes in one place.</p>
+                  <p className="mt-5 text-[11px] uppercase tracking-[0.24em] text-white/35">Booking clarity</p>
+                  <p className="mt-2 text-sm leading-6 text-white/72">Read preferred dates, services, notes, and contact details without jumping between tools.</p>
                 </div>
-                <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.05] p-5 backdrop-blur">
+                <div className="rounded-[1.7rem] border border-white/10 bg-black/20 p-5">
                   <CheckCircle2 className="text-[#E9C88F]" size={18} />
-                  <p className="mt-4 text-xs uppercase tracking-[0.24em] text-white/35">Status Flow</p>
-                  <p className="mt-2 text-sm leading-6 text-white/70">Move each inquiry from new to scheduled, completed, or archived in seconds.</p>
+                  <p className="mt-5 text-[11px] uppercase tracking-[0.24em] text-white/35">Pipeline control</p>
+                  <p className="mt-2 text-sm leading-6 text-white/72">Move enquiries from new to contacted, scheduled, completed, or archived in a few clicks.</p>
+                </div>
+              </div>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-5 py-4">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/30">Purpose</p>
+                  <p className="mt-2 text-sm text-white/78">Private salon operations</p>
+                </div>
+                <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-5 py-4">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/30">Focus</p>
+                  <p className="mt-2 text-sm text-white/78">Bookings, follow-up, status</p>
+                </div>
+                <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-5 py-4">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/30">Access</p>
+                  <p className="mt-2 text-sm text-white/78">Restricted to admin credentials</p>
                 </div>
               </div>
             </motion.div>
 
-            <p className="text-xs uppercase tracking-[0.25em] text-white/25">Private salon access only</p>
-          </div>
-
-          <div className="px-8 py-12 sm:px-12 lg:px-16 flex items-center justify-center">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="w-full max-w-md rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.05))] p-8 shadow-[0_30px_90px_rgba(0,0,0,0.35)] backdrop-blur-xl"
-            >
-              <p className="text-[11px] uppercase tracking-[0.3em] text-[#E9C88F]">Admin Login</p>
-              <h2 className="mt-4 font-heading text-[2.1rem] leading-tight text-white">Sign in to the bookings dashboard</h2>
-              <p className="mt-3 text-sm leading-6 text-white/55">Use the private salon admin credentials to unlock the control panel.</p>
-
-              <form onSubmit={handleLogin} className="mt-8 space-y-5">
-                <div>
-                  <label htmlFor="admin-username" className="block text-[11px] uppercase tracking-[0.24em] text-white/40">
-                    Username
-                  </label>
-                  <input
-                    id="admin-username"
-                    value={username}
-                    onChange={(event) => setUsername(event.target.value)}
-                    className="mt-2 w-full rounded-2xl border border-white/10 bg-black/20 px-5 py-4 text-sm text-white outline-none transition focus:border-[#D7B57A]/45 focus:bg-black/30"
-                    placeholder="Enter username"
-                    autoComplete="username"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="admin-password" className="block text-[11px] uppercase tracking-[0.24em] text-white/40">
-                    Password
-                  </label>
-                  <input
-                    id="admin-password"
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    className="mt-2 w-full rounded-2xl border border-white/10 bg-black/20 px-5 py-4 text-sm text-white outline-none transition focus:border-[#D7B57A]/45 focus:bg-black/30"
-                    placeholder="Enter password"
-                    autoComplete="current-password"
-                  />
-                </div>
-
-                {authError ? (
-                  <div className="rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-100">
-                    {authError}
+            <div className="flex items-center justify-center">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="w-full max-w-[480px] rounded-[2.2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.13),rgba(255,255,255,0.04))] p-7 shadow-[0_30px_90px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.3em] text-[#E9C88F]">Admin Login</p>
+                    <h2 className="mt-4 font-heading text-[2.35rem] leading-[1.02] text-white">Sign in to the bookings desk</h2>
                   </div>
-                ) : null}
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#D7B57A]/20 bg-[#D7B57A]/10 text-[#E9C88F]">
+                    <ShieldCheck size={20} />
+                  </div>
+                </div>
 
-                <button
-                  type="submit"
-                  disabled={loggingIn}
-                  className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[linear-gradient(135deg,#F0D39E,#D3A35D,#8E6A3F)] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.28em] text-[#140D0B] transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-70"
-                >
-                  <ShieldCheck size={15} />
-                  {loggingIn ? 'Signing In' : 'Enter Admin'}
-                </button>
-              </form>
-            </motion.div>
+                <p className="mt-4 text-sm leading-6 text-white/58">
+                  Use the private salon admin credentials to unlock the control panel and manage enquiries securely.
+                </p>
+
+                <form onSubmit={handleLogin} className="mt-8 space-y-5">
+                  <div className="rounded-[1.6rem] border border-white/10 bg-black/20 p-4">
+                    <label htmlFor="admin-username" className="block text-[11px] uppercase tracking-[0.24em] text-white/40">
+                      Username
+                    </label>
+                    <input
+                      id="admin-username"
+                      value={username}
+                      onChange={(event) => setUsername(event.target.value)}
+                      className="mt-3 w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm text-white outline-none transition placeholder:text-white/28 focus:border-[#D7B57A]/45 focus:bg-white/[0.06]"
+                      placeholder="Enter username"
+                      autoComplete="username"
+                    />
+                  </div>
+
+                  <div className="rounded-[1.6rem] border border-white/10 bg-black/20 p-4">
+                    <label htmlFor="admin-password" className="block text-[11px] uppercase tracking-[0.24em] text-white/40">
+                      Password
+                    </label>
+                    <input
+                      id="admin-password"
+                      type="password"
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                      className="mt-3 w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm text-white outline-none transition placeholder:text-white/28 focus:border-[#D7B57A]/45 focus:bg-white/[0.06]"
+                      placeholder="Enter password"
+                      autoComplete="current-password"
+                    />
+                  </div>
+
+                  {authError ? (
+                    <div className="rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-100">
+                      {authError}
+                    </div>
+                  ) : null}
+
+                  <button
+                    type="submit"
+                    disabled={loggingIn}
+                    className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[linear-gradient(135deg,#F0D39E,#D3A35D,#8E6A3F)] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.28em] text-[#140D0B] transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    <ShieldCheck size={15} />
+                    {loggingIn ? 'Signing In' : 'Enter Admin'}
+                  </button>
+                </form>
+
+                <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-white/[0.04] px-5 py-4">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/32">Why this panel exists</p>
+                  <p className="mt-2 text-sm leading-6 text-white/64">
+                    Keep salon operations simple: see new leads, contact clients fast, and keep every booking status visible at a glance.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
@@ -513,19 +575,19 @@ export default function AdminPortal() {
   return (
     <div className="min-h-screen bg-[#120C0A] text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(215,181,122,0.18),transparent_22%),radial-gradient(circle_at_15%_18%,rgba(255,255,255,0.05),transparent_20%),linear-gradient(180deg,#120C0A_0%,#19110E_46%,#120C0A_100%)]" />
-      <div className="relative px-5 py-6 sm:px-8 lg:px-10">
-        <header className="rounded-[2rem] border border-white/10 bg-white/[0.04] px-6 py-6 shadow-[0_25px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
-          <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
+      <div className="relative mx-auto max-w-[1550px] px-5 py-5 sm:px-8 lg:px-10">
+        <header className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03))] px-6 py-6 shadow-[0_25px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
+          <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div>
               <div className="inline-flex items-center gap-3 rounded-full border border-[#D7B57A]/20 bg-[#D7B57A]/10 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[#E9C88F]">
                 <ShieldCheck size={14} />
                 Luscious Lox Admin
               </div>
-              <h1 className="mt-5 font-heading text-[clamp(2.3rem,4vw,4.4rem)] leading-[0.96] tracking-[-0.04em]">
+              <h1 className="mt-5 font-heading text-[clamp(2.6rem,5vw,4.8rem)] leading-[0.95] tracking-[-0.05em]">
                 Booking command center
               </h1>
               <p className="mt-4 max-w-3xl text-[15px] leading-[1.85] text-white/58">
-                Monitor incoming consultations, track booking progress, and keep the salon pipeline moving with a polished back-office view.
+                A cleaner operating view for the salon team: see fresh demand, monitor the active pipeline, and work through each enquiry with better context.
               </p>
             </div>
 
@@ -553,39 +615,75 @@ export default function AdminPortal() {
           </div>
         </header>
 
-        <section className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {[
-            { label: 'Total enquiries', value: totalBookings, icon: UserRound, tone: 'from-[#F3D7A6]/20 to-white/0' },
-            { label: 'New right now', value: newBookings, icon: Sparkles, tone: 'from-rose-400/20 to-white/0' },
-            { label: 'Active pipeline', value: activeBookings, icon: Clock3, tone: 'from-sky-400/18 to-white/0' },
-            { label: 'Scheduled dates', value: scheduledDates, icon: CalendarDays, tone: 'from-amber-300/18 to-white/0' },
-            { label: 'Completed', value: completedBookings, icon: CheckCircle2, tone: 'from-emerald-400/18 to-white/0' },
-          ].map((card, index) => (
-            <motion.div
-              key={card.label}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: index * 0.05 }}
-              className={`rounded-[1.8rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-5 backdrop-blur ${card.tone}`}
-            >
-              <div className="flex items-center justify-between">
-                <p className="text-[11px] uppercase tracking-[0.26em] text-white/35">{card.label}</p>
-                <card.icon size={16} className="text-[#E9C88F]" />
+        <section className="mt-6 grid gap-6 xl:grid-cols-[280px_minmax(0,1fr)_420px]">
+          <aside className="space-y-6 xl:sticky xl:top-5 xl:self-start">
+            <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-5 backdrop-blur-xl">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#E9C88F]">Snapshot</p>
+              <div className="mt-5 grid gap-3">
+                {[
+                  { label: 'Total enquiries', value: totalBookings, icon: UserRound },
+                  { label: 'New right now', value: newBookings, icon: Sparkles },
+                  { label: 'Active pipeline', value: activeBookings, icon: Clock3 },
+                  { label: 'Scheduled dates', value: scheduledDates, icon: CalendarDays },
+                ].map((card) => (
+                  <div key={card.label} className="rounded-[1.4rem] border border-white/10 bg-black/20 p-4">
+                    <div className="flex items-center justify-between">
+                      <p className="text-[10px] uppercase tracking-[0.22em] text-white/32">{card.label}</p>
+                      <card.icon size={15} className="text-[#E9C88F]" />
+                    </div>
+                    <p className="mt-4 font-heading text-[2rem] leading-none">{card.value}</p>
+                  </div>
+                ))}
               </div>
-              <p className="mt-5 font-heading text-[2.5rem] leading-none">{card.value}</p>
-            </motion.div>
-          ))}
-        </section>
+            </div>
 
-        <section className="mt-6 grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#E9C88F]">Status mix</p>
+              <div className="mt-5 space-y-3">
+                {statusBreakdown.map((item) => (
+                  <div key={item.status} className="rounded-[1.3rem] border border-white/10 bg-black/20 px-4 py-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className={`rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.22em] ${statusClasses(item.status)}`}>
+                        {statusLabel(item.status)}
+                      </span>
+                      <span className="text-sm text-white/65">{item.count}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[#E9C88F]">Salon signal</p>
+              <div className="mt-5 space-y-4 text-sm leading-6 text-white/64">
+                <div className="rounded-[1.4rem] border border-white/10 bg-black/20 p-4">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/32">Most requested</p>
+                  <p className="mt-2 font-heading text-[1.5rem] text-white">{topService}</p>
+                  <p className="mt-1 text-white/48">{topServiceCount} enquiry{topServiceCount === 1 ? '' : 'ies'}</p>
+                </div>
+                <div className="rounded-[1.4rem] border border-white/10 bg-black/20 p-4">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/32">Completion rate</p>
+                  <p className="mt-2 font-heading text-[1.5rem] text-white">{completionRate}%</p>
+                  <p className="mt-1 text-white/48">{completedBookings} completed, {archivedBookings} archived</p>
+                </div>
+                <div className="rounded-[1.4rem] border border-white/10 bg-black/20 p-4">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-white/32">Latest enquiry</p>
+                  <p className="mt-2 text-white">{mostRecentBooking ? mostRecentBooking.name : 'No enquiries yet'}</p>
+                  <p className="mt-1 text-white/48">{mostRecentBooking ? formatDateTime(mostRecentBooking.created_at) : 'Waiting for first booking'}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <section className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.28em] text-[#E9C88F]">Bookings</p>
-                <h2 className="mt-3 font-heading text-[2rem]">Salon inbox</h2>
+                <h2 className="mt-3 font-heading text-[2.2rem]">Salon inbox</h2>
+                <p className="mt-2 text-sm text-white/50">Search, filter, and triage each enquiry from one list.</p>
               </div>
               <div className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/60">
-                Top service: <span className="text-white">{topService}</span>
+                Showing <span className="text-white">{filteredBookings.length}</span> of <span className="text-white">{totalBookings}</span> bookings
               </div>
             </div>
 
@@ -667,7 +765,7 @@ export default function AdminPortal() {
                       onClick={() => setSelectedBookingId(booking.id)}
                       className={`w-full rounded-[1.8rem] border px-5 py-5 text-left transition ${
                         isSelected
-                          ? 'border-[#E9C88F]/35 bg-[#E9C88F]/10 shadow-[0_15px_40px_rgba(215,181,122,0.10)]'
+                          ? 'border-[#E9C88F]/35 bg-[linear-gradient(160deg,rgba(215,181,122,0.12),rgba(255,255,255,0.03))] shadow-[0_15px_40px_rgba(215,181,122,0.10)]'
                           : 'border-white/10 bg-white/[0.03] hover:bg-white/[0.06]'
                       }`}
                     >
@@ -692,9 +790,9 @@ export default function AdminPortal() {
                   );
                 })}
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-5 backdrop-blur-xl">
+          <section className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-5 backdrop-blur-xl xl:sticky xl:top-5 xl:self-start">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.28em] text-[#E9C88F]">Selected booking</p>
@@ -718,6 +816,9 @@ export default function AdminPortal() {
                     <div>
                       <h3 className="font-heading text-[2rem]">{selectedBooking.name}</h3>
                       <p className="mt-2 text-sm text-[#E9C88F]">{selectedBooking.service}</p>
+                      <p className="mt-3 text-sm text-white/48">
+                        {selectedPosition > 0 ? `Booking ${selectedPosition} in current filtered view` : 'Viewing booking details'}
+                      </p>
                     </div>
                     <span className={`rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.22em] ${statusClasses(selectedBooking.status)}`}>
                       {statusLabel(selectedBooking.status)}
@@ -794,7 +895,19 @@ export default function AdminPortal() {
                         </button>
                       ))}
                     </div>
+                    <p className="mt-4 text-sm leading-6 text-white/52">{getStatusGuidance(selectedBooking.status)}</p>
                   </div>
+                </div>
+
+                <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
+                  <p className="text-[11px] uppercase tracking-[0.26em] text-white/35">Next best action</p>
+                  <p className="mt-4 text-sm leading-7 text-white/72">
+                    {selectedBooking.phone
+                      ? `Call ${selectedBooking.name} on ${selectedBooking.phone} to confirm consultation details and availability.`
+                      : selectedBooking.email
+                        ? `Reply to ${selectedBooking.email} with next available consultation times and confirmation steps.`
+                        : 'No direct contact detail stored. Keep the inquiry for record only.'}
+                  </p>
                 </div>
 
                 <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
@@ -803,7 +916,7 @@ export default function AdminPortal() {
                 </div>
               </div>
             )}
-          </div>
+          </section>
         </section>
       </div>
     </div>
