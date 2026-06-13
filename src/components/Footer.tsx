@@ -139,12 +139,14 @@ export default function Footer({ isHome = false }: FooterProps) {
       {/* Bottom bar */}
       <div className="border-t border-cream/[0.05] py-7 px-6 sm:px-10">
         <div className="max-w-[1400px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[11px] text-cream/15 font-body">&copy; {year} {siteConfig.fullName}. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <p className="text-[11px] text-cream/15 font-body">{siteConfig.address}</p>
             <a href="/admin" className="text-[11px] text-cream/22 font-body hover:text-[#B08D57] transition-colors">
               admin
             </a>
+            <p className="text-[11px] text-cream/15 font-body">&copy; {year} {siteConfig.fullName}. All rights reserved.</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <p className="text-[11px] text-cream/15 font-body">{siteConfig.address}</p>
           </div>
         </div>
       </div>
