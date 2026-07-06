@@ -95,7 +95,7 @@ export const seoPages: Record<string, SeoPage> = {
       'Our salon uses premium Remy human hair for extensions and takes time to colour match, plan placement, and protect the condition of your natural hair.',
       'You can book a consultation through our homepage contact section or call the salon directly to discuss availability and the right service for your next visit.',
     ],
-    imageSrc: '/lusciouslox/front.png',
+    imageSrc: '/lusciouslox/front.webp',
     imageAlt: 'Luscious Lox salon exterior in Neutral Bay',
     relatedLinks: [
       { href: '/hair-extensions-neutral-bay', label: 'Explore hair extensions in Neutral Bay' },
@@ -153,7 +153,7 @@ export const seoPages: Record<string, SeoPage> = {
       'We plan your balayage around hair condition and maintenance, helping you keep tone and shine between appointments with the right salon and home care.',
       'Use the homepage booking section to request a colour consultation, or call the salon if you want guidance on balayage, glossing, or colour correction.',
     ],
-    imageSrc: '/lusciouslox/neutral-bay-1.png',
+    imageSrc: '/lusciouslox/neutral-bay-1.webp',
     imageAlt: 'Balayage result created by Luscious Lox in Neutral Bay',
     relatedLinks: [
       { href: '/hair-salon-neutral-bay', label: 'Visit our Neutral Bay salon page' },
@@ -182,7 +182,7 @@ export const seoPages: Record<string, SeoPage> = {
       'Maintenance appointments are important for keeping tapes secure, comfortable, and discreet as your natural hair grows.',
       'For advice on whether tape or nano extensions are better for your goals, contact the salon or explore the services section on our homepage.',
     ],
-    imageSrc: '/lusciouslox/neutral-bay-2.png',
+    imageSrc: '/lusciouslox/neutral-bay-2.webp',
     imageAlt: 'Tape extension result with long silky hair',
     relatedLinks: [
       { href: '/hair-extensions-neutral-bay', label: 'Compare all hair extension services' },
@@ -211,7 +211,7 @@ export const seoPages: Record<string, SeoPage> = {
       'Our approach focuses on protecting the integrity of your natural hair while building length and fullness gradually and evenly.',
       'If you want to compare nano extensions with tape installs, visit the homepage services section or call us to organise a consultation at the salon.',
     ],
-    imageSrc: '/lusciouslox/neutral-bay-3.png',
+    imageSrc: '/lusciouslox/neutral-bay-3.webp',
     imageAlt: 'Nano hair extensions result by Luscious Lox',
     relatedLinks: [
       { href: '/hair-extensions-neutral-bay', label: 'See our hair extensions overview' },
@@ -240,7 +240,7 @@ export const seoPages: Record<string, SeoPage> = {
       'We will talk you through aftercare, maintenance timing, and how to keep the result looking healthy without compromising your colour or condition.',
       'To book a consultation, head back to the homepage contact section or call the salon directly for current availability.',
     ],
-    imageSrc: '/lusciouslox/neutral-bay-5.png',
+    imageSrc: '/lusciouslox/neutral-bay-5.webp',
     imageAlt: 'Smooth glossy hair after keratin treatment at Luscious Lox',
     relatedLinks: [
       { href: '/hair-salon-neutral-bay', label: 'See our full Neutral Bay salon offering' },

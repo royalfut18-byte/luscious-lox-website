@@ -39,13 +39,13 @@ function App() {
         title: page.title,
         description: page.description,
         canonical: `${siteUrl}${page.path}`,
-        image: `${siteUrl}${page.imageSrc}`,
       }
-    : { ...homeSeo, image: `${siteUrl}/lusciouslox/neutral-bay-1.png` };
+    : homeSeo;
 
   return (
     <>
-      <SeoHead title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} schema={hairSalonSchema} />
+      {/* Social share image defaults to the JPEG og-image inside SeoHead (WebP previews are unreliable on WhatsApp/Facebook) */}
+      <SeoHead title={seo.title} description={seo.description} canonical={seo.canonical} schema={hairSalonSchema} />
       {page ? <LandingPage page={page} /> : <HomePage />}
     </>
   );

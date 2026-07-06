@@ -98,15 +98,15 @@ export const extensionBenefits = [
   },
 ];
 
-export const heroImage = '/lusciouslox/neutral-bay-1.png';
+export const heroImage = '/lusciouslox/neutral-bay-1.webp';
 
 export const galleryImages = [
-  { id: 1, label: 'Honey Blonde', src: '/lusciouslox/neutral-bay-1.png', alt: 'Honey blonde balayage and extension blend' },
-  { id: 2, label: 'Silky Length', src: '/lusciouslox/neutral-bay-2.png', alt: 'Long silky brunette extension result' },
-  { id: 3, label: 'Espresso Gloss', src: '/lusciouslox/neutral-bay-3.png', alt: 'Glossy brunette styling transformation' },
-  { id: 4, label: 'Ruby Waves', src: '/lusciouslox/neutral-bay-4.png', alt: 'Deep red curled hair transformation' },
-  { id: 5, label: 'Statement Red', src: '/lusciouslox/neutral-bay-5.png', alt: 'Straight vivid red hair result' },
-  { id: 6, label: 'Salon Finish', src: '/lusciouslox/front.png', alt: 'Luxury salon finish' },
+  { id: 1, label: 'Honey Blonde', src: '/lusciouslox/neutral-bay-1.webp', alt: 'Honey blonde balayage and extension blend' },
+  { id: 2, label: 'Silky Length', src: '/lusciouslox/neutral-bay-2.webp', alt: 'Long silky brunette extension result' },
+  { id: 3, label: 'Espresso Gloss', src: '/lusciouslox/neutral-bay-3.webp', alt: 'Glossy brunette styling transformation' },
+  { id: 4, label: 'Ruby Waves', src: '/lusciouslox/neutral-bay-4.webp', alt: 'Deep red curled hair transformation' },
+  { id: 5, label: 'Statement Red', src: '/lusciouslox/neutral-bay-5.webp', alt: 'Straight vivid red hair result' },
+  { id: 6, label: 'Salon Finish', src: '/lusciouslox/front.webp', alt: 'Luxury salon finish' },
 ];
 
 export const reviews = [
@@ -172,10 +172,10 @@ export const faqs = [
 ];
 
 export const instagramPosts = [
-  { id: 1, src: '/lusciouslox/neutral-bay-1.png', alt: 'Luscious Lox Neutral Bay result 1' },
-  { id: 2, src: '/lusciouslox/neutral-bay-2.png', alt: 'Luscious Lox Neutral Bay result 2' },
-  { id: 3, src: '/lusciouslox/neutral-bay-3.png', alt: 'Luscious Lox Neutral Bay result 3' },
-  { id: 4, src: '/lusciouslox/neutral-bay-4.png', alt: 'Luscious Lox Neutral Bay result 4' },
-  { id: 5, src: '/lusciouslox/neutral-bay-5.png', alt: 'Luscious Lox Neutral Bay result 5' },
-  { id: 6, src: '/lusciouslox/front.png', alt: 'Luscious Lox Neutral Bay salon front' },
+  { id: 1, src: '/lusciouslox/neutral-bay-1.webp', alt: 'Luscious Lox Neutral Bay result 1' },
+  { id: 2, src: '/lusciouslox/neutral-bay-2.webp', alt: 'Luscious Lox Neutral Bay result 2' },
+  { id: 3, src: '/lusciouslox/neutral-bay-3.webp', alt: 'Luscious Lox Neutral Bay result 3' },
+  { id: 4, src: '/lusciouslox/neutral-bay-4.webp', alt: 'Luscious Lox Neutral Bay result 4' },
+  { id: 5, src: '/lusciouslox/neutral-bay-5.webp', alt: 'Luscious Lox Neutral Bay result 5' },
+  { id: 6, src: '/lusciouslox/front.webp', alt: 'Luscious Lox Neutral Bay salon front' },
 ];

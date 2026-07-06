@@ -9,7 +9,7 @@ type SeoHeadProps = {
   image?: string;
 };
 
-const DEFAULT_OG_IMAGE = 'https://www.luscious-lox.com/lusciouslox/neutral-bay-1.png';
+const DEFAULT_OG_IMAGE = 'https://www.luscious-lox.com/lusciouslox/og-image.jpg';
 
 const upsertMeta = (selector: string, attributes: Record<string, string>) => {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
