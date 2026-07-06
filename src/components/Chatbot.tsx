@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Phone, MapPin, Clock, Scissors, CalendarCheck } from 'lucide-react';
+import { MessageCircle, X, Send, Phone, MapPin, Clock, Scissors, CalendarCheck, Sparkles, Home } from 'lucide-react';
 import { siteConfig } from '../data/siteData';
 
 interface Message {
@@ -12,6 +12,8 @@ interface Message {
 const WELCOME_MESSAGE = "Hi, I'm the Luscious Lox assistant. I can help with extensions, services, bookings, pricing guidance, hours and location.";
 
 const QUICK_BUTTONS: Array<{ label: string; icon: typeof MessageCircle; message?: string; href?: string }> = [
+  { label: '½ price keratin special', icon: Sparkles, message: 'Tell me about the keratin nanoplasty special' },
+  { label: 'Home visits', icon: Home, message: 'Do you offer home visits?' },
   { label: 'Book consultation', icon: CalendarCheck, message: 'How do I book a consultation?' },
   { label: 'Hair extensions', icon: Scissors, message: 'Tell me about your hair extension services' },
   { label: 'Opening hours', icon: Clock, message: 'What are your opening hours?' },

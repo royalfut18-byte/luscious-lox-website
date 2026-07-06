@@ -106,9 +106,10 @@ export default function IntroReveal({ onComplete }: Props) {
           transition={{ duration: 0.6, delay: 0.15 }}
         />
 
-        {/* Text reveal */}
+        {/* Text reveal (decorative — kept as a div so the page has a single h1) */}
         <div style={{ overflow: 'hidden' }}>
-          <motion.h1
+          <motion.div
+            aria-hidden="true"
             style={{
               fontFamily: '"Playfair Display",Georgia,serif',
               fontSize: 'clamp(3rem,10vw,6.5rem)',
@@ -121,7 +122,7 @@ export default function IntroReveal({ onComplete }: Props) {
             transition={{ duration: 1.0, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             Luscious Lox
-          </motion.h1>
+          </motion.div>
         </div>
 
         {/* Gold shimmer */}

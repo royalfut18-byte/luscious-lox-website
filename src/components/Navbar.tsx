@@ -23,10 +23,32 @@ export default function Navbar({ isHome = false }: NavbarProps) {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${
-        scrolled ? 'glass-nav py-3' : 'py-6 sm:py-8'
+        scrolled ? 'glass-nav' : ''
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 flex items-center justify-between">
+      {/* Announcement bar — special offer + home services */}
+      <a
+        href={resolveHref('#offers')}
+        className={`block overflow-hidden bg-[#1C1210] text-center transition-all duration-500 hover:bg-[#241713] ${
+          scrolled ? 'max-h-0 opacity-0' : 'max-h-12 opacity-100'
+        }`}
+      >
+        <p className="px-4 py-2.5 text-[9.5px] sm:text-[11px] font-body font-bold tracking-[0.12em] sm:tracking-[0.18em] uppercase text-cream/85 whitespace-nowrap overflow-hidden text-ellipsis">
+          <span className="text-[#E9C88F]">✨ Half-Price Special</span>
+          <span className="mx-2 text-cream/30">|</span>
+          Keratin Nanoplasty <s className="text-cream/40">$400</s> <span className="text-[#E9C88F]">$200</span>
+          <span className="hidden sm:inline">
+            <span className="mx-2 text-cream/30">|</span>
+            Home visits 7 days — weekends included
+          </span>
+        </p>
+      </a>
+
+      <div
+        className={`max-w-[1400px] mx-auto px-6 sm:px-10 flex items-center justify-between transition-all duration-700 ${
+          scrolled ? 'py-3' : 'py-5 sm:py-6'
+        }`}
+      >
         <a href={brandHref} className="group">
           <span className="font-heading text-[1.4rem] sm:text-[1.65rem] text-espresso italic font-light tracking-tight group-hover:text-muted-gold transition-colors duration-500">
             Luscious Lox
@@ -34,16 +56,22 @@ export default function Navbar({ isHome = false }: NavbarProps) {
         </a>
 
         <nav className="hidden lg:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={resolveHref(link.href)}
-              className="relative text-[11.5px] font-body font-semibold tracking-[0.05em] text-espresso/50 hover:text-espresso transition-colors duration-400 group"
-            >
-              {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-muted-gold group-hover:w-full transition-all duration-400" />
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isOffer = link.href === '#offers';
+            return (
+              <a
+                key={link.href}
+                href={resolveHref(link.href)}
+                className={`relative text-[11.5px] font-body font-semibold tracking-[0.05em] transition-colors duration-400 group ${
+                  isOffer ? 'text-muted-gold hover:text-espresso' : 'text-espresso/50 hover:text-espresso'
+                }`}
+              >
+                {isOffer && <span className="mr-1">✨</span>}
+                {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-muted-gold group-hover:w-full transition-all duration-400" />
+              </a>
+            );
+          })}
         </nav>
 
         <div className="hidden lg:flex items-center gap-5">
@@ -86,18 +114,20 @@ export default function Navbar({ isHome = false }: NavbarProps) {
                   key={link.href}
                   href={resolveHref(link.href)}
                   onClick={() => setOpen(false)}
-                  className="block py-3 font-heading text-[1.35rem] font-light italic text-espresso/50 hover:text-espresso transition-colors"
+                  className={`block py-3 font-heading text-[1.35rem] font-light italic transition-colors ${
+                    link.href === '#offers' ? 'text-muted-gold hover:text-espresso' : 'text-espresso/50 hover:text-espresso'
+                  }`}
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.04 }}
                 >
-                  {link.label}
+                  {link.href === '#offers' ? `✨ ${link.label}` : link.label}
                 </motion.a>
               ))}
               <div className="mt-6 pt-5 border-t border-champagne/25 space-y-3">
-                <a href={bookingHref} className="btn-primary w-full justify-center">Book Consultation</a>
-                <a href={siteConfig.phoneHref} className="btn-secondary w-full justify-center"><Phone size={13} /> {siteConfig.phone}</a>
-                <a href={siteConfig.landlineHref} className="btn-secondary w-full justify-center"><Phone size={13} /> {siteConfig.landline}</a>
+                <a href={bookingHref} onClick={() => setOpen(false)} className="btn-primary w-full justify-center">Book Consultation</a>
+                <a href={siteConfig.phoneHref} onClick={() => setOpen(false)} className="btn-secondary w-full justify-center"><Phone size={13} /> {siteConfig.phone}</a>
+                <a href={siteConfig.landlineHref} onClick={() => setOpen(false)} className="btn-secondary w-full justify-center"><Phone size={13} /> {siteConfig.landline}</a>
               </div>
             </div>
           </motion.div>

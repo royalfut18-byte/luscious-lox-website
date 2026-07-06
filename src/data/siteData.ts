@@ -30,12 +30,37 @@ export const siteConfig = {
 
 export const navLinks = [
   { label: 'Services', href: '#services' },
+  { label: 'Offers', href: '#offers' },
   { label: 'Extensions', href: '#extensions' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Reviews', href: '#reviews' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#booking' },
 ];
+
+export const specialOffer = {
+  name: 'Keratin Nanoplasty',
+  wasPrice: '$400',
+  nowPrice: '$200',
+  badge: 'Half Price',
+  tagline: 'Limited time offer',
+  description:
+    'Silky, frizz-free, glass-smooth hair with our premium keratin nanoplasty treatment — now half price for a limited time. Perfect before summer, events, or simply easier mornings.',
+};
+
+export const homeService = {
+  title: 'We Come To You',
+  eyebrow: 'Mobile Home Services',
+  description:
+    'Enjoy the full Luscious Lox experience without leaving home. Our mobile service brings everything from colour to hair extensions straight to your door.',
+  availability: 'Home visits available 7 days — weekends included',
+  points: [
+    'Colour, balayage & styling at home',
+    'Hair extensions fitted at your place',
+    'Event & occasion hair on location',
+    'Weekend home visits available',
+  ],
+};
 
 export const services = [
   { title: 'Hair Extensions', desc: 'Premium nano, tape and Remy extensions for seamless length and volume.', category: 'extensions' },
@@ -112,6 +137,14 @@ export const reviews = [
 ];
 
 export const faqs = [
+  {
+    q: 'Do you offer home visits or mobile appointments?',
+    a: 'Yes! We bring the full salon experience to you. Our home service covers everything from colour to hair extensions, and home visits are available seven days a week — weekends included. Choose "Home Service Visit" in the booking form or call us to arrange a time that suits you.',
+  },
+  {
+    q: 'What is the keratin nanoplasty special?',
+    a: 'For a limited time, our keratin nanoplasty smoothing treatment is half price — $200 instead of $400. It leaves hair silky, frizz-free and glossy for months. Select "Keratin Nanoplasty Special" in the booking form or call the salon to secure the offer.',
+  },
   {
     q: 'How long do hair extensions last?',
     a: 'With proper care and maintenance appointments, our premium extensions typically last 3-6 months per application. The hair itself can be reused for up to 12 months.',

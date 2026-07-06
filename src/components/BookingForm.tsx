@@ -24,6 +24,8 @@ const initialForm: InquiryForm = {
 };
 
 const serviceOptions = [
+  'Keratin Nanoplasty Special ($200)',
+  'Home Service Visit',
   'Nano Extensions',
   'Tape Extensions',
   'Remy Extensions',

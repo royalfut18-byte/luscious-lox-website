@@ -12,6 +12,8 @@ type InquiryPayload = {
 };
 
 const allowedServices = new Set([
+  'Keratin Nanoplasty Special ($200)',
+  'Home Service Visit',
   'Nano Extensions',
   'Tape Extensions',
   'Remy Extensions',

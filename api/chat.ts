@@ -18,10 +18,23 @@ const LOCAL_INTENTS: IntentMatch[] = [
   },
   {
     patterns: [
+      /\b(home (visit|service|appointment)|mobile (service|appointment|hairdresser)|house ?call|at[- ]home|come to (me|my|us|our))\b/i,
+    ],
+    response: "Yes, we come to you! Our home service covers everything from colour to hair extensions, and home visits are available 7 days a week - weekends included. Select 'Home Service Visit' in the booking form, or call 0416 595 902 or 02 9099 4362 to arrange a time.",
+  },
+  {
+    patterns: [
+      /\b(nanoplasty|nano ?plasty|keratin)\b/i,
+      /\b(special|deal|discount|promo|offer)\b/i,
+    ],
+    response: "Great timing - our keratin nanoplasty treatment is currently HALF PRICE: $200 (normally $400) for a limited time. It leaves hair silky, frizz-free and glossy. Select 'Keratin Nanoplasty Special' in the booking form, or call 0416 595 902 or 02 9099 4362 to secure the offer!",
+  },
+  {
+    patterns: [
       /\b(hour|open|close|when are you|trading|availab)\b/i,
       /\b(what days|what time)\b/i,
     ],
-    response: "We're open Monday, Tuesday, Wednesday and Friday from 10:00 AM - 6:00 PM, Thursday from 10:00 AM - 7:00 PM, and Saturday from 9:00 AM - 4:00 PM. We're closed on Sunday. Give us a call on 0416 595 902 or 02 9099 4362 to book your visit!",
+    response: "We're open Monday, Tuesday, Wednesday and Friday from 10:00 AM - 6:00 PM, Thursday from 10:00 AM - 7:00 PM, and Saturday from 9:00 AM - 4:00 PM. The salon is closed on Sunday, but home visits can be arranged 7 days a week - weekends included. Give us a call on 0416 595 902 or 02 9099 4362 to book!",
   },
   {
     patterns: [
@@ -40,13 +53,13 @@ const LOCAL_INTENTS: IntentMatch[] = [
     patterns: [
       /\b(price|pric|cost|how much|rate|fee|charge|expensive|afford|budget)\b/i,
     ],
-    response: "Pricing depends on the extension method, hair length, amount of hair needed, colour matching and your hair goals. The best next step is a consultation so the team can quote accurately. Call us on 0416 595 902 or 02 9099 4362, email contact@lusciouslox.co.au, or use the booking form to get started.",
+    response: "Pricing depends on the extension method, hair length, amount of hair needed, colour matching and your hair goals - a consultation gives you an accurate quote. One price we can share: our keratin nanoplasty special is currently half price at $200 (was $400)! Call 0416 595 902 or 02 9099 4362, or use the booking form to get started.",
   },
   {
     patterns: [
       /\b(service|what do you (do|offer)|menu|treatment|what can you)\b/i,
     ],
-    response: "We specialise in nano tip extensions, tape-in extensions, premium Remy hair, balayage, hair colouring, keratin treatments, and professional styling & blowdry. Every extension service begins with a personalised consultation. Would you like to book one?",
+    response: "We specialise in nano tip extensions, tape-in extensions, premium Remy hair, balayage, hair colouring, keratin treatments, and professional styling & blowdry. We also offer home services - from colour to hair extensions, 7 days a week including weekends - and our keratin nanoplasty is currently half price at $200. Would you like to book?",
   },
   {
     patterns: [
@@ -107,6 +120,17 @@ SERVICES:
 - Styling & blowdry (professional blowdry, curly styling, occasion hair)
 - Personalised consultations (required before extension services)
 
+CURRENT SPECIAL OFFER (promote this when relevant):
+- Keratin Nanoplasty treatment: HALF PRICE - now $200 (normally $400), for a limited time
+- Leaves hair silky, frizz-free and glossy
+- Clients can select "Keratin Nanoplasty Special" in the website booking form or call to book
+
+HOME SERVICES (promote this when relevant):
+- We offer mobile home services - we come to the client
+- Covers everything from colour to hair extensions
+- Home visits available 7 days a week, WEEKENDS INCLUDED (even though the salon itself is closed Sundays)
+- Clients can select "Home Service Visit" in the website booking form or call to arrange
+
 EXTENSION DETAILS:
 - Premium European and Remy human hair
 - Ethically sourced
@@ -124,7 +148,8 @@ BOOKING:
 PRICING:
 - Pricing is determined during consultation
 - Depends on: method chosen, hair length desired, colour matching complexity, and amount of hair needed
-- Never quote specific prices - always direct to consultation
+- Never quote specific prices, with ONE exception: the advertised keratin nanoplasty special is $200 (was $400) and you may share that
+- For everything else, always direct to consultation
 
 RULES:
 - Only answer questions about Luscious Lox salon, hair extensions, and related hair services

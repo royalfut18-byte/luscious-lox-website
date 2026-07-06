@@ -3,6 +3,7 @@ import IntroReveal from './IntroReveal';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import TrustStrip from './TrustStrip';
+import SpecialOffers from './SpecialOffers';
 import Services from './Services';
 import SignatureExtensions from './SignatureExtensions';
 import ResultsGallery from './ResultsGallery';
@@ -27,13 +28,36 @@ const scrollToHash = () => {
   }
 };
 
+const shouldSkipIntro = () => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const alreadySeen = window.sessionStorage?.getItem('ll-intro-seen') === '1';
+
+  return Boolean(prefersReducedMotion || alreadySeen);
+};
+
 export default function HomePage() {
-  const [siteVisible, setSiteVisible] = useState(false);
+  const [skipIntro] = useState(shouldSkipIntro);
+  const [siteVisible, setSiteVisible] = useState(skipIntro);
 
   useEffect(() => {
+    if (skipIntro) {
+      return;
+    }
+
+    // Safety fallback in case the intro never signals completion
     const timer = window.setTimeout(() => setSiteVisible(true), 5000);
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [skipIntro]);
+
+  useEffect(() => {
+    if (siteVisible) {
+      window.sessionStorage?.setItem('ll-intro-seen', '1');
+    }
+  }, [siteVisible]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => scrollToHash(), siteVisible ? 120 : 650);
@@ -47,13 +71,14 @@ export default function HomePage() {
 
   return (
     <>
-      <IntroReveal onComplete={() => setSiteVisible(true)} />
+      {!skipIntro && <IntroReveal onComplete={() => setSiteVisible(true)} />}
 
       <div style={{ opacity: siteVisible ? 1 : 0, transition: 'opacity 0.7s ease' }}>
         <Navbar isHome />
         <main>
           <Hero />
           <TrustStrip />
+          <SpecialOffers />
           <Services />
           <SignatureExtensions />
           <ResultsGallery />

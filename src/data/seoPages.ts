@@ -46,6 +46,22 @@ export const hairSalonSchema = {
     addressCountry: 'AU',
   },
   areaServed: ['Neutral Bay', 'Cremorne', 'North Sydney', 'Lower North Shore', 'Sydney'],
+  makesOffer: [
+    {
+      '@type': 'Offer',
+      name: 'Keratin Nanoplasty Special',
+      description: 'Keratin nanoplasty smoothing treatment - half price for a limited time. Silky, frizz-free, glossy hair.',
+      price: '200',
+      priceCurrency: 'AUD',
+      availability: 'https://schema.org/InStock',
+    },
+    {
+      '@type': 'Offer',
+      name: 'Mobile Home Hair Services',
+      description: 'Home visit hair services from colour to hair extensions, available 7 days a week including weekends.',
+      availability: 'https://schema.org/InStock',
+    },
+  ],
   openingHoursSpecification: [
     { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Monday', opens: '10:00', closes: '18:00' },
     { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Tuesday', opens: '10:00', closes: '18:00' },

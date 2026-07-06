@@ -39,12 +39,13 @@ function App() {
         title: page.title,
         description: page.description,
         canonical: `${siteUrl}${page.path}`,
+        image: `${siteUrl}${page.imageSrc}`,
       }
-    : homeSeo;
+    : { ...homeSeo, image: `${siteUrl}/lusciouslox/neutral-bay-1.png` };
 
   return (
     <>
-      <SeoHead title={seo.title} description={seo.description} canonical={seo.canonical} schema={hairSalonSchema} />
+      <SeoHead title={seo.title} description={seo.description} canonical={seo.canonical} image={seo.image} schema={hairSalonSchema} />
       {page ? <LandingPage page={page} /> : <HomePage />}
     </>
   );

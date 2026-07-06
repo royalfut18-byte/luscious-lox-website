@@ -6,7 +6,10 @@ type SeoHeadProps = {
   canonical: string;
   schema?: Record<string, unknown>;
   robots?: string;
+  image?: string;
 };
+
+const DEFAULT_OG_IMAGE = 'https://www.luscious-lox.com/lusciouslox/neutral-bay-1.png';
 
 const upsertMeta = (selector: string, attributes: Record<string, string>) => {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
@@ -33,7 +36,7 @@ const upsertLink = (selector: string, rel: string, href: string) => {
   element.setAttribute('href', href);
 };
 
-export default function SeoHead({ title, description, canonical, schema, robots = 'index,follow' }: SeoHeadProps) {
+export default function SeoHead({ title, description, canonical, schema, robots = 'index,follow', image = DEFAULT_OG_IMAGE }: SeoHeadProps) {
   useEffect(() => {
     document.title = title;
 
@@ -43,9 +46,12 @@ export default function SeoHead({ title, description, canonical, schema, robots 
     upsertMeta('meta[property="og:description"]', { property: 'og:description', content: description });
     upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
     upsertMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
+    upsertMeta('meta[property="og:image"]', { property: 'og:image', content: image });
+    upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Luscious Lox' });
     upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
     upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: title });
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description });
+    upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: image });
     upsertLink('link[rel="canonical"]', 'canonical', canonical);
 
     const schemaElement = document.head.querySelector<HTMLScriptElement>('script[data-schema="hair-salon"]');
@@ -63,7 +69,7 @@ export default function SeoHead({ title, description, canonical, schema, robots 
     if (!schemaElement) {
       document.head.appendChild(nextSchemaElement);
     }
-  }, [canonical, description, robots, schema, title]);
+  }, [canonical, description, robots, schema, title, image]);
 
   return null;
 }

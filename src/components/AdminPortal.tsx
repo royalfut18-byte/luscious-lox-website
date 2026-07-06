@@ -659,7 +659,7 @@ export default function AdminPortal() {
                 <div className="rounded-[1.4rem] border border-white/10 bg-black/20 p-4">
                   <p className="text-[10px] uppercase tracking-[0.22em] text-white/32">Most requested</p>
                   <p className="mt-2 font-heading text-[1.5rem] text-white">{topService}</p>
-                  <p className="mt-1 text-white/48">{topServiceCount} enquiry{topServiceCount === 1 ? '' : 'ies'}</p>
+                  <p className="mt-1 text-white/48">{topServiceCount} {topServiceCount === 1 ? 'enquiry' : 'enquiries'}</p>
                 </div>
                 <div className="rounded-[1.4rem] border border-white/10 bg-black/20 p-4">
                   <p className="text-[10px] uppercase tracking-[0.22em] text-white/32">Completion rate</p>

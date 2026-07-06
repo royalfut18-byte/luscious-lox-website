@@ -102,7 +102,7 @@ export default function Hero() {
             >
               {/* Image mask */}
               <div className="relative aspect-[3/4] rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-[0_40px_100px_rgba(28,18,16,0.1)] border border-champagne/20">
-                <img src={heroImage} alt="Luscious Lox hero - premium hair extensions" className="absolute inset-0 w-full h-full object-cover" />
+                <img src={heroImage} alt="Luscious Lox hero - premium hair extensions" className="absolute inset-0 w-full h-full object-cover" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-espresso/[0.06] via-transparent to-transparent" />
               </div>
 

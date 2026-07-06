@@ -47,7 +47,7 @@ export default function SignatureExtensions() {
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="aspect-[4/5] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden border border-champagne/20 shadow-[0_30px_80px_rgba(176,141,87,0.08)] relative">
-                <img src="/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_33%20PM%20%283%29.png" alt="Undetectable hair extensions showcase" className="absolute inset-0 w-full h-full object-cover" />
+                <img src="/lusciouslox/ChatGPT%20Image%20May%2014%2C%202026%2C%2007_10_33%20PM%20%283%29.png" alt="Undetectable hair extensions showcase" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
               </div>
 
               {/* Floating tag */}
