@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Instagram, Phone, MapPin, Mail, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { siteConfig } from '../data/siteData';
+import { seoPages } from '../data/seoPages';
 
 type FooterProps = {
   isHome?: boolean;
@@ -133,6 +134,26 @@ export default function Footer({ isHome = false }: FooterProps) {
               ))}
             </div>
           </motion.div>
+        </div>
+      </div>
+
+      {/* Locations & services — internal links to all landing pages */}
+      <div className="border-t border-cream/[0.05] py-10 px-6 sm:px-10">
+        <div className="max-w-[1400px] mx-auto">
+          <p className="text-[10px] font-body font-bold tracking-[0.25em] uppercase text-cream/20 mb-5">
+            Locations &amp; Services
+          </p>
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            {Object.values(seoPages).map((page) => (
+              <a
+                key={page.path}
+                href={page.path}
+                className="text-[12px] font-body text-cream/30 hover:text-[#B08D57] transition-colors duration-300"
+              >
+                {page.h1}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 

@@ -45,7 +45,7 @@ export const hairSalonSchema = {
     postalCode: '2089',
     addressCountry: 'AU',
   },
-  areaServed: ['Neutral Bay', 'Cremorne', 'North Sydney', 'Lower North Shore', 'Sydney'],
+  areaServed: ['Neutral Bay', 'Mosman', 'Cammeray', 'Cremorne', 'North Sydney', 'Lower North Shore', 'Sydney'],
   makesOffer: [
     {
       '@type': 'Offer',
@@ -245,6 +245,238 @@ export const seoPages: Record<string, SeoPage> = {
     relatedLinks: [
       { href: '/hair-salon-neutral-bay', label: 'See our full Neutral Bay salon offering' },
       { href: '/balayage-neutral-bay', label: 'Explore balayage services' },
+    ],
+  },
+  '/hair-extensions-mosman': {
+    path: '/hair-extensions-mosman',
+    title: 'Hair Extensions Mosman | Luscious Lox',
+    description:
+      'Looking for hair extensions near Mosman? Luscious Lox in Neutral Bay offers premium nano, tape and weft extensions with expert colour matching, minutes from Mosman.',
+    h1: 'Hair Extensions Mosman',
+    heroIntro:
+      'Luscious Lox is the go-to hair extension specialist for Mosman clients, located just minutes away in Neutral Bay with premium Remy human hair, seamless blends, and personalised consultations.',
+    openingCopy:
+      'Many of our regular extension clients travel from Mosman, Balmoral, and Clifton Gardens for colour-matched installs that look natural, feel comfortable, and hold up to an active harbourside lifestyle.',
+    sectionTitle: 'Trusted by Mosman clients for seamless extensions',
+    sectionParagraphs: [
+      'Our boutique salon on Wycombe Rd is a short drive from Mosman Junction, making maintenance appointments and move-ups easy to fit around school runs, work, and weekend plans.',
+      'Every Mosman client starts with a one-on-one consultation where we colour match, assess your natural density, and recommend nano, tape, or weft extensions based on your hair and routine.',
+      'We use premium Remy human hair for every install, so your extensions move naturally, style beautifully, and blend invisibly with your own hair.',
+    ],
+    detailsTitle: 'Too busy to come to us? We come to Mosman',
+    detailsParagraphs: [
+      'Our mobile home service brings the full salon experience to your Mosman home - from colour to hair extensions - with home visits available seven days a week, weekends included.',
+      'Home appointments suit new mums, busy professionals, and anyone preparing for an event who would rather have their hair done at home.',
+      'Use the homepage booking form and select Home Service Visit, or call the salon to arrange a Mosman home appointment or an in-salon consultation.',
+    ],
+    imageSrc: '/lusciouslox/neutral-bay-2.webp',
+    imageAlt: 'Long seamless hair extensions for a Mosman client by Luscious Lox',
+    relatedLinks: [
+      { href: '/hair-extensions-neutral-bay', label: 'Explore our hair extensions overview' },
+      { href: '/nano-hair-extensions-sydney', label: 'Learn about nano hair extensions' },
+    ],
+  },
+  '/tape-hair-extensions-neutral-bay': {
+    path: '/tape-hair-extensions-neutral-bay',
+    title: 'Tape Hair Extensions Neutral Bay | Luscious Lox',
+    description:
+      'Premium tape hair extensions in Neutral Bay. Luscious Lox fits lightweight, colour-matched tape-in hair with seamless blending, gentle wear and easy maintenance.',
+    h1: 'Tape Hair Extensions Neutral Bay',
+    heroIntro:
+      'Luscious Lox fits premium tape hair extensions in Neutral Bay using top-grade Remy human hair, precise colour matching, and placement planned around your haircut for an invisible finish.',
+    openingCopy:
+      'Tape hair extensions add instant length and fullness with slim, flexible panels that sit flat against the head - comfortable from day one and quick to maintain at move-up appointments.',
+    sectionTitle: 'Why clients choose our tape hair extensions',
+    sectionParagraphs: [
+      'The quality of the hair matters as much as the application. We fit only premium Remy tape hair that keeps its softness and shine wash after wash, so your investment lasts.',
+      'Each install is customised - we blend multiple shades where needed so the tapes disappear into your natural colour, including through face-framing sections.',
+      'Move-up appointments every six to eight weeks keep tape extensions secure and discreet as your hair grows, and the same hair can usually be re-taped and reused.',
+    ],
+    detailsTitle: 'Gentle, reusable, and easy to live with',
+    detailsParagraphs: [
+      'Tape extensions distribute weight across a wide, flat panel, making them one of the gentlest options for adding volume - especially for fine to medium hair.',
+      'They style effortlessly: straight, waved, or in an updo with the right placement, and washing and drying stays close to your normal routine.',
+      'Book a tape hair extension consultation through the homepage booking form, or call the salon and we will plan colour, quantity, and placement together.',
+    ],
+    imageSrc: '/lusciouslox/neutral-bay-4.webp',
+    imageAlt: 'Tape hair extensions styled with soft waves at Luscious Lox Neutral Bay',
+    relatedLinks: [
+      { href: '/weft-hair-extensions-neutral-bay', label: 'Compare weft hair extensions' },
+      { href: '/hair-extensions-neutral-bay', label: 'See all extension methods' },
+    ],
+  },
+  '/weft-hair-extensions-sydney': {
+    path: '/weft-hair-extensions-sydney',
+    title: 'Weft Hair Extensions Sydney | Luscious Lox',
+    description:
+      'Luscious Lox fits premium weft hair extensions in Sydney - seamless wefts applied for maximum volume and length with a flat, comfortable, damage-conscious finish.',
+    h1: 'Weft Hair Extensions Sydney',
+    heroIntro:
+      'Luscious Lox offers premium weft hair extensions for Sydney clients who want serious volume and length in one appointment, with a flat, secure finish designed for comfortable everyday wear.',
+    openingCopy:
+      'Wefts are continuous curtains of hair applied in rows, making them ideal for thicker results, fewer attachment points, and a streamlined install that grows out cleanly between maintenance visits.',
+    sectionTitle: 'Fuller results with fewer attachment points',
+    sectionParagraphs: [
+      'Because a weft covers a whole row in one piece, it can deliver dramatic fullness while keeping the install lightweight and low-profile against the head.',
+      'Our wefts use premium Remy human hair, colour matched and cut to blend into your natural shape so the result looks like your own hair - only fuller and longer.',
+      'Clients travel to our Neutral Bay salon from across Sydney for weft installs, and we plan every placement around your density, lifestyle, and how you like to wear your hair.',
+    ],
+    detailsTitle: 'Sydney-wide, in salon or at home',
+    detailsParagraphs: [
+      'Not sure whether wefts, tapes, or nanos suit you best? A consultation lets us assess your hair and recommend the method that will look and feel right long-term.',
+      'We also offer a mobile home service across Sydney - from colour to hair extensions - with home visits available seven days a week, weekends included.',
+      'Book through the homepage booking form or call the salon to arrange your weft consultation in Neutral Bay or at home.',
+    ],
+    imageSrc: '/lusciouslox/extensions-showcase.webp',
+    imageAlt: 'Voluminous weft hair extensions result by Luscious Lox Sydney',
+    relatedLinks: [
+      { href: '/weft-hair-extensions-neutral-bay', label: 'Weft extensions in Neutral Bay' },
+      { href: '/keratin-bond-hair-extensions-sydney', label: 'Explore keratin bond extensions' },
+    ],
+  },
+  '/keratin-bond-hair-extensions-sydney': {
+    path: '/keratin-bond-hair-extensions-sydney',
+    title: 'Keratin Bond Hair Extensions Sydney | Luscious Lox',
+    description:
+      'Keratin bond hair extensions in Sydney by Luscious Lox. Discreet individual bonds, premium Remy hair and expert placement for natural movement and 360-degree wear.',
+    h1: 'Keratin Bond Hair Extensions Sydney',
+    heroIntro:
+      'Luscious Lox applies keratin bond hair extensions for Sydney clients who want individual, strand-by-strand placement with natural movement and the freedom to wear hair up or down.',
+    openingCopy:
+      'Keratin bonds attach small sections of premium hair with a discreet keratin tip, giving 360-degree styling freedom and a result that moves exactly like your own hair.',
+    sectionTitle: 'Strand-by-strand precision for a natural result',
+    sectionParagraphs: [
+      'Individual bonds allow detailed placement through partings, face-framing layers, and crown sections where panels and wefts cannot sit as discreetly.',
+      'We tailor bond size, hair quantity, and colour blend to your natural hair so the finish stays undetectable at every angle - in ponytails, braids, and updos.',
+      'As nano specialists, we work with the newest generation of small-bond methods and will recommend keratin bonds or nano tips depending on your hair type and goals.',
+    ],
+    detailsTitle: 'Planning your keratin bond install',
+    detailsParagraphs: [
+      'Every keratin bond service starts with a consultation covering colour matching, hair health, quantity, and the maintenance rhythm that fits your routine.',
+      'Please note keratin bond extensions are different from our keratin nanoplasty smoothing treatment - currently half price at $200 - which we are happy to explain at your visit.',
+      'Book through the homepage booking form or call the salon; clients visit us in Neutral Bay from across Sydney, and home visits are available seven days a week.',
+    ],
+    imageSrc: '/lusciouslox/neutral-bay-3.webp',
+    imageAlt: 'Keratin bond hair extensions with glossy finish by Luscious Lox Sydney',
+    relatedLinks: [
+      { href: '/nano-hair-extensions-sydney', label: 'Compare nano hair extensions' },
+      { href: '/hair-extensions-neutral-bay', label: 'See all extension methods' },
+    ],
+  },
+  '/hair-extensions-cammeray': {
+    path: '/hair-extensions-cammeray',
+    title: 'Hair Extensions Cammeray | Luscious Lox',
+    description:
+      'Hair extensions near Cammeray - Luscious Lox in Neutral Bay fits premium nano, tape and weft extensions with expert colour matching, minutes from Cammeray.',
+    h1: 'Hair Extensions Cammeray',
+    heroIntro:
+      'Cammeray locals choose Luscious Lox for premium hair extensions just minutes away in Neutral Bay - seamless nano, tape, and weft installs with personalised colour matching.',
+    openingCopy:
+      'Our boutique salon sits an easy few minutes from Cammeray, so consultations, installs, and maintenance appointments slot neatly into your week without a trip across the bridge.',
+    sectionTitle: 'Your local extension specialists, minutes from Cammeray',
+    sectionParagraphs: [
+      'From first consultation to final styling, every appointment is one-on-one - we assess your natural hair, match colour precisely, and recommend the method that suits your lifestyle.',
+      'Whether you want subtle thickening, noticeable length, or event-ready glamour, we plan quantity and placement so the result stays believable and easy to maintain.',
+      'Cammeray clients also visit us for balayage, colour, keratin smoothing, and styling - so your extensions and colour can be planned together for a seamless overall result.',
+    ],
+    detailsTitle: 'In-salon or at your Cammeray home',
+    detailsParagraphs: [
+      'Prefer to stay home? Our mobile service covers everything from colour to hair extensions and travels to Cammeray, with home visits available seven days a week - weekends included.',
+      'Extensions are maintained on a simple schedule, and we will map out your move-up timing before you leave your first appointment.',
+      'Use the homepage booking form or call the salon to book your Cammeray consultation - in the salon chair or in your own living room.',
+    ],
+    imageSrc: '/lusciouslox/neutral-bay-5.webp',
+    imageAlt: 'Vibrant hair extension transformation for a Cammeray client by Luscious Lox',
+    relatedLinks: [
+      { href: '/hair-extensions-neutral-bay', label: 'Explore our hair extensions overview' },
+      { href: '/hair-salon-neutral-bay', label: 'Visit our Neutral Bay salon page' },
+    ],
+  },
+  '/weft-hair-extensions-neutral-bay': {
+    path: '/weft-hair-extensions-neutral-bay',
+    title: 'Weft Hair Extensions Neutral Bay | Luscious Lox',
+    description:
+      'Weft hair extensions in Neutral Bay by Luscious Lox. Seamless rows of premium Remy hair for maximum volume, a flat comfortable fit and easy maintenance.',
+    h1: 'Weft Hair Extensions Neutral Bay',
+    heroIntro:
+      'Luscious Lox installs weft hair extensions in Neutral Bay for clients who want maximum volume and length with a flat, comfortable row that disappears under your natural hair.',
+    openingCopy:
+      'A weft install builds fullness quickly with fewer attachment points than strand-by-strand methods, making it a favourite for thicker results and a clean, streamlined grow-out.',
+    sectionTitle: 'The weft experience at Luscious Lox',
+    sectionParagraphs: [
+      'We begin with a consultation to check your density and hair health, then colour match premium Remy weft hair to blend invisibly with your own.',
+      'Placement is planned around your parting, haircut, and how you wear your hair, so the row stays hidden whether your hair is down, half-up, or tied back.',
+      'Maintenance visits keep the row snug and comfortable as your hair grows, and quality weft hair can be reused across multiple installs.',
+    ],
+    detailsTitle: 'Is a weft right for you?',
+    detailsParagraphs: [
+      'Wefts suit medium to thicker hair beautifully and are ideal when your priority is volume - hair that photographs full and styles with body.',
+      'If your hair is finer, we may recommend nano or tape methods instead, and we will explain the trade-offs honestly at your consultation.',
+      'Book through the homepage booking form or call the salon - we are on Wycombe Rd in Neutral Bay, with home visits available seven days a week.',
+    ],
+    imageSrc: '/lusciouslox/neutral-bay-1.webp',
+    imageAlt: 'Full voluminous weft hair extensions styled at Luscious Lox Neutral Bay',
+    relatedLinks: [
+      { href: '/weft-hair-extensions-sydney', label: 'Weft extensions across Sydney' },
+      { href: '/tape-hair-extensions-neutral-bay', label: 'Compare tape hair extensions' },
+    ],
+  },
+  '/nano-hair-extensions-sydney': {
+    path: '/nano-hair-extensions-sydney',
+    title: 'Nano Hair Extensions Sydney | Luscious Lox',
+    description:
+      'Nano hair extensions in Sydney by specialists Luscious Lox. Ultra-discreet nano bonds, premium Remy hair and precision placement for undetectable length and volume.',
+    h1: 'Nano Hair Extensions Sydney',
+    heroIntro:
+      'Luscious Lox is one of Sydney’s dedicated nano hair extension specialists - ultra-small bonds, premium Remy hair, and precision placement for a result nobody can detect.',
+    openingCopy:
+      'Nano bonds are among the smallest attachment points available, sitting flat and invisible even through fine partings - which is why clients travel from across Sydney for our installs.',
+    sectionTitle: 'Why Sydney clients choose our nano work',
+    sectionParagraphs: [
+      'Nano extensions are our signature. We fit them daily, refining placement patterns that keep bonds hidden through crown sections, partings, and face-framing layers.',
+      'Each install is fully customised: colour blended across multiple shades, quantity matched to your density, and bond placement planned for how you actually wear your hair.',
+      'The method is designed to protect your natural hair - lightweight bonds, sensible tension, and a maintenance schedule that keeps everything healthy underneath.',
+    ],
+    detailsTitle: 'Visit Neutral Bay, or we come to you',
+    detailsParagraphs: [
+      'Our salon is in Neutral Bay on Sydney’s lower north shore - an easy trip from the CBD, eastern suburbs, and northern beaches, with parking nearby.',
+      'We also run a mobile home service across Sydney covering everything from colour to hair extensions, with home visits available seven days a week.',
+      'Start with a consultation booked through the homepage form, or call the salon and we will plan your nano transformation together.',
+    ],
+    imageSrc: '/lusciouslox/extensions-showcase.webp',
+    imageAlt: 'Undetectable nano hair extensions by Luscious Lox Sydney',
+    relatedLinks: [
+      { href: '/nano-hair-extensions-neutral-bay', label: 'Nano extensions in Neutral Bay' },
+      { href: '/keratin-bond-hair-extensions-sydney', label: 'Compare keratin bond extensions' },
+    ],
+  },
+  '/balayage-north-sydney': {
+    path: '/balayage-north-sydney',
+    title: 'Balayage North Sydney | Luscious Lox',
+    description:
+      'Balayage near North Sydney - Luscious Lox in Neutral Bay creates dimensional, hand-painted colour with personalised toning and glossing, minutes from North Sydney.',
+    h1: 'Balayage North Sydney',
+    heroIntro:
+      'Luscious Lox creates hand-painted balayage for North Sydney clients just minutes away in Neutral Bay - dimensional colour, soft grow-out, and a glossy, polished finish.',
+    openingCopy:
+      'A short trip from North Sydney offices and apartments, our boutique salon makes it easy to book balayage around work - including Thursday evenings and Saturday appointments.',
+    sectionTitle: 'Dimensional colour designed around you',
+    sectionParagraphs: [
+      'Every balayage starts with a consultation on tone, brightness, and placement so your colour flatters your complexion and grows out softly without hard regrowth lines.',
+      'From creamy blondes to rich caramel ribbons, we hand-paint each section and finish with toning and glossing for shine that reads expensive.',
+      'Many North Sydney clients pair balayage with a keratin smoothing treatment or extensions for extra length and movement - we can plan the combination in one visit.',
+    ],
+    detailsTitle: 'Easy to reach from North Sydney',
+    detailsParagraphs: [
+      'We are on Wycombe Rd in Neutral Bay, minutes from North Sydney by car or bus, with parking available nearby.',
+      'Prefer your colour done at home? Our mobile service covers North Sydney with home visits available seven days a week, weekends included.',
+      'Book a colour consultation through the homepage booking form, or call the salon to talk through balayage, glossing, or a bigger transformation.',
+    ],
+    imageSrc: '/lusciouslox/neutral-bay-1.webp',
+    imageAlt: 'Hand-painted balayage result for a North Sydney client by Luscious Lox',
+    relatedLinks: [
+      { href: '/balayage-neutral-bay', label: 'Balayage in Neutral Bay' },
+      { href: '/keratin-treatment-neutral-bay', label: 'Pair colour with keratin smoothing' },
     ],
   },
 };
