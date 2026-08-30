@@ -32,10 +32,69 @@ export const navLinks = [
   { label: 'Services', href: '#services' },
   { label: 'Offers', href: '#offers' },
   { label: 'Extensions', href: '#extensions' },
+  { label: 'Shop', href: '#shop' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Reviews', href: '#reviews' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#booking' },
+];
+
+export type ShopProduct = {
+  id: string;
+  name: string;
+  tagline: string;
+  batch: string;
+  /** Display price, e.g. '$340'. Leave null to show "Enquire for pricing" until a price is set. */
+  price: string | null;
+  priceNote: string;
+  description: string;
+  specs: { label: string; value: string }[];
+  features: string[];
+  /** First image is the main product photo; the rest show as gallery thumbnails. */
+  images: { src: string; alt: string }[];
+  /** Value sent to the inquiry API when someone places an order. Must match api/inquiry.ts allowlist. */
+  orderService: string;
+};
+
+export const shopIntro = {
+  eyebrow: 'Wigs & Toppers',
+  title: 'The Topper Collection',
+  description:
+    'Premium Remy human hair toppers, hand-finished for natural blending and everyday comfort. Order online and we will confirm colour matching, delivery or in-salon fitting with you personally.',
+};
+
+export const shopProducts: ShopProduct[] = [
+  {
+    id: 'micro-topper',
+    name: 'MICRO Hair Topper',
+    tagline: 'Premium Remy Human Hair',
+    batch: 'Batch 1',
+    price: '$1,600',
+    priceNote: 'Includes personal colour-match consultation',
+    description:
+      'Designed for lightweight, natural-looking coverage, our MICRO Hair Topper is crafted from premium Remy human hair and finished with a delicate Swiss lace base for a comfortable, barely-there feel. At 12 inches, it blends seamlessly through the crown and smaller areas where extra fullness is desired — a subtle result without the bulk of a traditional topper, and a great introduction for first-time topper wearers.',
+    specs: [
+      { label: 'Hair', value: '100% Premium Remy Human Hair' },
+      { label: 'Length', value: '12" finished' },
+      { label: 'Density', value: 'Ultra-light MICRO' },
+      { label: 'Base', value: 'Lightweight Swiss lace' },
+      { label: 'Base Size', value: '4.75" × 3.25"' },
+      { label: 'Attachment', value: 'Four secure clips' },
+    ],
+    features: [
+      'Natural blending and discreet crown coverage',
+      'Ultra-light density — no bulk, all softness',
+      'Comfortable enough for everyday wear',
+      'Easy to secure — ideal for first-time wearers',
+    ],
+    images: [
+      { src: '/lusciouslox/micro-topper-1.webp', alt: 'MICRO Hair Topper styled side view in dark brown Remy human hair' },
+      { src: '/lusciouslox/micro-topper-2.webp', alt: 'MICRO Hair Topper Swiss lace base with four secure clips' },
+      { src: '/lusciouslox/micro-topper-4.webp', alt: 'MICRO Hair Topper base and clip detail from above' },
+      { src: '/lusciouslox/micro-topper-3.webp', alt: 'Close-up of MICRO Hair Topper premium Remy hair texture' },
+    ],
+    orderService: 'MICRO Hair Topper (Shop Order)',
+  },
 ];
 
 export const specialOffer = {
@@ -144,6 +203,10 @@ export const faqs = [
   {
     q: 'What is the keratin nanoplasty special?',
     a: 'For a limited time, our keratin nanoplasty smoothing treatment is half price — $200 instead of $400. It leaves hair silky, frizz-free and glossy for months. Select "Keratin Nanoplasty Special" in the booking form or call the salon to secure the offer.',
+  },
+  {
+    q: 'Do you sell wigs and hair toppers?',
+    a: 'Yes! Our Topper Collection features premium Remy human hair toppers, starting with the MICRO Hair Topper — an ultra-light 12" topper on a Swiss lace base, perfect for discreet crown coverage. Order through the Shop section and we will personally confirm colour matching, payment and delivery or in-salon fitting.',
   },
   {
     q: 'How long do hair extensions last?',

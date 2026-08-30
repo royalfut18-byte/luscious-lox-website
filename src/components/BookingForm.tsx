@@ -34,6 +34,8 @@ const serviceOptions = [
   'Keratin Treatment',
   'Styling / Blowdry',
   'General Consultation',
+  'MICRO Hair Topper (Shop Order)',
+  'Wigs & Toppers Enquiry',
 ];
 
 export default function BookingForm() {

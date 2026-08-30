@@ -6,6 +6,7 @@ import TrustStrip from './TrustStrip';
 import SpecialOffers from './SpecialOffers';
 import Services from './Services';
 import SignatureExtensions from './SignatureExtensions';
+import Shop from './Shop';
 import ResultsGallery from './ResultsGallery';
 import Reviews from './Reviews';
 import CTABand from './CTABand';
@@ -81,6 +82,7 @@ export default function HomePage() {
           <SpecialOffers />
           <Services />
           <SignatureExtensions />
+          <Shop />
           <ResultsGallery />
           <CTABand />
           <Reviews />

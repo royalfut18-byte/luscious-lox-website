@@ -22,6 +22,8 @@ const allowedServices = new Set([
   'Keratin Treatment',
   'Styling / Blowdry',
   'General Consultation',
+  'MICRO Hair Topper (Shop Order)',
+  'Wigs & Toppers Enquiry',
 ]);
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
