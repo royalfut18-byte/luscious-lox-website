@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { AlertCircle, ArrowRight, Check, CheckCircle, Minus, Phone, Plus, ShoppingBag, Sparkles, X } from 'lucide-react';
+import { AlertCircle, ArrowRight, Check, CheckCircle, ChevronLeft, ChevronRight, Minus, Phone, Plus, ShoppingBag, Sparkles, X } from 'lucide-react';
 import { shopIntro, shopProducts, siteConfig, type ShopProduct } from '../data/siteData';
 
 type OrderForm = {
@@ -269,6 +269,11 @@ function OrderModal({ product, onClose }: { product: ShopProduct; onClose: () =>
 
 function ProductCard({ product, index, onOrder }: { product: ShopProduct; index: number; onOrder: () => void }) {
   const [activeImage, setActiveImage] = useState(0);
+  const imageCount = product.images.length;
+  const hasMultiple = imageCount > 1;
+
+  // Wraps around so the arrows never dead-end on the first or last photo.
+  const step = (delta: number) => setActiveImage((current) => (current + delta + imageCount) % imageCount);
 
   return (
     <motion.article
@@ -293,6 +298,30 @@ function ProductCard({ product, index, onOrder }: { product: ShopProduct; index:
               }`}
             />
           ))}
+          {hasMultiple && (
+            <>
+              <button
+                type="button"
+                onClick={() => step(-1)}
+                aria-label="Previous photo"
+                className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 backdrop-blur border border-champagne/40 text-espresso/60 flex items-center justify-center shadow-card hover:bg-white hover:text-espresso hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                type="button"
+                onClick={() => step(1)}
+                aria-label="Next photo"
+                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 backdrop-blur border border-champagne/40 text-espresso/60 flex items-center justify-center shadow-card hover:bg-white hover:text-espresso hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                <ChevronRight size={18} />
+              </button>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-white/85 backdrop-blur border border-champagne/40 px-3.5 py-1.5 text-[10px] font-body font-bold tracking-[0.18em] uppercase text-espresso/55">
+                {activeImage + 1} / {imageCount}
+              </div>
+            </>
+          )}
+
           <div className="absolute top-5 left-5 flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,#F0D39E,#D3A35D,#8E6A3F)] px-4 py-2 text-[10px] font-body font-bold tracking-[0.22em] uppercase text-[#140D0B]">
               <Sparkles size={12} />
@@ -302,14 +331,14 @@ function ProductCard({ product, index, onOrder }: { product: ShopProduct; index:
         </div>
 
         {/* Thumbnails */}
-        {product.images.length > 1 && (
-          <div className="flex gap-2.5 p-4 bg-white/60 border-t border-champagne/25">
+        {hasMultiple && (
+          <div className="flex gap-2.5 p-4 bg-white/60 border-t border-champagne/25 overflow-x-auto">
             {product.images.map((img, i) => (
               <button
                 key={img.src}
                 onClick={() => setActiveImage(i)}
                 aria-label={`View photo ${i + 1}: ${img.alt}`}
-                className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                className={`relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
                   i === activeImage ? 'border-muted-gold shadow-card' : 'border-transparent opacity-60 hover:opacity-100'
                 }`}
               >
