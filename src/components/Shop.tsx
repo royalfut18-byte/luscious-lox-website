@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { AlertCircle, ArrowRight, Check, CheckCircle, ChevronLeft, ChevronRight, Minus, Phone, Plus, ShoppingBag, Sparkles, X } from 'lucide-react';
+import { AlertCircle, ArrowRight, Check, CheckCircle, ChevronLeft, ChevronRight, Minus, Phone, Plus, ShoppingBag, X } from 'lucide-react';
 import { shopIntro, shopProducts, siteConfig, type ShopProduct } from '../data/siteData';
 
 type OrderForm = {
@@ -159,7 +159,7 @@ function OrderModal({ product, onClose }: { product: ShopProduct; onClose: () =>
                 ) : (
                   <span className="text-[12px] font-body font-semibold text-muted-gold">Price confirmed when we call you</span>
                 )}
-                <span className="text-[11px] font-body text-warm-gray/50">{product.batch} · {product.tagline}</span>
+                <span className="text-[11px] font-body text-warm-gray/50">{product.tagline}</span>
               </div>
             </div>
 
@@ -322,12 +322,9 @@ function ProductCard({ product, index, onOrder }: { product: ShopProduct; index:
             </>
           )}
 
-          <div className="absolute top-5 left-5 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,#F0D39E,#D3A35D,#8E6A3F)] px-4 py-2 text-[10px] font-body font-bold tracking-[0.22em] uppercase text-[#140D0B]">
-              <Sparkles size={12} />
-              {product.batch} · New
-            </span>
-          </div>
+          <span className="absolute top-4 left-4 inline-flex items-center rounded-full bg-[linear-gradient(135deg,#F0D39E,#D3A35D,#8E6A3F)] px-3 py-1 text-[9px] font-body font-bold tracking-[0.2em] uppercase text-[#140D0B]">
+            New
+          </span>
         </div>
 
         {/* Thumbnails */}
