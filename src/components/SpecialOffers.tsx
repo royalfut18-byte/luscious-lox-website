@@ -77,11 +77,12 @@ export default function SpecialOffers() {
               </h3>
 
               {/* Price */}
-              <div className="mt-6 flex items-end gap-4 flex-wrap">
-                <span className="font-heading text-[1.6rem] sm:text-[2rem] font-light text-cream/30 line-through decoration-[#C4A265]/60 decoration-2">
+              <div className="mt-6 flex items-end gap-3 sm:gap-4 flex-wrap">
+                <span className="font-heading text-[1.4rem] sm:text-[1.9rem] font-light text-cream/30 line-through decoration-[#C4A265]/60 decoration-2">
                   {specialOffer.wasPrice}
                 </span>
-                <span className="font-heading text-[3.6rem] sm:text-[4.6rem] font-medium leading-[0.85] bg-[linear-gradient(135deg,#F0D39E,#D3A35D)] bg-clip-text text-transparent">
+                {/* leading must stay >= 1 so the tall $ glyph is not clipped by the card's overflow-hidden */}
+                <span className="font-heading text-[clamp(2.6rem,9vw,4.2rem)] font-medium leading-[1.02] bg-[linear-gradient(135deg,#F0D39E,#D3A35D)] bg-clip-text text-transparent">
                   {specialOffer.nowPrice}
                 </span>
                 <span className="mb-2 text-[11px] font-body font-bold tracking-[0.25em] uppercase text-[#E9C88F]/70">
