@@ -27,7 +27,7 @@ const LOCAL_INTENTS: IntentMatch[] = [
       /\b(nanoplasty|nano ?plasty|keratin)\b/i,
       /\b(special|deal|discount|promo|offer)\b/i,
     ],
-    response: "Great timing - our keratin nanoplasty treatment is currently HALF PRICE: $200 (normally $400) for a limited time. It leaves hair silky, frizz-free and glossy. Select 'Keratin Nanoplasty Special' in the booking form, or call 0416 595 902 or 02 9099 4362 to secure the offer!",
+    response: "Great timing - our keratin nanoplasty treatment is currently HALF PRICE: $199.99 (normally $399.99) for a limited time. It leaves hair silky, frizz-free and glossy. Select 'Keratin Nanoplasty Special' in the booking form, or call 0416 595 902 or 02 9099 4362 to secure the offer!",
   },
   {
     patterns: [
@@ -53,13 +53,13 @@ const LOCAL_INTENTS: IntentMatch[] = [
     patterns: [
       /\b(price|pric|cost|how much|rate|fee|charge|expensive|afford|budget)\b/i,
     ],
-    response: "Pricing depends on the extension method, hair length, amount of hair needed, colour matching and your hair goals - a consultation gives you an accurate quote. One price we can share: our keratin nanoplasty special is currently half price at $200 (was $400)! Call 0416 595 902 or 02 9099 4362, or use the booking form to get started.",
+    response: "Pricing depends on the extension method, hair length, amount of hair needed, colour matching and your hair goals - a consultation gives you an accurate quote. One price we can share: our keratin nanoplasty special is currently half price at $199.99 (was $399.99)! Call 0416 595 902 or 02 9099 4362, or use the booking form to get started.",
   },
   {
     patterns: [
       /\b(service|what do you (do|offer)|menu|treatment|what can you)\b/i,
     ],
-    response: "We specialise in nano tip extensions, tape-in extensions, premium Remy hair, balayage, hair colouring, keratin treatments, and professional styling & blowdry. We also offer home services - from colour to hair extensions, 7 days a week including weekends - and our keratin nanoplasty is currently half price at $200. Would you like to book?",
+    response: "We specialise in nano tip extensions, tape-in extensions, premium Remy hair, balayage, hair colouring, keratin treatments, and professional styling & blowdry. We also offer home services - from colour to hair extensions, 7 days a week including weekends - and our keratin nanoplasty is currently half price at $199.99. Would you like to book?",
   },
   {
     patterns: [
@@ -121,7 +121,7 @@ SERVICES:
 - Personalised consultations (required before extension services)
 
 CURRENT SPECIAL OFFER (promote this when relevant):
-- Keratin Nanoplasty treatment: HALF PRICE - now $200 (normally $400), for a limited time
+- Keratin Nanoplasty treatment: HALF PRICE - now $199.99 (normally $399.99), for a limited time
 - Leaves hair silky, frizz-free and glossy
 - Clients can select "Keratin Nanoplasty Special" in the website booking form or call to book
 
@@ -148,7 +148,7 @@ BOOKING:
 PRICING:
 - Pricing is determined during consultation
 - Depends on: method chosen, hair length desired, colour matching complexity, and amount of hair needed
-- Never quote specific prices, with ONE exception: the advertised keratin nanoplasty special is $200 (was $400) and you may share that
+- Never quote specific prices, with ONE exception: the advertised keratin nanoplasty special is $199.99 (was $399.99) and you may share that
 - For everything else, always direct to consultation
 
 RULES:

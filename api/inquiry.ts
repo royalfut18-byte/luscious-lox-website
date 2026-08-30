@@ -13,6 +13,7 @@ type InquiryPayload = {
 
 const allowedServices = new Set([
   'Keratin Nanoplasty Special ($200)',
+  'Keratin Nanoplasty Special ($199.99)',
   'Home Service Visit',
   'Nano Extensions',
   'Tape Extensions',
@@ -23,6 +24,8 @@ const allowedServices = new Set([
   'Styling / Blowdry',
   'General Consultation',
   'MICRO Hair Topper (Shop Order)',
+  '12" MICRO Hair Topper (Shop Order)',
+  '16" MICRO Hair Topper (Shop Order)',
   'Wigs & Toppers Enquiry',
 ]);
 

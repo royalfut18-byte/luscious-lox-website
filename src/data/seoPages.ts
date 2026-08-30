@@ -353,7 +353,7 @@ export const seoPages: Record<string, SeoPage> = {
     detailsTitle: 'Planning your keratin bond install',
     detailsParagraphs: [
       'Every keratin bond service starts with a consultation covering colour matching, hair health, quantity, and the maintenance rhythm that fits your routine.',
-      'Please note keratin bond extensions are different from our keratin nanoplasty smoothing treatment - currently half price at $200 - which we are happy to explain at your visit.',
+      'Please note keratin bond extensions are different from our keratin nanoplasty smoothing treatment - currently half price at $199.99 - which we are happy to explain at your visit.',
       'Book through the homepage booking form or call the salon; clients visit us in Neutral Bay from across Sydney, and home visits are available seven days a week.',
     ],
     imageSrc: '/lusciouslox/neutral-bay-3.webp',

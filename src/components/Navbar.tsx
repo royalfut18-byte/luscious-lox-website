@@ -36,7 +36,7 @@ export default function Navbar({ isHome = false }: NavbarProps) {
         <p className="px-4 py-2.5 text-[9.5px] sm:text-[11px] font-body font-bold tracking-[0.12em] sm:tracking-[0.18em] uppercase text-cream/85 whitespace-nowrap overflow-hidden text-ellipsis">
           <span className="text-[#E9C88F]">✨ Half-Price Special</span>
           <span className="mx-2 text-cream/30">|</span>
-          Keratin Nanoplasty <s className="text-cream/40">$400</s> <span className="text-[#E9C88F]">$200</span>
+          Keratin Nanoplasty <s className="text-cream/40">$399.99</s> <span className="text-[#E9C88F]">$199.99</span>
           <span className="hidden sm:inline">
             <span className="mx-2 text-cream/30">|</span>
             Home visits 7 days — weekends included
