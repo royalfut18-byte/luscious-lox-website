@@ -109,7 +109,7 @@ export default function IntroReveal({ onComplete }: Props) {
           transition={reduce ? { duration: 0 } : { duration: 0.6, delay: 0.15 }}
         />
 
-        {/* Text reveal (decorative — kept as a div so the page has a single h1) */}
+        {/* Text reveal (decorative, kept as a div so the page has a single h1) */}
         <div style={{ overflow: 'hidden' }}>
           <motion.div
             aria-hidden="true"

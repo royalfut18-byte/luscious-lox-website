@@ -26,6 +26,8 @@ const allowedServices = new Set([
   'MICRO Hair Topper (Shop Order)',
   '12" MICRO Hair Topper (Shop Order)',
   '16" MICRO Hair Topper (Shop Order)',
+  '16" MICRO Hair Topper - Honey Blonde (Shop Order)',
+  '16" MICRO Hair Topper - Ash Blonde (Shop Order)',
   'Wigs & Toppers Enquiry',
 ]);
 

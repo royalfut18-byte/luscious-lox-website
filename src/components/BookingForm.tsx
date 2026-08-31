@@ -35,7 +35,8 @@ const serviceOptions = [
   'Styling / Blowdry',
   'General Consultation',
   '12" MICRO Hair Topper (Shop Order)',
-  '16" MICRO Hair Topper (Shop Order)',
+  '16" MICRO Hair Topper - Honey Blonde (Shop Order)',
+  '16" MICRO Hair Topper - Ash Blonde (Shop Order)',
   'Wigs & Toppers Enquiry',
 ];
 

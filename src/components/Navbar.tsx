@@ -12,7 +12,8 @@ export default function Navbar({ isHome = false }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const brandHref = isHome ? '#home' : '/';
   const bookingHref = isHome ? siteConfig.bookingUrl : '/#booking';
-  const resolveHref = (href: string) => (isHome ? href : `/${href}`);
+  // Absolute paths (e.g. /shop) are real pages and must not be prefixed.
+  const resolveHref = (href: string) => (href.startsWith('/') ? href : isHome ? href : `/${href}`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -26,7 +27,7 @@ export default function Navbar({ isHome = false }: NavbarProps) {
         scrolled ? 'glass-nav' : ''
       }`}
     >
-      {/* Announcement bar — special offer + home services */}
+      {/* Announcement bar: special offer + home services */}
       <a
         href={resolveHref('#offers')}
         className={`block overflow-hidden bg-[#1C1210] text-center transition-all duration-500 hover:bg-[#241713] ${
@@ -39,7 +40,7 @@ export default function Navbar({ isHome = false }: NavbarProps) {
           Keratin Nanoplasty <s className="text-cream/40">$399.99</s> <span className="text-[#E9C88F]">$199.99</span>
           <span className="hidden sm:inline">
             <span className="mx-2 text-cream/30">|</span>
-            Home visits 7 days — weekends included
+            Home visits 7 days, weekends included
           </span>
         </p>
       </a>

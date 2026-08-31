@@ -33,7 +33,7 @@ export default function SpecialOffers() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-5 sm:gap-6 items-stretch">
-          {/* Card 1 — Keratin Nanoplasty half-price special */}
+          {/* Card 1: Keratin Nanoplasty half-price special */}
           <motion.div
             className="relative overflow-hidden rounded-[2rem] bg-[#1C1210] text-cream p-8 sm:p-12 flex flex-col"
             initial={{ opacity: 0, y: 30 }}
@@ -106,7 +106,7 @@ export default function SpecialOffers() {
             </div>
           </motion.div>
 
-          {/* Card 2 — Home services */}
+          {/* Card 2: Home services */}
           <motion.div
             className="relative overflow-hidden rounded-[2rem] bg-white border border-champagne/30 shadow-card p-8 sm:p-12 flex flex-col"
             initial={{ opacity: 0, y: 30 }}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { AlertCircle, ArrowRight, Check, CheckCircle, ChevronLeft, ChevronRight, Minus, Phone, Plus, ShoppingBag, X } from 'lucide-react';
-import { shopIntro, shopProducts, siteConfig, type ShopProduct } from '../data/siteData';
+import { AlertCircle, Check, CheckCircle, ChevronLeft, ChevronRight, Minus, Phone, Plus, ShoppingBag, X } from 'lucide-react';
+import { shopProducts, siteConfig, type ShopProduct } from '../data/siteData';
 
 type OrderForm = {
   name: string;
@@ -258,7 +258,7 @@ function OrderModal({ product, onClose }: { product: ShopProduct; onClose: () =>
             </button>
 
             <p className="text-[11px] text-warm-gray/40 font-body text-center leading-relaxed">
-              No payment is taken online. We confirm every order personally — colour match, payment and delivery or in-salon fitting — within 24 hours.
+              No payment is taken online. We confirm every order personally within 24 hours: colour match, payment, and delivery or in-salon fitting.
             </p>
           </form>
         )}
@@ -267,7 +267,7 @@ function OrderModal({ product, onClose }: { product: ShopProduct; onClose: () =>
   );
 }
 
-function ProductCard({ product, index, onOrder }: { product: ShopProduct; index: number; onOrder: () => void }) {
+export function ProductCard({ product, index, onOrder }: { product: ShopProduct; index: number; onOrder: () => void }) {
   const [activeImage, setActiveImage] = useState(0);
   const imageCount = product.images.length;
   const hasMultiple = imageCount > 1;
@@ -409,65 +409,29 @@ function ProductCard({ product, index, onOrder }: { product: ShopProduct; index:
   );
 }
 
-export default function Shop() {
+/**
+ * The full product list plus its order dialog. Used by the dedicated /shop
+ * page; the homepage shows ShopTeaser instead.
+ */
+export default function ProductList() {
   const [orderingProduct, setOrderingProduct] = useState<ShopProduct | null>(null);
 
   return (
-    <section id="shop" className="py-24 sm:py-32 section-padding relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cream via-[#F8F4EE] to-cream" />
-      <div className="absolute top-[15%] right-[5%] w-[420px] h-[420px] bg-muted-gold/[0.05] rounded-full blur-[120px]" />
-      <div className="absolute bottom-[10%] left-[8%] w-[380px] h-[380px] bg-soft-blush/30 rounded-full blur-[110px]" />
-
-      <div className="relative max-w-[1400px] mx-auto">
-        {/* Header */}
-        <motion.div
-          className="text-center max-w-2xl mx-auto mb-14 sm:mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="w-10 h-[1.5px] bg-muted-gold" />
-            <span className="label-sm">{shopIntro.eyebrow}</span>
-            <div className="w-10 h-[1.5px] bg-muted-gold" />
-          </div>
-          <h2 className="font-heading text-[clamp(2.2rem,5vw,4rem)] font-light leading-[1.05] tracking-[-0.03em] text-espresso">
-            The <em>Topper</em> Collection
-          </h2>
-          <p className="mt-5 text-[15px] text-warm-gray/60 font-body font-light leading-[1.8] max-w-lg mx-auto">
-            {shopIntro.description}
-          </p>
-        </motion.div>
-
-        {/* Products */}
-        <div className="space-y-8">
-          {shopProducts.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} onOrder={() => setOrderingProduct(product)} />
-          ))}
-        </div>
-
-        {/* More coming */}
-        <motion.div
-          className="mt-10 text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <p className="text-[13px] font-body text-warm-gray/50">
-            More toppers and wigs arriving soon.{' '}
-            <a href="#booking" className="text-muted-gold font-semibold hover:text-espresso transition-colors inline-flex items-center gap-1">
-              Ask about the full range <ArrowRight size={12} />
-            </a>
-          </p>
-        </motion.div>
+    <>
+      <div className="space-y-8">
+        {shopProducts.map((product, index) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            index={index}
+            onOrder={() => setOrderingProduct(product)}
+          />
+        ))}
       </div>
 
       <AnimatePresence>
         {orderingProduct && <OrderModal product={orderingProduct} onClose={() => setOrderingProduct(null)} />}
       </AnimatePresence>
-    </section>
+    </>
   );
 }

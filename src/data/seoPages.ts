@@ -28,6 +28,17 @@ export const homeSeo = {
   canonical: `${siteUrl}/`,
 };
 
+export const shopSeo = {
+  path: '/shop',
+  title: 'Buy Hair Toppers & Wigs Online | Lusciouslox',
+  description:
+    'Shop premium Remy human hair toppers from Lusciouslox, Neutral Bay. Ultra-light MICRO toppers on Swiss lace bases, with personal colour matching and delivery or in-salon fitting.',
+  canonical: `${siteUrl}/shop`,
+  h1: 'Wigs & Hair Toppers',
+  intro:
+    'Premium Remy human hair toppers, hand-finished for natural blending and everyday comfort. Every order is confirmed personally so your colour, fit and delivery are right.',
+};
+
 export const hairSalonSchema = {
   '@context': 'https://schema.org',
   '@type': 'HairSalon',

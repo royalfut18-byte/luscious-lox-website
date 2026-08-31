@@ -32,7 +32,7 @@ export const navLinks = [
   { label: 'Services', href: '#services' },
   { label: 'Offers', href: '#offers' },
   { label: 'Extensions', href: '#extensions' },
-  { label: 'Shop', href: '#shop' },
+  { label: 'Shop', href: '/shop' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Reviews', href: '#reviews' },
   { label: 'FAQ', href: '#faq' },
@@ -72,7 +72,7 @@ export const shopProducts: ShopProduct[] = [
     price: '$1,599.99',
     priceNote: 'Includes personal colour-match consultation',
     description:
-      'Designed for lightweight, natural-looking coverage, our MICRO Hair Topper is crafted from premium Remy human hair and finished with a delicate Swiss lace base for a comfortable, barely-there feel. At 12 inches, it blends seamlessly through the crown and smaller areas where extra fullness is desired — a subtle result without the bulk of a traditional topper, and a great introduction for first-time topper wearers.',
+      'Designed for lightweight, natural-looking coverage, our MICRO Hair Topper is crafted from premium Remy human hair and finished with a delicate Swiss lace base for a comfortable, barely-there feel. At 12 inches, it blends seamlessly through the crown and smaller areas where extra fullness is desired, giving a subtle result without the bulk of a traditional topper, and a great introduction for first-time topper wearers.',
     specs: [
       { label: 'Hair', value: '100% Premium Remy Human Hair' },
       { label: 'Length', value: '12" finished' },
@@ -83,9 +83,9 @@ export const shopProducts: ShopProduct[] = [
     ],
     features: [
       'Natural blending and discreet crown coverage',
-      'Ultra-light density — no bulk, all softness',
+      'Ultra-light density, no bulk and all softness',
       'Comfortable enough for everyday wear',
-      'Easy to secure — ideal for first-time wearers',
+      'Easy to secure, ideal for first-time wearers',
     ],
     images: [
       { src: '/lusciouslox/micro-topper-1.webp', alt: 'MICRO Hair Topper styled side view in dark brown Remy human hair' },
@@ -96,14 +96,14 @@ export const shopProducts: ShopProduct[] = [
     orderService: '12" MICRO Hair Topper (Shop Order)',
   },
   {
-    id: 'micro-topper-16',
-    name: '16" MICRO Hair Topper',
+    id: 'micro-topper-16-honey',
+    name: '16" MICRO Hair Topper - Honey Blonde',
     tagline: 'Premium Remy Human Hair',
     batch: 'Batch 1',
     price: '$1,499.99',
     priceNote: 'Includes personal colour-match consultation',
     description:
-      'Created for natural, lightweight coverage, our 16" MICRO Hair Topper is made from premium Remy human hair and finished with a soft Swiss lace base for a comfortable and discreet fit. The longer 16-inch length gives you extra blending and styling versatility while maintaining the ultra-light feel of our MICRO design — ideal for adding subtle fullness through the crown and covering smaller areas where additional density is desired, without the heaviness of a traditional topper.',
+      'Created for natural, lightweight coverage, our 16" MICRO Hair Topper is made from premium Remy human hair and finished with a soft Swiss lace base for a comfortable and discreet fit. The longer 16-inch length gives you extra blending and styling versatility while maintaining the ultra-light feel of our MICRO design, ideal for adding subtle fullness through the crown and covering smaller areas where additional density is desired, without the heaviness of a traditional topper.',
     specs: [
       { label: 'Hair', value: 'Premium Remy Human Hair' },
       { label: 'Length', value: '16" finished' },
@@ -126,7 +126,38 @@ export const shopProducts: ShopProduct[] = [
       { src: '/lusciouslox/micro-topper-16in-2.webp', alt: '16 inch MICRO Hair Topper side profile showing length and movement' },
       { src: '/lusciouslox/micro-topper-16in-4.webp', alt: 'Close-up of the 16 inch MICRO Hair Topper blonde ombre hair texture' },
     ],
-    orderService: '16" MICRO Hair Topper (Shop Order)',
+    orderService: '16" MICRO Hair Topper - Honey Blonde (Shop Order)',
+  },
+  {
+    id: 'micro-topper-16-ash',
+    name: '16" MICRO Hair Topper - Ash Blonde',
+    tagline: 'Premium Remy Human Hair',
+    batch: 'Batch 1',
+    price: '$1,499.99',
+    priceNote: 'Includes personal colour-match consultation',
+    description:
+      'Our 16" MICRO Hair Topper is designed for lightweight, natural-looking coverage without adding unnecessary bulk. Made from premium Remy human hair, it blends smoothly with your own hair for a soft, seamless finish. The ultra-light MICRO construction and delicate Swiss lace base keep it comfortable and discreet, while the 16-inch length provides extra coverage and styling versatility. Four secure clips hold the piece in place throughout the day.',
+    specs: [
+      { label: 'Hair', value: 'Premium Remy Human Hair' },
+      { label: 'Length', value: '16" finished' },
+      { label: 'Density', value: 'Ultra-light MICRO' },
+      { label: 'Base', value: 'Lightweight Swiss lace' },
+      { label: 'Base Size', value: '4.75" × 3.25"' },
+      { label: 'Attachment', value: 'Four secure clips' },
+    ],
+    features: [
+      'Designed for natural blending',
+      'Adds subtle fullness through the crown',
+      'Extra length for styling versatility',
+      'Soft, lightweight and comfortable for everyday wear',
+    ],
+    images: [
+      { src: '/lusciouslox/micro-topper-16b-2.webp', alt: '16 inch MICRO Hair Topper in ash blonde ombre Remy human hair' },
+      { src: '/lusciouslox/micro-topper-16b-4.webp', alt: '16 inch ash blonde MICRO Hair Topper showing the Swiss lace base and clips' },
+      { src: '/lusciouslox/micro-topper-16b-1.webp', alt: 'Close-up of the Swiss lace base and four secure clips on the ash blonde topper' },
+      { src: '/lusciouslox/micro-topper-16b-3.webp', alt: 'Close-up of the ash blonde MICRO Hair Topper hair texture' },
+    ],
+    orderService: '16" MICRO Hair Topper - Ash Blonde (Shop Order)',
   },
 ];
 
@@ -137,7 +168,7 @@ export const specialOffer = {
   badge: 'Half Price',
   tagline: 'Limited time offer',
   description:
-    'Silky, frizz-free, glass-smooth hair with our premium keratin nanoplasty treatment — now half price for a limited time. Perfect before summer, events, or simply easier mornings.',
+    'Silky, frizz-free, glass-smooth hair with our premium keratin nanoplasty treatment, now half price for a limited time. Perfect before summer, events, or simply easier mornings.',
 };
 
 export const homeService = {
@@ -145,7 +176,7 @@ export const homeService = {
   eyebrow: 'Mobile Home Services',
   description:
     'Enjoy the full Lusciouslox experience without leaving home. Our mobile service brings everything from colour to hair extensions straight to your door.',
-  availability: 'Home visits available 7 days — weekends included',
+  availability: 'Home visits available 7 days, weekends included',
   points: [
     'Colour, balayage & styling at home',
     'Hair extensions fitted at your place',
@@ -154,13 +185,62 @@ export const homeService = {
   ],
 };
 
-export const services = [
-  { title: 'Hair Extensions', desc: 'Premium nano, tape and Remy extensions for seamless length and volume.', category: 'extensions' },
-  { title: 'Tape Extensions', desc: 'Lightweight, flat-lay tape wefts for natural movement and comfort.', category: 'extensions' },
-  { title: 'Balayage', desc: 'Hand-painted sun-kissed colour with soft, natural grow-out.', category: 'colour' },
-  { title: 'Hair Colouring', desc: 'Full colour, root touch-ups and creative colour transformations.', category: 'colour' },
-  { title: 'Keratin Treatments', desc: 'Smoothing treatments for frizz-free, shiny, manageable hair.', category: 'treatments' },
-  { title: 'Styling and Blowdry', desc: 'Professional blowdry, curly styling, and occasion hair.', category: 'styling' },
+export type Service = {
+  title: string;
+  desc: string;
+  category: 'extensions' | 'colour' | 'treatments' | 'styling';
+  /** Two concrete details, shown on the card so it says more than the title does. */
+  points: [string, string];
+  /** Deep link to the matching landing page where one exists, else the booking form. */
+  href: string;
+  /** Optional photo - the first card is featured and runs wide. */
+  image?: string;
+};
+
+export const services: Service[] = [
+  {
+    title: 'Hair Extensions',
+    desc: 'Premium nano, tape and Remy extensions for seamless length and volume, colour-matched to your own hair.',
+    category: 'extensions',
+    points: ['Nano, tape and weft methods', 'Reusable with proper care'],
+    href: '/hair-extensions-neutral-bay',
+    image: '/lusciouslox/extensions-showcase.webp',
+  },
+  {
+    title: 'Tape Extensions',
+    desc: 'Lightweight, flat-lay tape wefts for natural movement and comfort.',
+    category: 'extensions',
+    points: ['Flat, invisible lay', 'Gentle on finer hair'],
+    href: '/tape-extensions-neutral-bay',
+  },
+  {
+    title: 'Balayage',
+    desc: 'Hand-painted sun-kissed colour with soft, natural grow-out.',
+    category: 'colour',
+    points: ['Freehand, hand-painted', 'Soft, natural grow-out'],
+    href: '/balayage-neutral-bay',
+  },
+  {
+    title: 'Hair Colouring',
+    desc: 'Full colour, root touch-ups and creative colour transformations.',
+    category: 'colour',
+    points: ['Full colour and root touch-ups', 'Creative colour work'],
+    href: '#booking',
+  },
+  {
+    title: 'Keratin Treatments',
+    desc: 'Smoothing treatments for frizz-free, shiny, manageable hair.',
+    category: 'treatments',
+    points: ['Frizz-free for months', 'Glass-smooth finish'],
+    href: '/keratin-treatment-neutral-bay',
+  },
+  {
+    title: 'Styling and Blowdry',
+    desc: 'Professional blowdry, curly styling, and occasion hair.',
+    category: 'styling',
+    points: ['Blowdry and curly styling', 'Event and occasion hair'],
+    href: '#booking',
+  },
 ];
 
 export const extensionBenefits = [
@@ -231,11 +311,11 @@ export const reviews = [
 export const faqs = [
   {
     q: 'Do you offer home visits or mobile appointments?',
-    a: 'Yes! We bring the full salon experience to you. Our home service covers everything from colour to hair extensions, and home visits are available seven days a week — weekends included. Choose "Home Service Visit" in the booking form or call us to arrange a time that suits you.',
+    a: 'Yes! We bring the full salon experience to you. Our home service covers everything from colour to hair extensions, and home visits are available seven days a week, weekends included. Choose "Home Service Visit" in the booking form or call us to arrange a time that suits you.',
   },
   {
     q: 'What is the keratin nanoplasty special?',
-    a: 'For a limited time, our keratin nanoplasty smoothing treatment is half price — $199.99 instead of $399.99. It leaves hair silky, frizz-free and glossy for months. Select "Keratin Nanoplasty Special" in the booking form or call the salon to secure the offer.',
+    a: 'For a limited time, our keratin nanoplasty smoothing treatment is half price at $199.99, down from $399.99. It leaves hair silky, frizz-free and glossy for months. Select "Keratin Nanoplasty Special" in the booking form or call the salon to secure the offer.',
   },
   {
     q: 'Do you sell wigs and hair toppers?',

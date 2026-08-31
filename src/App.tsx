@@ -3,7 +3,8 @@ import AdminPortal from './components/AdminPortal';
 import HomePage from './components/HomePage';
 import LandingPage from './components/LandingPage';
 import SeoHead from './components/SeoHead';
-import { hairSalonSchema, homeSeo, seoPages, siteUrl } from './data/seoPages';
+import ShopPage from './components/ShopPage';
+import { hairSalonSchema, homeSeo, seoPages, shopSeo, siteUrl } from './data/seoPages';
 
 const normalisePath = () => {
   const pathname = window.location.pathname.replace(/\/+$/, '');
@@ -29,6 +30,20 @@ function App() {
           robots="noindex,nofollow"
         />
         <AdminPortal />
+      </>
+    );
+  }
+
+  if (pathname === '/shop') {
+    return (
+      <>
+        <SeoHead
+          title={shopSeo.title}
+          description={shopSeo.description}
+          canonical={shopSeo.canonical}
+          schema={hairSalonSchema}
+        />
+        <ShopPage />
       </>
     );
   }

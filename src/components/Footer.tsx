@@ -86,7 +86,7 @@ export default function Footer({ isHome = false }: FooterProps) {
               <li><a href={resolveHref('#services')} className="hover:text-cream hover:pl-1 transition-all duration-300">Balayage & Colour</a></li>
               <li><a href={resolveHref('#services')} className="hover:text-cream hover:pl-1 transition-all duration-300">Keratin Treatments</a></li>
               <li><a href={resolveHref('#services')} className="hover:text-cream hover:pl-1 transition-all duration-300">Styling & Blowdry</a></li>
-              <li><a href={resolveHref('#shop')} className="hover:text-cream hover:pl-1 transition-all duration-300">Wigs & Toppers</a></li>
+              <li><a href="/shop" className="hover:text-cream hover:pl-1 transition-all duration-300">Wigs & Toppers</a></li>
             </ul>
           </motion.div>
 
@@ -138,7 +138,7 @@ export default function Footer({ isHome = false }: FooterProps) {
         </div>
       </div>
 
-      {/* Locations & services — internal links to all landing pages */}
+      {/* Locations & services: internal links to all landing pages */}
       <div className="border-t border-cream/[0.05] py-10 px-6 sm:px-10">
         <div className="max-w-[1400px] mx-auto">
           <p className="text-[10px] font-body font-bold tracking-[0.25em] uppercase text-cream/20 mb-5">

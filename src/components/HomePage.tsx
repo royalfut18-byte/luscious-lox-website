@@ -6,7 +6,8 @@ import TrustStrip from './TrustStrip';
 import SpecialOffers from './SpecialOffers';
 import Services from './Services';
 import SignatureExtensions from './SignatureExtensions';
-import Shop from './Shop';
+import ShopTeaser from './ShopTeaser';
+import ShopPromptPopup from './ShopPromptPopup';
 import ResultsGallery from './ResultsGallery';
 import Reviews from './Reviews';
 import CTABand from './CTABand';
@@ -78,10 +79,11 @@ export default function HomePage() {
         <main>
           <Hero />
           <TrustStrip />
+          {/* Shop sits high: it is the newest offer and the only one that can be bought outright */}
+          <ShopTeaser />
           <SpecialOffers />
-          <Services />
           <SignatureExtensions />
-          <Shop />
+          <Services />
           <ResultsGallery />
           <CTABand />
           <Reviews />
@@ -91,6 +93,7 @@ export default function HomePage() {
         </main>
         <Footer isHome />
         <Chatbot />
+        <ShopPromptPopup />
       </div>
     </>
   );
