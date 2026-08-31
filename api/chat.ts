@@ -14,7 +14,7 @@ const LOCAL_INTENTS: IntentMatch[] = [
     patterns: [
       /\b(book|appoint|consult|reserv|schedule)\b/i,
     ],
-    response: "Of course - we'd love to help you book. Please call Luscious Lox on 0416 595 902 or 02 9099 4362, email contact@lusciouslox.co.au, or use the booking form on this page with your name, phone, preferred date and hair goals. The team will confirm your appointment.",
+    response: "Of course - we'd love to help you book. Please call Lusciouslox on 0416 595 902 or 02 9099 4362, email contact@lusciouslox.co.au, or use the booking form on this page with your name, phone, preferred date and hair goals. The team will confirm your appointment.",
   },
   {
     patterns: [
@@ -71,7 +71,7 @@ const LOCAL_INTENTS: IntentMatch[] = [
     patterns: [
       /\b(hi|hey|hello|g'day|good morning|good afternoon|good evening)\b/i,
     ],
-    response: "Hey! Welcome to Luscious Lox. I can help with bookings, services, pricing info, hours and location. What would you like to know?",
+    response: "Hey! Welcome to Lusciouslox. I can help with bookings, services, pricing info, hours and location. What would you like to know?",
   },
 ];
 
@@ -91,10 +91,10 @@ function matchLocalIntent(userMessage: string): string | null {
 // System prompt for Bedrock (complex questions only)
 // ---------------------------------------------------------------------------
 
-const SYSTEM_PROMPT = `You are the Luscious Lox AI assistant - a friendly, knowledgeable virtual concierge for Luscious Lox HAIR, a premium hair extension salon in Neutral Bay, Sydney.
+const SYSTEM_PROMPT = `You are the Lusciouslox AI assistant - a friendly, knowledgeable virtual concierge for Lusciouslox HAIR, a premium hair extension salon in Neutral Bay, Sydney.
 
 SALON INFORMATION:
-- Name: Luscious Lox HAIR Neutral Bay
+- Name: Lusciouslox HAIR Neutral Bay
 - Address: 156 Wycombe Rd, Neutral Bay NSW 2089
 - Mobile: 0416 595 902
 - Landline: 02 9099 4362
@@ -152,7 +152,7 @@ PRICING:
 - For everything else, always direct to consultation
 
 RULES:
-- Only answer questions about Luscious Lox salon, hair extensions, and related hair services
+- Only answer questions about Lusciouslox salon, hair extensions, and related hair services
 - Never make medical guarantees or fake promises about results
 - Never guarantee specific timelines for hair growth or damage repair
 - Keep responses short (2-4 sentences max), friendly, premium, and salon-like

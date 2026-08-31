@@ -581,7 +581,7 @@ export default function AdminPortal() {
             <div>
               <div className="inline-flex items-center gap-3 rounded-full border border-[#D7B57A]/20 bg-[#D7B57A]/10 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[#E9C88F]">
                 <ShieldCheck size={14} />
-                Luscious Lox Admin
+                Lusciouslox Admin
               </div>
               <h1 className="mt-5 font-heading text-[clamp(2.6rem,5vw,4.8rem)] leading-[0.95] tracking-[-0.05em]">
                 Booking command center

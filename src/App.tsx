@@ -23,8 +23,8 @@ function App() {
     return (
       <>
         <SeoHead
-          title="Luscious Lox Admin"
-          description="Private Luscious Lox bookings dashboard."
+          title="Lusciouslox Admin"
+          description="Private Lusciouslox bookings dashboard."
           canonical={`${siteUrl}/admin`}
           robots="noindex,nofollow"
         />

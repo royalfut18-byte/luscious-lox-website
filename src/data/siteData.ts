@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: 'Luscious Lox',
-  fullName: 'Luscious Lox HAIR Neutral Bay',
+  name: 'Lusciouslox',
+  fullName: 'Lusciouslox HAIR Neutral Bay',
   phone: '0416 595 902',
   phoneHref: 'tel:+61416595902',
   landline: '02 9099 4362',
@@ -144,7 +144,7 @@ export const homeService = {
   title: 'We Come To You',
   eyebrow: 'Mobile Home Services',
   description:
-    'Enjoy the full Luscious Lox experience without leaving home. Our mobile service brings everything from colour to hair extensions straight to your door.',
+    'Enjoy the full Lusciouslox experience without leaving home. Our mobile service brings everything from colour to hair extensions straight to your door.',
   availability: 'Home visits available 7 days — weekends included',
   points: [
     'Colour, balayage & styling at home',
@@ -268,10 +268,10 @@ export const faqs = [
 ];
 
 export const instagramPosts = [
-  { id: 1, src: '/lusciouslox/neutral-bay-1.webp', alt: 'Luscious Lox Neutral Bay result 1' },
-  { id: 2, src: '/lusciouslox/neutral-bay-2.webp', alt: 'Luscious Lox Neutral Bay result 2' },
-  { id: 3, src: '/lusciouslox/neutral-bay-3.webp', alt: 'Luscious Lox Neutral Bay result 3' },
-  { id: 4, src: '/lusciouslox/neutral-bay-4.webp', alt: 'Luscious Lox Neutral Bay result 4' },
-  { id: 5, src: '/lusciouslox/neutral-bay-5.webp', alt: 'Luscious Lox Neutral Bay result 5' },
-  { id: 6, src: '/lusciouslox/front.webp', alt: 'Luscious Lox Neutral Bay salon front' },
+  { id: 1, src: '/lusciouslox/neutral-bay-1.webp', alt: 'Lusciouslox Neutral Bay result 1' },
+  { id: 2, src: '/lusciouslox/neutral-bay-2.webp', alt: 'Lusciouslox Neutral Bay result 2' },
+  { id: 3, src: '/lusciouslox/neutral-bay-3.webp', alt: 'Lusciouslox Neutral Bay result 3' },
+  { id: 4, src: '/lusciouslox/neutral-bay-4.webp', alt: 'Lusciouslox Neutral Bay result 4' },
+  { id: 5, src: '/lusciouslox/neutral-bay-5.webp', alt: 'Lusciouslox Neutral Bay result 5' },
+  { id: 6, src: '/lusciouslox/front.webp', alt: 'Lusciouslox Neutral Bay salon front' },
 ];

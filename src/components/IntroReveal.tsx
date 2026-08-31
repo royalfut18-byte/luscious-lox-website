@@ -124,7 +124,7 @@ export default function IntroReveal({ onComplete }: Props) {
             animate={{ y: '0%' }}
             transition={reduce ? { duration: 0 } : { duration: 1.0, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
-            Luscious Lox
+            Lusciouslox
           </motion.div>
         </div>
 

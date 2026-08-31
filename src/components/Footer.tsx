@@ -35,7 +35,7 @@ export default function Footer({ isHome = false }: FooterProps) {
               <h3 className="font-heading text-[clamp(1.4rem,3vw,2.2rem)] text-cream font-light italic leading-tight">
                 Ready to transform your hair?
               </h3>
-              <p className="text-[13px] text-cream/30 font-body mt-2">Book a consultation with Luscious Lox today.</p>
+              <p className="text-[13px] text-cream/30 font-body mt-2">Book a consultation with Lusciouslox today.</p>
             </div>
             <a href={bookingHref} className="btn-gold flex-shrink-0">
               Book Now <ArrowRight size={13} strokeWidth={2.5} />
@@ -54,7 +54,7 @@ export default function Footer({ isHome = false }: FooterProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h4 className="font-heading text-[1.8rem] text-cream font-light italic mb-4">Luscious Lox</h4>
+            <h4 className="font-heading text-[1.8rem] text-cream font-light italic mb-4">Lusciouslox</h4>
             <p className="text-[13px] text-cream/30 font-body leading-relaxed max-w-xs">
               Celebrity hair extension specialists creating seamless, luxury transformations in Neutral Bay, Sydney.
             </p>

@@ -9,7 +9,7 @@ interface Message {
   content: string;
 }
 
-const WELCOME_MESSAGE = "Hi, I'm the Luscious Lox assistant. I can help with extensions, services, bookings, pricing guidance, hours and location.";
+const WELCOME_MESSAGE = "Hi, I'm the Lusciouslox assistant. I can help with extensions, services, bookings, pricing guidance, hours and location.";
 
 const QUICK_BUTTONS: Array<{ label: string; icon: typeof MessageCircle; message?: string; href?: string }> = [
   { label: '½ price keratin special', icon: Sparkles, message: 'Tell me about the keratin nanoplasty special' },
@@ -140,7 +140,7 @@ export default function Chatbot() {
                   <span className="font-heading text-sm italic text-muted-gold">L</span>
                 </div>
                 <div>
-                  <h3 className="font-heading text-sm font-medium">Luscious Lox</h3>
+                  <h3 className="font-heading text-sm font-medium">Lusciouslox</h3>
                   <p className="text-[10px] text-cream/50 font-body">Hair Extension Specialists</p>
                 </div>
               </div>

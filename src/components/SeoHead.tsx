@@ -47,7 +47,7 @@ export default function SeoHead({ title, description, canonical, schema, robots 
     upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
     upsertMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
     upsertMeta('meta[property="og:image"]', { property: 'og:image', content: image });
-    upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Luscious Lox' });
+    upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Lusciouslox' });
     upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
     upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: title });
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description });

@@ -51,7 +51,7 @@ export default function Navbar({ isHome = false }: NavbarProps) {
       >
         <a href={brandHref} className="group">
           <span className="font-heading text-[1.4rem] sm:text-[1.65rem] text-espresso italic font-light tracking-tight group-hover:text-muted-gold transition-colors duration-500">
-            Luscious Lox
+            Lusciouslox
           </span>
         </a>
 

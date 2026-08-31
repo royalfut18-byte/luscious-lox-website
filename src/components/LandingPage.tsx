@@ -73,7 +73,7 @@ export default function LandingPage({ page }: LandingPageProps) {
             <div className="bg-white rounded-[2rem] border border-champagne/25 p-8 sm:p-10 shadow-card">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-[1.5px] bg-muted-gold" />
-                <span className="label-sm">Why Luscious Lox</span>
+                <span className="label-sm">Why Lusciouslox</span>
               </div>
               <h2 className="font-heading text-[clamp(2rem,4vw,3.3rem)] font-light leading-[1.05] tracking-[-0.03em] text-espresso">
                 {page.sectionTitle}
@@ -129,7 +129,7 @@ export default function LandingPage({ page }: LandingPageProps) {
                 Book your consultation in Neutral Bay
               </h2>
               <p className="mt-6 max-w-xl text-[15px] font-body font-light leading-[1.9] text-cream/55">
-                Ready to book with Luscious Lox? Use the homepage contact form, browse the main services section, or call the salon directly for current availability.
+                Ready to book with Lusciouslox? Use the homepage contact form, browse the main services section, or call the salon directly for current availability.
               </p>
               <div className="mt-9 flex flex-wrap gap-4">
                 <a href="/#booking" className="btn-gold">
