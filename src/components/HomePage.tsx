@@ -34,10 +34,9 @@ const shouldSkipIntro = () => {
     return false;
   }
 
-  const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  const alreadySeen = window.sessionStorage?.getItem('ll-intro-seen') === '1';
-
-  return Boolean(prefersReducedMotion || alreadySeen);
+  // Reduced motion no longer skips the intro outright - IntroReveal renders a
+  // still version instead, so the brand reveal is not lost to those users.
+  return window.sessionStorage?.getItem('ll-intro-seen') === '1';
 };
 
 export default function HomePage() {
