@@ -60,6 +60,40 @@ async function updateBookingStatus(id: string, status: string) {
   return { ok: true as const, booking: rows[0] ?? null };
 }
 
+async function deleteBooking(id: string) {
+  const config = getSupabaseConfig();
+  if (!config) {
+    return { ok: false as const, status: 503, error: 'Booking storage is not configured.' };
+  }
+
+  const endpoint = new URL('/rest/v1/inquiries', config.supabaseUrl);
+  endpoint.searchParams.set('id', `eq.${id}`);
+  endpoint.searchParams.set('select', 'id');
+
+  const response = await fetch(endpoint, {
+    method: 'DELETE',
+    headers: {
+      ...buildSupabaseHeaders(config.serviceRoleKey),
+      Prefer: 'return=representation',
+    },
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    console.error('Failed to delete booking in Supabase:', response.status, errorBody);
+    return { ok: false as const, status: 502, error: 'Unable to delete this booking right now.' };
+  }
+
+  // PostgREST returns the deleted rows. An empty array means the id matched
+  // nothing, which is worth reporting rather than claiming a successful delete.
+  const rows = (await response.json()) as Array<unknown>;
+  if (rows.length === 0) {
+    return { ok: false as const, status: 404, error: 'That booking no longer exists.' };
+  }
+
+  return { ok: true as const, id };
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Cache-Control', 'no-store');
 
@@ -94,6 +128,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     return res.status(200).json({ booking: result.booking });
+  }
+
+  if (req.method === 'DELETE') {
+    const id = getString(req.body?.id) || getString(req.query?.id);
+
+    if (!id) {
+      return res.status(400).json({ error: 'Booking id is required.' });
+    }
+
+    const result = await deleteBooking(id);
+    if (!result.ok) {
+      return res.status(result.status).json({ error: result.error });
+    }
+
+    console.log('Admin deleted booking', id);
+    return res.status(200).json({ id: result.id });
   }
 
   return res.status(405).json({ error: 'Method not allowed.' });

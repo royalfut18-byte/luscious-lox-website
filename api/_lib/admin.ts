@@ -3,9 +3,10 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const SESSION_COOKIE = 'lux_admin_session';
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
-const DEFAULT_ADMIN_USERNAME = 'kate';
-const DEFAULT_ADMIN_PASSWORD = '12345678';
-const DEFAULT_SESSION_SECRET = 'luscious-lox-admin-secret';
+// No credential fallbacks live in this repo. If the environment variables are
+// not set the admin API refuses every login rather than accepting a default
+// that anyone reading the source could use.
+const REQUIRED_ADMIN_ENV = 'ADMIN_USERNAME, ADMIN_PASSWORD and ADMIN_SESSION_SECRET';
 
 export function normalizeEnvValue(value: string | undefined): string {
   if (typeof value !== 'string') {
@@ -41,19 +42,19 @@ function safeEqual(left: string, right: string): boolean {
 }
 
 function getAdminUsername(): string {
-  return normalizeEnvValue(process.env.ADMIN_USERNAME) || DEFAULT_ADMIN_USERNAME;
+  return normalizeEnvValue(process.env.ADMIN_USERNAME);
 }
 
 function getAdminPassword(): string {
-  return normalizeEnvValue(process.env.ADMIN_PASSWORD) || DEFAULT_ADMIN_PASSWORD;
+  return normalizeEnvValue(process.env.ADMIN_PASSWORD);
 }
 
 function getSessionSecret(): string {
-  return normalizeEnvValue(process.env.ADMIN_SESSION_SECRET) || DEFAULT_SESSION_SECRET;
+  return normalizeEnvValue(process.env.ADMIN_SESSION_SECRET);
 }
 
-function signSessionPayload(payload: string): string {
-  return crypto.createHmac('sha256', getSessionSecret()).update(payload).digest('base64url');
+function signSessionPayload(payload: string, secret: string): string {
+  return crypto.createHmac('sha256', secret).update(payload).digest('base64url');
 }
 
 function parseCookies(cookieHeader: string | undefined): Record<string, string> {
@@ -83,10 +84,18 @@ function buildSessionCookie(value: string, maxAge: number): string {
 }
 
 export function verifyAdminCredentials(username: string, password: string): boolean {
+  const expectedUsername = getAdminUsername();
+  const expectedPassword = getAdminPassword();
+
+  if (!expectedUsername || !expectedPassword || !getSessionSecret()) {
+    console.error(`Admin sign-in is not configured. Set ${REQUIRED_ADMIN_ENV} in the environment.`);
+    return false;
+  }
+
   const normalizedUsername = username.trim();
   const normalizedPassword = password.trim();
 
-  return safeEqual(normalizedUsername, getAdminUsername()) && safeEqual(normalizedPassword, getAdminPassword());
+  return safeEqual(normalizedUsername, expectedUsername) && safeEqual(normalizedPassword, expectedPassword);
 }
 
 export function setAdminSession(res: VercelResponse, username: string) {
@@ -98,7 +107,7 @@ export function setAdminSession(res: VercelResponse, username: string) {
     'utf8',
   ).toString('base64url');
 
-  const signature = signSessionPayload(payload);
+  const signature = signSessionPayload(payload, getSessionSecret());
   res.setHeader('Set-Cookie', buildSessionCookie(`${payload}.${signature}`, SESSION_MAX_AGE));
 }
 
@@ -107,6 +116,13 @@ export function clearAdminSession(res: VercelResponse) {
 }
 
 export function getAuthenticatedAdmin(req: VercelRequest): string | null {
+  // Without a signing secret no cookie can be trusted, so reject everything.
+  const secret = getSessionSecret();
+  if (!secret) {
+    console.error(`Admin session check is not configured. Set ${REQUIRED_ADMIN_ENV} in the environment.`);
+    return null;
+  }
+
   const token = parseCookies(req.headers.cookie)[SESSION_COOKIE];
   if (!token) {
     return null;
@@ -117,7 +133,7 @@ export function getAuthenticatedAdmin(req: VercelRequest): string | null {
     return null;
   }
 
-  const expectedSignature = signSessionPayload(payload);
+  const expectedSignature = signSessionPayload(payload, secret);
   if (!safeEqual(signature, expectedSignature)) {
     return null;
   }

@@ -31,6 +31,11 @@ const allowedServices = new Set([
   'Wigs & Toppers Enquiry',
 ]);
 
+// If the database write fails the enquiry is gone, so never leave the customer
+// at a dead end - hand them the phone numbers instead.
+const BOOKING_FALLBACK_MESSAGE =
+  'We could not save your enquiry just now. Please call us on 0416 595 902 or 02 9099 4362 and we will book you in.';
+
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phonePattern = /^[0-9+()\s-]{6,25}$/;
 const preferredDatePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -129,7 +134,7 @@ async function storeInquiry(record: {
 
   if (!supabaseUrl || !serviceRoleKey) {
     console.error('Inquiry storage is not configured: missing or blank Supabase environment variables');
-    return { ok: false as const, status: 503, error: 'Inquiry storage is not configured.' };
+    return { ok: false as const, status: 503, error: BOOKING_FALLBACK_MESSAGE };
   }
 
   const endpoint = `${supabaseUrl.replace(/\/$/, '')}/rest/v1/inquiries`;
@@ -151,7 +156,7 @@ async function storeInquiry(record: {
   if (!response.ok) {
     const errorBody = await response.text();
     console.error('Failed to store inquiry in Supabase:', response.status, errorBody);
-    return { ok: false as const, status: 502, error: 'Unable to store your inquiry right now.' };
+    return { ok: false as const, status: 502, error: BOOKING_FALLBACK_MESSAGE };
   }
 
   return { ok: true as const };

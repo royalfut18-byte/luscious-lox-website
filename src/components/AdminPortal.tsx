@@ -1,6 +1,7 @@
 import { FormEvent, useDeferredValue, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
+  AlertTriangle,
   ArrowLeft,
   CalendarDays,
   CheckCircle2,
@@ -14,7 +15,9 @@ import {
   Search,
   ShieldCheck,
   Sparkles,
+  Trash2,
   UserRound,
+  X,
 } from 'lucide-react';
 
 type BookingRecord = {
@@ -126,6 +129,10 @@ export default function AdminPortal() {
   const [selectedBookingId, setSelectedBookingId] = useState('');
   const [updatingBookingId, setUpdatingBookingId] = useState('');
   const [copiedLabel, setCopiedLabel] = useState('');
+  // Holds the booking awaiting delete confirmation. Nothing is removed until
+  // the dialog is confirmed.
+  const [pendingDeleteId, setPendingDeleteId] = useState('');
+  const [deletingBookingId, setDeletingBookingId] = useState('');
 
   const deferredSearch = useDeferredValue(search);
 
@@ -288,6 +295,7 @@ export default function AdminPortal() {
   const topServiceCount = topService === 'No bookings yet' ? 0 : (serviceCounts[topService] ?? 0);
   const mostRecentBooking = bookings[0] ?? null;
   const selectedPosition = selectedBooking ? filteredBookings.findIndex((booking) => booking.id === selectedBooking.id) + 1 : 0;
+  const pendingDeleteBooking = pendingDeleteId ? bookings.find((booking) => booking.id === pendingDeleteId) ?? null : null;
   const statusBreakdown = statusOptions.map((status) => ({
     status,
     count: bookings.filter((booking) => booking.status === status).length,
@@ -396,6 +404,36 @@ export default function AdminPortal() {
       setBookingsError('Unable to update this booking.');
     } finally {
       setUpdatingBookingId('');
+    }
+  };
+
+  const handleDeleteBooking = async (bookingId: string) => {
+    setDeletingBookingId(bookingId);
+    setBookingsError('');
+
+    try {
+      const response = await fetch('/api/admin-bookings', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: bookingId }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as { id?: string; error?: string } | null;
+
+      if (!response.ok) {
+        setBookingsError(payload?.error || 'Unable to delete this booking.');
+        return;
+      }
+
+      setBookings((current) => current.filter((booking) => booking.id !== bookingId));
+      setSelectedBookingId((current) => (current === bookingId ? '' : current));
+      setPendingDeleteId('');
+    } catch {
+      setBookingsError('Unable to delete this booking.');
+    } finally {
+      setDeletingBookingId('');
     }
   };
 
@@ -914,11 +952,98 @@ export default function AdminPortal() {
                   <p className="text-[11px] uppercase tracking-[0.26em] text-white/35">Client request</p>
                   <p className="mt-4 text-sm leading-7 text-white/72 whitespace-pre-wrap">{selectedMessage.details}</p>
                 </div>
+
+                <div className="rounded-[1.6rem] border border-red-400/20 bg-red-500/[0.05] p-5">
+                  <p className="text-[11px] uppercase tracking-[0.26em] text-red-200/60">Delete booking</p>
+                  <p className="mt-3 text-sm leading-6 text-white/55">
+                    Removes this enquiry permanently. Archive it instead if you only want it out of the way.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setPendingDeleteId(selectedBooking.id)}
+                    disabled={deletingBookingId === selectedBooking.id}
+                    className="mt-4 inline-flex items-center gap-2 rounded-full border border-red-400/30 bg-red-500/10 px-5 py-2.5 text-[11px] uppercase tracking-[0.2em] text-red-100 transition hover:bg-red-500/20 hover:border-red-400/50 disabled:opacity-50"
+                  >
+                    <Trash2 size={13} />
+                    {deletingBookingId === selectedBooking.id ? 'Deleting...' : 'Delete booking'}
+                  </button>
+                </div>
               </div>
             )}
           </section>
         </section>
       </div>
+
+      <AnimatePresence>
+        {pendingDeleteBooking && (
+          <motion.div
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+              onClick={() => setPendingDeleteId('')}
+            />
+
+            <motion.div
+              className="relative w-full max-w-md rounded-[1.75rem] border border-white/10 bg-[#141014] p-7 shadow-2xl"
+              initial={{ opacity: 0, y: 20, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 16, scale: 0.98 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              role="alertdialog"
+              aria-modal="true"
+              aria-label="Confirm booking deletion"
+            >
+              <button
+                type="button"
+                onClick={() => setPendingDeleteId('')}
+                aria-label="Cancel"
+                className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-white/40 transition hover:text-white hover:border-white/30"
+              >
+                <X size={14} />
+              </button>
+
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-red-400/25 bg-red-500/10">
+                <AlertTriangle size={20} className="text-red-300" />
+              </div>
+
+              <h3 className="mt-5 text-xl text-white">Delete this booking?</h3>
+
+              <p className="mt-3 text-sm leading-6 text-white/60">
+                This permanently removes the enquiry from
+                {' '}
+                <span className="text-white">{pendingDeleteBooking.name}</span>
+                {pendingDeleteBooking.phone ? ` (${pendingDeleteBooking.phone})` : ''}
+                {' '}
+                for {pendingDeleteBooking.service}. It cannot be undone.
+              </p>
+
+              <div className="mt-7 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => handleDeleteBooking(pendingDeleteBooking.id)}
+                  disabled={deletingBookingId === pendingDeleteBooking.id}
+                  className="inline-flex items-center gap-2 rounded-full border border-red-400/40 bg-red-500/20 px-6 py-3 text-[11px] uppercase tracking-[0.2em] text-red-50 transition hover:bg-red-500/30 disabled:opacity-50"
+                >
+                  <Trash2 size={13} />
+                  {deletingBookingId === pendingDeleteBooking.id ? 'Deleting...' : 'Yes, delete it'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPendingDeleteId('')}
+                  disabled={deletingBookingId === pendingDeleteBooking.id}
+                  className="rounded-full border border-white/12 px-6 py-3 text-[11px] uppercase tracking-[0.2em] text-white/60 transition hover:text-white hover:border-white/30 disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

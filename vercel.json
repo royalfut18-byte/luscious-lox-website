@@ -17,6 +17,10 @@
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/chat" },
     { "source": "/api/inquiry", "destination": "/api/inquiry" },
+    { "source": "/api/keep-alive", "destination": "/api/keep-alive" },
     { "source": "/(.*)", "destination": "/" }
+  ],
+  "crons": [
+    { "path": "/api/keep-alive", "schedule": "0 14 * * *" }
   ]
 }
