@@ -1,0 +1,49 @@
+name: Keep Supabase awake
+
+# Second, independent pinger. Vercel's cron already calls /api/keep-alive daily;
+# this one runs from GitHub so a problem with the Vercel cron alone cannot let
+# the Supabase project drift past its 7-day idle limit and pause.
+#
+# Note: GitHub disables scheduled workflows after 60 days with no repo activity,
+# and emails the owner first. If that happens, re-enable it from the Actions tab.
+
+on:
+  schedule:
+    # 02:00 UTC daily, deliberately offset from the Vercel cron at 14:00 UTC
+    # so the two checks land roughly twelve hours apart.
+    - cron: '0 2 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the keep-alive endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          url="https://www.luscious-lox.com/api/keep-alive"
+
+          response=$(curl --silent --show-error --max-time 30 \
+            --write-out '\n%{http_code}' \
+            --header "Authorization: Bearer ${CRON_SECRET}" \
+            "$url")
+
+          body=$(printf '%s' "$response" | sed '$d')
+          status=$(printf '%s' "$response" | tail -n1)
+
+          echo "HTTP $status"
+          echo "$body"
+
+          if [ "$status" != "200" ]; then
+            echo "::error::Keep-alive failed with HTTP $status. Supabase may be paused or the key rotated."
+            exit 1
+          fi
+
+          # A 200 that served the SPA instead of the function means the rewrite
+          # rules are swallowing the route and nothing actually reached Supabase.
+          case "$body" in
+            *'"ok":true'*) echo "Supabase confirmed reachable." ;;
+            *) echo "::error::Unexpected response body; the endpoint may not be reaching Supabase."; exit 1 ;;
+          esac
