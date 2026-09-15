@@ -6,7 +6,7 @@ const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
 // No credential fallbacks live in this repo. If the environment variables are
 // not set the admin API refuses every login rather than accepting a default
 // that anyone reading the source could use.
-const REQUIRED_ADMIN_ENV = 'ADMIN_USERNAME, ADMIN_PASSWORD and ADMIN_SESSION_SECRET';
+const REQUIRED_ADMIN_ENV = 'ADMIN_USERNAME and ADMIN_PASSWORD';
 
 export function normalizeEnvValue(value: string | undefined): string {
   if (typeof value !== 'string') {
@@ -49,8 +49,25 @@ function getAdminPassword(): string {
   return normalizeEnvValue(process.env.ADMIN_PASSWORD);
 }
 
+/**
+ * Prefers a dedicated ADMIN_SESSION_SECRET. When that is not configured the
+ * signing key is derived from the admin password instead, which keeps sessions
+ * signed with something private to this deployment rather than a constant
+ * published in this repo. Setting ADMIN_SESSION_SECRET is still better, because
+ * it separates the signing key from the password and survives password changes.
+ */
 function getSessionSecret(): string {
-  return normalizeEnvValue(process.env.ADMIN_SESSION_SECRET);
+  const configured = normalizeEnvValue(process.env.ADMIN_SESSION_SECRET);
+  if (configured) {
+    return configured;
+  }
+
+  const password = normalizeEnvValue(process.env.ADMIN_PASSWORD);
+  if (!password) {
+    return '';
+  }
+
+  return crypto.createHash('sha256').update(`lux-admin-session:${password}`).digest('base64url');
 }
 
 function signSessionPayload(payload: string, secret: string): string {
@@ -83,11 +100,16 @@ function buildSessionCookie(value: string, maxAge: number): string {
   return `${SESSION_COOKIE}=${value}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${secureFlag}`;
 }
 
+/** True when the sign-in credentials exist in the environment at all. */
+export function isAdminConfigured(): boolean {
+  return Boolean(getAdminUsername() && getAdminPassword());
+}
+
 export function verifyAdminCredentials(username: string, password: string): boolean {
   const expectedUsername = getAdminUsername();
   const expectedPassword = getAdminPassword();
 
-  if (!expectedUsername || !expectedPassword || !getSessionSecret()) {
+  if (!expectedUsername || !expectedPassword) {
     console.error(`Admin sign-in is not configured. Set ${REQUIRED_ADMIN_ENV} in the environment.`);
     return false;
   }

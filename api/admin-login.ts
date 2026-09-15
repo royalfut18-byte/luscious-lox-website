@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { clearAdminSession, setAdminSession, verifyAdminCredentials } from './_lib/admin.js';
+import { clearAdminSession, isAdminConfigured, setAdminSession, verifyAdminCredentials } from './_lib/admin.js';
 
 function getString(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';
@@ -13,6 +13,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed.' });
+  }
+
+  // Say plainly when the server has no credentials configured. A generic
+  // "invalid password" here makes a misconfigured deployment look identical to
+  // a typo, which is a miserable thing to debug.
+  if (!isAdminConfigured()) {
+    return res.status(503).json({
+      error: 'Admin sign-in is not configured on the server. Set ADMIN_USERNAME and ADMIN_PASSWORD, then redeploy.',
+    });
   }
 
   const username = getString(req.body?.username);
