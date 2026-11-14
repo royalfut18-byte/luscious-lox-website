@@ -4,7 +4,7 @@ import { normalizeEnvValue, requireAdmin } from './_lib/admin.js';
 /**
  * ClickSend SMS for the admin panel.
  *
- *   GET  /api/admin-sms            -> { configured, balance, currency, senderId, history }
+ *   GET  /api/admin-sms            -> { configured, senderId, history }
  *   POST /api/admin-sms            -> body { messages: [{ to, body, bookingId? }] }
  *
  * Needs CLICKSEND_USERNAME and CLICKSEND_API_KEY (from the ClickSend dashboard,
@@ -99,7 +99,8 @@ function describeClickSendError(payload: Record<string, unknown> | null, fallbac
   }
 
   if (code === 'INSUFFICIENT_CREDIT') {
-    return 'Your ClickSend account is out of credit. Top up, then try again.';
+    // Keep billing out of the salon's view; whoever runs the ClickSend account sees it there.
+    return 'Texting is unavailable right now. Please contact your website administrator.';
   }
 
   return message || fallback;
@@ -112,13 +113,13 @@ type HistoryItem = {
   status: string;
   sentAt: number;
   bookingId: string;
-  price: string;
 };
 
 async function loadOverview(authorization: string) {
   const now = Math.floor(Date.now() / 1000);
   const thirtyDaysAgo = now - 60 * 60 * 24 * 30;
 
+  // /account is only used to confirm the credentials work; nothing from it is returned.
   const [account, history] = await Promise.all([
     clickSendFetch('/account', authorization),
     clickSendFetch(`/sms/history?date_from=${thirtyDaysAgo}&date_to=${now}&limit=50&page=1`, authorization),
@@ -131,9 +132,6 @@ async function loadOverview(authorization: string) {
       error: describeClickSendError(account.payload, 'Unable to reach ClickSend right now.'),
     };
   }
-
-  const accountData = (account.payload?.data ?? {}) as Record<string, unknown>;
-  const currencyData = (accountData._currency ?? {}) as Record<string, unknown>;
 
   let items: HistoryItem[] = [];
   if (history.response.ok) {
@@ -149,19 +147,13 @@ async function loadOverview(authorization: string) {
         status: getString(row.status) || getString(row.status_text) || 'Unknown',
         sentAt: Number(row.date ?? row.date_added ?? 0) * 1000,
         bookingId: getString(row.custom_string),
-        price: getString(row.message_price),
       }))
       .sort((a, b) => b.sentAt - a.sentAt);
   } else {
     console.error('ClickSend history request failed:', history.response.status, history.payload);
   }
 
-  return {
-    ok: true as const,
-    balance: accountData.balance !== undefined ? String(accountData.balance) : null,
-    currency: getString(currencyData.currency_name_short) || getString(currencyData.currency_prefix_d) || '',
-    history: items,
-  };
+  return { ok: true as const, history: items };
 }
 
 function parseMessages(value: unknown): { messages: OutgoingMessage[]; error?: string } {
@@ -210,7 +202,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method === 'GET') {
     if (!config) {
-      return res.status(200).json({ configured: false, balance: null, currency: '', senderId: '', history: [] });
+      return res.status(200).json({ configured: false, senderId: '', history: [] });
     }
 
     const overview = await loadOverview(config.authorization);
@@ -220,8 +212,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     return res.status(200).json({
       configured: true,
-      balance: overview.balance,
-      currency: overview.currency,
       senderId: config.senderId,
       history: overview.history,
     });
@@ -273,8 +263,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({
       sent,
       failed: results.length - sent,
-      totalPrice: data.total_price ?? null,
-      currency: getString((data._currency as Record<string, unknown> | undefined)?.currency_name_short),
       results,
     });
   }

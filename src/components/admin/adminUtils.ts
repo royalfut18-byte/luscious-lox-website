@@ -17,13 +17,10 @@ export type SmsHistoryItem = {
   status: string;
   sentAt: number;
   bookingId: string;
-  price: string;
 };
 
 export type SmsOverview = {
   configured: boolean;
-  balance: string | null;
-  currency: string;
   senderId: string;
   history: SmsHistoryItem[];
   error?: string;

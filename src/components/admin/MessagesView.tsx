@@ -10,7 +10,6 @@ import {
   Send,
   Settings2,
   Users,
-  Wallet,
   X,
 } from 'lucide-react';
 import {
@@ -44,7 +43,6 @@ type MessagesViewProps = {
 type SendResult = {
   sent: number;
   failed: Array<{ to: string; status: string }>;
-  cost: string;
 };
 
 export default function MessagesView({ bookings, recipients, onRecipientsChange, onMarkContacted, onUnauthorized }: MessagesViewProps) {
@@ -76,7 +74,7 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
       }
 
       if (!response.ok || !payload) {
-        setOverview(payload?.configured ? { configured: true, balance: null, currency: '', senderId: '', history: [] } : null);
+        setOverview(payload?.configured ? { configured: true, senderId: '', history: [] } : null);
         setOverviewError(payload?.error || 'Unable to load SMS account details.');
         return;
       }
@@ -97,7 +95,6 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
   const cleanedBody = cleanSmsText(body);
   const preview = personalise(cleanedBody, recipients[0] ?? null);
   const segments = smsSegments(preview);
-  const totalCredits = segments.segments * recipients.length;
   const newRecipientCount = recipients.filter((recipient) => recipient.bookingId && recipient.status === 'new').length;
 
   const canSend = configured && recipients.length > 0 && cleanedBody.trim().length > 0 && !sending;
@@ -176,8 +173,6 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
 
       const payload = (await response.json().catch(() => null)) as {
         sent?: number;
-        totalPrice?: number | string | null;
-        currency?: string;
         results?: Array<{ to: string; status: string; bookingId: string }>;
         error?: string;
       } | null;
@@ -195,7 +190,6 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
       setResult({
         sent: payload?.sent ?? 0,
         failed: failed.map((item) => ({ to: item.to, status: item.status })),
-        cost: payload?.totalPrice != null ? `${payload.currency ? `${payload.currency} ` : ''}${payload.totalPrice}` : '',
       });
 
       if (markContacted) {
@@ -238,7 +232,6 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
               <div className="flex-1 text-emerald-50">
                 <p>
                   Sent to {result.sent} {result.sent === 1 ? 'person' : 'people'}
-                  {result.cost ? <span className="text-emerald-100/60"> · cost {result.cost}</span> : null}
                 </p>
                 {result.failed.length ? (
                   <p className="mt-1 text-amber-100">
@@ -382,10 +375,7 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
                     </button>
                   ))}
                 </div>
-                <span className={`text-xs tabular-nums ${segments.segments > 2 ? 'text-amber-200' : 'text-white/40'}`}>
-                  {segments.length} chars · {segments.segments} SMS
-                  {segments.encoding === 'Unicode' ? ' · emoji/special chars' : ''}
-                </span>
+                <span className="text-xs tabular-nums text-white/40">{segments.length} characters</span>
               </div>
             </div>
           </div>
@@ -468,9 +458,7 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
               Send to {recipients.length} {recipients.length === 1 ? 'person' : 'people'}?
             </h3>
             <p className="mt-2 text-sm leading-6 text-white/55">
-              This uses about {totalCredits} SMS credit{totalCredits === 1 ? '' : 's'} on ClickSend
-              {overview?.balance ? ` (balance ${overview.currency ? `${overview.currency} ` : ''}${Number(overview.balance).toFixed(2)})` : ''}. Texts can't be
-              unsent once they go out.
+              Each person gets their own copy of the message below. Texts can't be unsent once they go out.
             </p>
             <div className="mt-4 max-h-40 overflow-y-auto rounded-xl bg-black/30 px-4 py-3 text-sm leading-6 text-white/75 whitespace-pre-wrap">
               {preview}
@@ -570,23 +558,7 @@ function AccountCard({
       {error ? (
         <p className="mt-4 text-sm leading-6 text-rose-100/80">{error}</p>
       ) : (
-        <div className="mt-5 grid grid-cols-2 gap-4">
-          <div>
-            <p className="flex items-center gap-1.5 text-xs text-white/40">
-              <Wallet size={13} />
-              Balance
-            </p>
-            <p className="mt-1.5 text-2xl font-semibold tabular-nums tracking-tight">
-              {overview?.balance != null ? (
-                <>
-                  <span className="mr-1 text-sm font-normal text-white/45">{overview.currency}</span>
-                  {Number(overview.balance).toFixed(2)}
-                </>
-              ) : (
-                '—'
-              )}
-            </p>
-          </div>
+        <div className="mt-5">
           <div className="min-w-0">
             <p className="text-xs text-white/40">Sends as</p>
             <p className="mt-1.5 truncate text-sm text-white/85" title={overview?.senderId || 'Shared number'}>
