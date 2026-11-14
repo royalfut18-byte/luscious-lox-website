@@ -10,6 +10,38 @@ export type BookingRecord = {
   created_at: string;
 };
 
+export type ClientRecord = {
+  id: string;
+  name: string;
+  phone: string | null;
+  email: string | null;
+  notes: string | null;
+  created_at: string;
+};
+
+export type ClientInput = {
+  name: string;
+  phone: string;
+  email: string;
+  notes: string;
+};
+
+/**
+ * One person in the Clients tab: either a saved client, or someone who only
+ * exists as a website enquiry so far. Enquiries are matched to saved clients
+ * by email, then phone.
+ */
+export type Contact = {
+  key: string;
+  clientId?: string;
+  name: string;
+  phone: string;
+  email: string;
+  notes: string;
+  addedAt: string;
+  bookings: BookingRecord[];
+};
+
 export type SmsHistoryItem = {
   id: string;
   to: string;
@@ -261,3 +293,66 @@ export const smsTemplates = [
     body: 'Hi {first_name}, thank you for visiting Lusciouslox! We hope you love your hair. A quick Google review would mean the world to us.',
   },
 ] as const;
+
+export function buildContacts(clients: ClientRecord[], bookings: BookingRecord[]): Contact[] {
+  const contacts: Contact[] = clients.map((client) => ({
+    key: `client:${client.id}`,
+    clientId: client.id,
+    name: client.name,
+    phone: client.phone ? normalizePhone(client.phone) : '',
+    email: (client.email ?? '').toLowerCase(),
+    notes: client.notes ?? '',
+    addedAt: client.created_at,
+    bookings: [],
+  }));
+
+  const byEmail = new Map<string, Contact>();
+  const byPhone = new Map<string, Contact>();
+  const index = (contact: Contact) => {
+    if (contact.email && !byEmail.has(contact.email)) byEmail.set(contact.email, contact);
+    if (contact.phone && !byPhone.has(contact.phone)) byPhone.set(contact.phone, contact);
+  };
+  contacts.forEach(index);
+
+  // Bookings arrive newest first, so each contact's bookings stay newest first.
+  bookings.forEach((booking) => {
+    const email = (booking.email ?? '').trim().toLowerCase();
+    const phone = booking.phone ? normalizePhone(booking.phone) : '';
+    const match = (email && byEmail.get(email)) || (phone && byPhone.get(phone)) || null;
+
+    if (match) {
+      match.bookings.push(booking);
+      return;
+    }
+
+    const contact: Contact = {
+      key: `enquiry:${booking.id}`,
+      name: booking.name,
+      phone,
+      email,
+      notes: '',
+      addedAt: booking.created_at,
+      bookings: [booking],
+    };
+    contacts.push(contact);
+    index(contact);
+  });
+
+  return contacts.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
+}
+
+export function recipientFromContact(contact: Contact): SmsRecipient | null {
+  if (!contact.phone) {
+    return null;
+  }
+
+  const latest = contact.bookings[0];
+  return {
+    key: contact.key,
+    phone: contact.phone,
+    name: contact.name,
+    service: latest?.service ?? '',
+    bookingId: latest?.id,
+    status: latest?.status,
+  };
+}

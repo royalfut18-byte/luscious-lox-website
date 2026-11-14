@@ -1,14 +1,29 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { AlertTriangle, ExternalLink, Inbox, LogOut, MessageSquareText, RefreshCcw, Trash2 } from 'lucide-react';
+import { AlertTriangle, ExternalLink, Inbox, LogOut, MessageSquareText, RefreshCcw, Trash2, Users } from 'lucide-react';
 import AdminLogin from './admin/AdminLogin';
 import BookingsView from './admin/BookingsView';
+import ClientsView, { SaveClientResult } from './admin/ClientsView';
 import MessagesView, { Modal } from './admin/MessagesView';
-import { BookingRecord, SmsRecipient, initials, recipientFromBooking } from './admin/adminUtils';
+import {
+  BookingRecord,
+  ClientInput,
+  ClientRecord,
+  Contact,
+  SmsRecipient,
+  buildContacts,
+  initials,
+  recipientFromBooking,
+  recipientFromContact,
+} from './admin/adminUtils';
 
-type View = 'bookings' | 'messages';
+type View = 'bookings' | 'clients' | 'messages';
 
-const viewFromHash = (): View => (window.location.hash === '#messages' ? 'messages' : 'bookings');
+const viewFromHash = (): View => {
+  if (window.location.hash === '#messages') return 'messages';
+  if (window.location.hash === '#clients') return 'clients';
+  return 'bookings';
+};
 
 export default function AdminPortal() {
   const [sessionReady, setSessionReady] = useState(false);
@@ -22,12 +37,17 @@ export default function AdminPortal() {
   const [deletingId, setDeletingId] = useState('');
   const [pendingDeleteId, setPendingDeleteId] = useState('');
   const [smsRecipients, setSmsRecipients] = useState<SmsRecipient[]>([]);
+  const [clients, setClients] = useState<ClientRecord[]>([]);
+  const [loadingClients, setLoadingClients] = useState(false);
+  const [clientsError, setClientsError] = useState('');
+  const [openBookingDetail, setOpenBookingDetail] = useState(false);
 
   const authenticated = Boolean(authUser);
 
   const signOutLocally = useCallback(() => {
     setAuthUser('');
     setBookings([]);
+    setClients([]);
     setSelectedId('');
     setSmsRecipients([]);
   }, []);
@@ -59,7 +79,7 @@ export default function AdminPortal() {
 
   const goTo = (next: View) => {
     setView(next);
-    window.history.replaceState(null, '', next === 'messages' ? '#messages' : window.location.pathname);
+    window.history.replaceState(null, '', next === 'bookings' ? window.location.pathname : `#${next}`);
     window.scrollTo({ top: 0 });
   };
 
@@ -91,11 +111,104 @@ export default function AdminPortal() {
     }
   }, [signOutLocally]);
 
+  const loadClients = useCallback(async () => {
+    setLoadingClients(true);
+    setClientsError('');
+
+    try {
+      const response = await fetch('/api/admin-clients', { cache: 'no-store' });
+      const payload = (await response.json().catch(() => null)) as { clients?: ClientRecord[]; error?: string } | null;
+
+      if (response.status === 401) {
+        signOutLocally();
+        return;
+      }
+
+      if (!response.ok) {
+        setClientsError(payload?.error || 'Unable to load clients right now.');
+        return;
+      }
+
+      setClients(Array.isArray(payload?.clients) ? payload.clients : []);
+    } catch {
+      setClientsError('Unable to load clients right now.');
+    } finally {
+      setLoadingClients(false);
+    }
+  }, [signOutLocally]);
+
+  const refreshAll = useCallback(() => {
+    loadBookings();
+    loadClients();
+  }, [loadBookings, loadClients]);
+
   useEffect(() => {
     if (authenticated) {
-      loadBookings();
+      refreshAll();
     }
-  }, [authenticated, loadBookings]);
+  }, [authenticated, refreshAll]);
+
+  const contacts = useMemo(() => buildContacts(clients, bookings), [clients, bookings]);
+
+  const handleSaveClient = async (input: ClientInput, id: string | undefined, allowSharedPhone: boolean): Promise<SaveClientResult> => {
+    try {
+      const response = await fetch('/api/admin-clients', {
+        method: id ? 'PATCH' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...input, id, allowSharedPhone }),
+      });
+      const payload = (await response.json().catch(() => null)) as { client?: ClientRecord; error?: string; code?: string } | null;
+
+      if (response.status === 401) {
+        signOutLocally();
+        return { error: 'Your session has ended. Please sign in again.' };
+      }
+
+      if (!response.ok || !payload?.client) {
+        return { error: payload?.error || 'Unable to save this client.', code: payload?.code };
+      }
+
+      const saved = payload.client;
+      setClients((current) => (id ? current.map((client) => (client.id === id ? saved : client)) : [...current, saved]));
+      return { id: saved.id };
+    } catch {
+      return { error: 'Unable to save this client. Check your connection and try again.' };
+    }
+  };
+
+  const handleDeleteClient = async (id: string): Promise<string | null> => {
+    try {
+      const response = await fetch('/api/admin-clients', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+
+      if (!response.ok) {
+        return payload?.error || 'Unable to delete this client.';
+      }
+
+      setClients((current) => current.filter((client) => client.id !== id));
+      return null;
+    } catch {
+      return 'Unable to delete this client.';
+    }
+  };
+
+  const handleTextContact = (contact: Contact) => {
+    const recipient = recipientFromContact(contact);
+    if (recipient) {
+      setSmsRecipients([recipient]);
+    }
+    goTo('messages');
+  };
+
+  const handleOpenBooking = (bookingId: string) => {
+    setSelectedId(bookingId);
+    setOpenBookingDetail(true);
+    goTo('bookings');
+  };
 
   const updateStatus = useCallback(async (bookingId: string, status: string) => {
     const response = await fetch('/api/admin-bookings', {
@@ -186,16 +299,20 @@ export default function AdminPortal() {
 
   const navItems = [
     { id: 'bookings' as const, label: 'Bookings', icon: Inbox, badge: newCount },
+    { id: 'clients' as const, label: 'Clients', icon: Users, badge: 0 },
     { id: 'messages' as const, label: 'Messages', icon: MessageSquareText, badge: smsRecipients.length },
   ];
 
-  const pageTitle = view === 'bookings' ? 'Bookings' : 'Messages';
+  const savedClientCount = clients.length;
+  const pageTitle = view === 'bookings' ? 'Bookings' : view === 'clients' ? 'Clients' : 'Messages';
   const pageSubtitle =
     view === 'bookings'
       ? newCount
         ? `${newCount} new ${newCount === 1 ? 'enquiry needs' : 'enquiries need'} a reply`
         : 'You are all caught up'
-      : 'Send text messages to your clients';
+      : view === 'clients'
+        ? `${savedClientCount} saved ${savedClientCount === 1 ? 'client' : 'clients'}`
+        : 'Send text messages to your clients';
 
   return (
     <div className="min-h-screen bg-[#0E0A09] font-body text-white antialiased">
@@ -300,18 +417,30 @@ export default function AdminPortal() {
               ) : null}
               <button
                 type="button"
-                onClick={loadBookings}
+                onClick={refreshAll}
                 className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 text-sm text-white/80 transition hover:bg-white/[0.08] sm:px-4"
                 aria-label="Refresh"
               >
-                <RefreshCcw size={16} className={loadingBookings ? 'animate-spin' : ''} />
+                <RefreshCcw size={16} className={loadingBookings || loadingClients ? 'animate-spin' : ''} />
                 <span className="hidden sm:inline">Refresh</span>
               </button>
             </div>
           </div>
 
-          {view === 'bookings' ? (
+          {view === 'clients' ? (
+            <ClientsView
+              contacts={contacts}
+              loading={loadingClients || loadingBookings}
+              error={clientsError}
+              onSave={handleSaveClient}
+              onDelete={handleDeleteClient}
+              onText={handleTextContact}
+              onOpenBooking={handleOpenBooking}
+            />
+          ) : view === 'bookings' ? (
             <BookingsView
+              startWithDetailOpen={openBookingDetail}
+              onDetailOpened={() => setOpenBookingDetail(false)}
               bookings={bookings}
               loading={loadingBookings}
               error={bookingsError}
@@ -325,7 +454,7 @@ export default function AdminPortal() {
             />
           ) : (
             <MessagesView
-              bookings={bookings}
+              contacts={contacts}
               recipients={smsRecipients}
               onRecipientsChange={setSmsRecipients}
               onMarkContacted={handleMarkContacted}
@@ -336,7 +465,7 @@ export default function AdminPortal() {
       </main>
 
       {/* Mobile tab bar */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 border-t border-white/[0.07] bg-[#120D0B]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 border-t border-white/[0.07] bg-[#120D0B]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden">
         {navItems.map((item) => {
           const active = view === item.id;
           return (

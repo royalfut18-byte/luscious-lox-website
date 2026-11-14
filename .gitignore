@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Local-only SQL that contains client personal details
+*.private.sql

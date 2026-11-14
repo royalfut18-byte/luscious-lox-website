@@ -13,7 +13,7 @@ import {
   X,
 } from 'lucide-react';
 import {
-  BookingRecord,
+  Contact,
   SmsOverview,
   SmsRecipient,
   cleanSmsText,
@@ -24,7 +24,7 @@ import {
   messageVariables,
   normalizePhone,
   personalise,
-  recipientFromBooking,
+  recipientFromContact,
   smsSegments,
   smsTemplates,
   statusDot,
@@ -33,7 +33,7 @@ import {
 } from './adminUtils';
 
 type MessagesViewProps = {
-  bookings: BookingRecord[];
+  contacts: Contact[];
   recipients: SmsRecipient[];
   onRecipientsChange: (recipients: SmsRecipient[]) => void;
   onMarkContacted: (bookingIds: string[]) => Promise<void>;
@@ -45,7 +45,7 @@ type SendResult = {
   failed: Array<{ to: string; status: string }>;
 };
 
-export default function MessagesView({ bookings, recipients, onRecipientsChange, onMarkContacted, onUnauthorized }: MessagesViewProps) {
+export default function MessagesView({ contacts, recipients, onRecipientsChange, onMarkContacted, onUnauthorized }: MessagesViewProps) {
   const [overview, setOverview] = useState<SmsOverview | null>(null);
   const [overviewError, setOverviewError] = useState('');
   const [loadingOverview, setLoadingOverview] = useState(true);
@@ -126,12 +126,8 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
       return;
     }
 
-    const match = bookings.find((booking) => booking.phone && normalizePhone(booking.phone) === phone);
-    addRecipients([
-      match
-        ? (recipientFromBooking(match) as SmsRecipient)
-        : { key: `manual:${phone}`, phone, name: '', service: '' },
-    ]);
+    const match = contacts.find((contact) => contact.phone === phone);
+    addRecipients([(match && recipientFromContact(match)) || { key: `manual:${phone}`, phone, name: '', service: '' }]);
     setManualNumber('');
     setManualError('');
   };
@@ -429,19 +425,19 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
 
       <aside className="space-y-5">
         <AccountCard overview={overview} loading={loadingOverview} error={overviewError} onRefresh={loadOverview} />
-        {configured ? <HistoryCard overview={overview} loading={loadingOverview} bookings={bookings} /> : null}
+        {configured ? <HistoryCard overview={overview} loading={loadingOverview} contacts={contacts} /> : null}
       </aside>
 
       <AnimatePresence>
         {pickerOpen ? (
           <RecipientPicker
-            bookings={bookings}
+            contacts={contacts}
             selectedPhones={new Set(recipients.map((recipient) => recipient.phone))}
             onClose={() => setPickerOpen(false)}
             onConfirm={(picked) => {
               const pickedPhones = new Set(picked.map((recipient) => recipient.phone));
-              // Booking-based recipients are fully controlled by the picker; manual ones stay.
-              const kept = recipients.filter((recipient) => !recipient.bookingId || pickedPhones.has(recipient.phone));
+              // Client recipients are fully controlled by the picker; typed-in numbers stay.
+              const kept = recipients.filter((recipient) => recipient.key.startsWith('manual:') || pickedPhones.has(recipient.phone));
               const keptPhones = new Set(kept.map((recipient) => recipient.phone));
               onRecipientsChange([...kept, ...picked.filter((recipient) => !keptPhones.has(recipient.phone))]);
               setPickerOpen(false);
@@ -560,13 +556,14 @@ function AccountCard({
   );
 }
 
-function HistoryCard({ overview, loading, bookings }: { overview: SmsOverview | null; loading: boolean; bookings: BookingRecord[] }) {
+function HistoryCard({ overview, loading, contacts }: { overview: SmsOverview | null; loading: boolean; contacts: Contact[] }) {
   const history = overview?.history ?? [];
   const nameFor = (bookingId: string, to: string) => {
-    const booking =
-      bookings.find((item) => item.id === bookingId) ??
-      bookings.find((item) => item.phone && normalizePhone(item.phone) === normalizePhone(to));
-    return booking?.name ?? '';
+    const phone = normalizePhone(to);
+    const contact =
+      (bookingId ? contacts.find((item) => item.bookings.some((booking) => booking.id === bookingId)) : undefined) ??
+      contacts.find((item) => item.phone === phone);
+    return contact?.name ?? '';
   };
 
   return (
@@ -605,12 +602,12 @@ function HistoryCard({ overview, loading, bookings }: { overview: SmsOverview | 
 }
 
 function RecipientPicker({
-  bookings,
+  contacts: people,
   selectedPhones,
   onClose,
   onConfirm,
 }: {
-  bookings: BookingRecord[];
+  contacts: Contact[];
   selectedPhones: Set<string>;
   onClose: () => void;
   onConfirm: (recipients: SmsRecipient[]) => void;
@@ -618,11 +615,11 @@ function RecipientPicker({
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('all');
 
-  // One entry per phone number, keeping the most recent booking for each.
+  // One entry per phone number: people who share a phone only need one text.
   const contacts: SmsRecipient[] = [];
   const seen = new Set<string>();
-  bookings.forEach((booking) => {
-    const recipient = recipientFromBooking(booking);
+  people.forEach((person) => {
+    const recipient = recipientFromContact(person);
     if (recipient && !seen.has(recipient.phone)) {
       seen.add(recipient.phone);
       contacts.push(recipient);
@@ -636,7 +633,7 @@ function RecipientPicker({
   const query = search.trim().toLowerCase();
   const visible = contacts.filter(
     (contact) =>
-      (status === 'all' || contact.status === status) &&
+      (status === 'all' || (status === 'none' ? !contact.status : contact.status === status)) &&
       (!query || `${contact.name} ${contact.phone} ${displayPhone(contact.phone)} ${contact.service}`.toLowerCase().includes(query)),
   );
   const allVisiblePicked = visible.length > 0 && visible.every((contact) => picked.has(contact.phone));
@@ -666,7 +663,7 @@ function RecipientPicker({
           <X size={18} />
         </button>
       </div>
-      <p className="mt-1 text-sm text-white/45">Clients from your bookings who left a phone number.</p>
+      <p className="mt-1 text-sm text-white/45">Your clients and website enquiries with a mobile number.</p>
 
       <div className="mt-5 flex flex-col gap-2 sm:flex-row">
         <label className="flex h-10 min-w-0 items-center gap-2.5 rounded-xl sm:flex-1 border border-white/10 bg-black/20 px-3.5 focus-within:border-[#E3C189]/50">
@@ -687,6 +684,7 @@ function RecipientPicker({
             aria-label="Filter by status"
           >
             <option value="all" className="bg-[#1A120F]">Any status</option>
+            <option value="none" className="bg-[#1A120F]">No website enquiry</option>
             {statusOptions.map((option) => (
               <option key={option} value={option} className="bg-[#1A120F]">
                 {statusLabel(option)}
@@ -719,13 +717,15 @@ function RecipientPicker({
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm text-white/90">{contact.name}</p>
                 <p className="truncate text-xs text-white/40">
-                  {displayPhone(contact.phone)} · {contact.service}
+                  {[displayPhone(contact.phone), contact.service].filter(Boolean).join(' · ')}
                 </p>
               </div>
-              <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-white/45">
-                <span className={`h-1.5 w-1.5 rounded-full ${statusDot(contact.status ?? '')}`} />
-                {statusLabel(contact.status ?? '')}
-              </span>
+              {contact.status ? (
+                <span className="inline-flex shrink-0 items-center gap-1.5 text-xs text-white/45">
+                  <span className={`h-1.5 w-1.5 rounded-full ${statusDot(contact.status)}`} />
+                  {statusLabel(contact.status)}
+                </span>
+              ) : null}
             </label>
           );
         })}

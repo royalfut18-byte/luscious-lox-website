@@ -41,6 +41,9 @@ type BookingsViewProps = {
   onStatusChange: (id: string, status: string) => void;
   onRequestDelete: (id: string) => void;
   onText: (booking: BookingRecord) => void;
+  /** Open the selected booking straight away on phones (used when coming from Clients). */
+  startWithDetailOpen?: boolean;
+  onDetailOpened?: () => void;
 };
 
 export default function BookingsView({
@@ -54,11 +57,19 @@ export default function BookingsView({
   onStatusChange,
   onRequestDelete,
   onText,
+  startWithDetailOpen = false,
+  onDetailOpened,
 }: BookingsViewProps) {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [serviceFilter, setServiceFilter] = useState('all');
-  const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
+  const [mobileDetailOpen, setMobileDetailOpen] = useState(startWithDetailOpen);
+
+  useEffect(() => {
+    if (startWithDetailOpen) onDetailOpened?.();
+    // Only on mount: the flag is a one-off hand-off from the Clients tab.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const deferredSearch = useDeferredValue(search);
 
   const filtered = bookings.filter((booking) => {
