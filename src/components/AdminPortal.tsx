@@ -195,7 +195,7 @@ export default function AdminPortal() {
       ? newCount
         ? `${newCount} new ${newCount === 1 ? 'enquiry needs' : 'enquiries need'} a reply`
         : 'You are all caught up'
-      : 'Send SMS to clients through ClickSend';
+      : 'Send text messages to your clients';
 
   return (
     <div className="min-h-screen bg-[#0E0A09] font-body text-white antialiased">

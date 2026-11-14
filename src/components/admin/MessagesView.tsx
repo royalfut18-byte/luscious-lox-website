@@ -75,13 +75,13 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
 
       if (!response.ok || !payload) {
         setOverview(payload?.configured ? { configured: true, senderId: '', history: [] } : null);
-        setOverviewError(payload?.error || 'Unable to load SMS account details.');
+        setOverviewError(payload?.error || 'Unable to load texting details.');
         return;
       }
 
       setOverview(payload);
     } catch {
-      setOverviewError('Unable to load SMS account details.');
+      setOverviewError('Unable to load texting details.');
     } finally {
       setLoadingOverview(false);
     }
@@ -99,7 +99,7 @@ export default function MessagesView({ bookings, recipients, onRecipientsChange,
 
   const canSend = configured && recipients.length > 0 && cleanedBody.trim().length > 0 && !sending;
   const sendBlocker = !configured
-    ? 'Connect ClickSend to start sending'
+    ? 'Texting is not switched on yet'
     : recipients.length === 0
       ? 'Add at least one recipient'
       : !cleanedBody.trim()
@@ -516,24 +516,13 @@ function AccountCard({
             <Settings2 size={18} />
           </div>
           <div>
-            <p className="font-semibold">Connect ClickSend</p>
-            <p className="text-xs text-white/50">SMS is not switched on yet</p>
+            <p className="font-semibold">Texting is not set up</p>
+            <p className="text-xs text-white/50">Messages can't be sent yet</p>
           </div>
         </div>
-        <ol className="mt-5 list-decimal space-y-2.5 pl-5 text-sm leading-6 text-white/65 marker:text-white/35">
-          <li>
-            In ClickSend, open <span className="text-white/85">Developers → API Credentials</span>.
-          </li>
-          <li>
-            In Vercel, add <code className="rounded bg-black/30 px-1.5 py-0.5 text-[12px] text-[#F0D39E]">CLICKSEND_USERNAME</code> and{' '}
-            <code className="rounded bg-black/30 px-1.5 py-0.5 text-[12px] text-[#F0D39E]">CLICKSEND_API_KEY</code>.
-          </li>
-          <li>
-            Optional: <code className="rounded bg-black/30 px-1.5 py-0.5 text-[12px] text-[#F0D39E]">CLICKSEND_SENDER_ID</code> to send
-            from a set number or name.
-          </li>
-          <li>Redeploy, then refresh this page.</li>
-        </ol>
+        <p className="mt-4 text-sm leading-6 text-white/65">
+          Please contact your website administrator to switch on text messaging.
+        </p>
       </div>
     );
   }
@@ -543,7 +532,7 @@ function AccountCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm">
           <span className={`h-2 w-2 rounded-full ${error ? 'bg-rose-400' : 'bg-emerald-400'}`} />
-          <span className="text-white/70">{error ? 'ClickSend problem' : 'ClickSend connected'}</span>
+          <span className="text-white/70">{error ? 'Texting unavailable' : 'Texting is on'}</span>
         </div>
         <button
           type="button"
@@ -562,7 +551,7 @@ function AccountCard({
           <div className="min-w-0">
             <p className="text-xs text-white/40">Sends as</p>
             <p className="mt-1.5 truncate text-sm text-white/85" title={overview?.senderId || 'Shared number'}>
-              {overview?.senderId || 'ClickSend shared number'}
+              {overview?.senderId || 'Shared number'}
             </p>
           </div>
         </div>

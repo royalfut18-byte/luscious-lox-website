@@ -4,6 +4,9 @@ import { normalizeEnvValue, requireAdmin } from './_lib/admin.js';
 /**
  * ClickSend SMS for the admin panel.
  *
+ * The provider's name never reaches the browser: every message returned to
+ * the panel is worded neutrally, and ClickSend details only go to server logs.
+ *
  *   GET  /api/admin-sms            -> { configured, senderId, history }
  *   POST /api/admin-sms            -> body { messages: [{ to, body, bookingId? }] }
  *
@@ -90,20 +93,21 @@ async function clickSendFetch(path: string, authorization: string, init?: Reques
   return { response, payload };
 }
 
+const CONTACT_ADMIN = 'Texting is unavailable right now. Please contact your website administrator.';
+
 function describeClickSendError(payload: Record<string, unknown> | null, fallback: string) {
   const code = getString(payload?.response_code);
   const message = getString(payload?.response_msg);
 
-  if (code === 'UNAUTHORIZED' || code === 'INVALID_CREDENTIALS') {
-    return 'ClickSend rejected the API credentials. Check CLICKSEND_USERNAME and CLICKSEND_API_KEY.';
+  // The raw provider response goes to the server log only.
+  console.error('ClickSend error:', code, message);
+
+  // Bad credentials and empty balance are for whoever runs the account, not the salon.
+  if (code === 'UNAUTHORIZED' || code === 'INVALID_CREDENTIALS' || code === 'INSUFFICIENT_CREDIT') {
+    return CONTACT_ADMIN;
   }
 
-  if (code === 'INSUFFICIENT_CREDIT') {
-    // Keep billing out of the salon's view; whoever runs the ClickSend account sees it there.
-    return 'Texting is unavailable right now. Please contact your website administrator.';
-  }
-
-  return message || fallback;
+  return fallback;
 }
 
 type HistoryItem = {
@@ -129,7 +133,7 @@ async function loadOverview(authorization: string) {
     return {
       ok: false as const,
       status: account.response.status === 401 ? 401 : 502,
-      error: describeClickSendError(account.payload, 'Unable to reach ClickSend right now.'),
+      error: describeClickSendError(account.payload, 'Texting is unavailable right now. Try again in a moment.'),
     };
   }
 
@@ -220,7 +224,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'POST') {
     if (!config) {
       return res.status(503).json({
-        error: 'SMS is not set up yet. Add CLICKSEND_USERNAME and CLICKSEND_API_KEY to the environment, then redeploy.',
+        error: 'Texting is not switched on yet. Please contact your website administrator.',
       });
     }
 
@@ -245,7 +249,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!response.ok) {
       console.error('ClickSend send failed:', response.status, payload);
       return res.status(response.status === 401 ? 401 : 502).json({
-        error: describeClickSendError(payload, 'ClickSend could not send the message.'),
+        error: describeClickSendError(payload, 'The message could not be sent. Try again in a moment.'),
       });
     }
 
